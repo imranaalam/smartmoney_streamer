@@ -1,0 +1,2 @@
+2024-10-05 19:58:47,539 - INFO - Ticker 'HUBC' added successfully.
+2024-10-05 19:58:57,617 - ERROR - Error during analysis for ticker 'HUBC': 'data_frequency'
