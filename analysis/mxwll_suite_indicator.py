@@ -471,6 +471,6 @@ def mxwll_suite_indicator(df, ticker, params):
     fig.update_xaxes(rangeslider_visible=False)
     
     # --- Remove Repeated Legends ---
-    fig.update_layout(showlegend=True)
+    fig.update_layout(showlegend=False)
     
     return fig

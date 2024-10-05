@@ -1,4 +1,4 @@
-# File: stock_analysis_app/main.py
+# main.py
 
 import streamlit as st 
 import pandas as pd
@@ -15,7 +15,15 @@ from analysis.mxwll_suite_indicator import mxwll_suite_indicator
 
 import os
 import numpy as np
-from datetime import datetime
+import logging
+
+# Configure logging
+logging.basicConfig(
+    filename='app.log',
+    filemode='a',
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
 
 # Configure Streamlit page
 st.set_page_config(
@@ -32,6 +40,7 @@ conn = initialize_db()
 
 if conn is None:
     st.error("Failed to connect to the database. Please check the logs.")
+    logging.error("Database connection failed.")
     st.stop()
 
 # Sidebar for navigation
@@ -47,6 +56,7 @@ def synchronize_database():
         tickers = get_tickers_from_db(conn)
         if not tickers:
             st.warning("No tickers found in the database. Please add new tickers first.")
+            logging.warning("No tickers found during synchronization.")
             return
         
         total_tickers = len(tickers)
@@ -64,6 +74,7 @@ def synchronize_database():
                 date_from = date_from_dt.strftime("%d %b %Y")
                 if date_from_dt > pd.Timestamp.today():
                     status_text.text(f"No new data to fetch for ticker '{ticker}'. Already up to date.")
+                    logging.info(f"No new data to fetch for ticker '{ticker}'.")
                     continue
             else:
                 date_from = "01 Jan 2020"
@@ -75,13 +86,17 @@ def synchronize_database():
                 success = insert_data_into_db(conn, raw_data, ticker)
                 if success:
                     st.success(f"Data for ticker '{ticker}' updated successfully.")
+                    logging.info(f"Data for ticker '{ticker}' updated successfully.")
                 else:
                     st.warning(f"No valid data to process for ticker '{ticker}'.")
+                    logging.warning(f"No valid data to process for ticker '{ticker}'.")
             else:
                 st.error(f"Failed to retrieve data for ticker '{ticker}'.")
+                logging.error(f"Failed to retrieve data for ticker '{ticker}'.")
         
         status_text.text("Synchronization complete.")
         progress_bar.empty()
+        logging.info("Database synchronization complete.")
 
 # Function to add new tickers
 def add_new_ticker_ui():
@@ -92,6 +107,7 @@ def add_new_ticker_ui():
             tickers_in_db = get_tickers_from_db(conn)
             if ticker_input in tickers_in_db:
                 st.warning(f"Ticker '{ticker_input}' already exists in the database.")
+                logging.warning(f"Attempted to add existing ticker '{ticker_input}'.")
             else:
                 with st.spinner(f"Fetching data for ticker '{ticker_input}'..."):
                     raw_data = get_stock_data(ticker_input, "01 Jan 2020", pd.Timestamp.today().strftime("%d %b %Y"))
@@ -99,12 +115,16 @@ def add_new_ticker_ui():
                     success = insert_data_into_db(conn, raw_data, ticker_input)
                     if success:
                         st.success(f"Ticker '{ticker_input}' added successfully.")
+                        logging.info(f"Ticker '{ticker_input}' added successfully.")
                     else:
                         st.error(f"No valid data to add for ticker '{ticker_input}'.")
+                        logging.error(f"No valid data to add for ticker '{ticker_input}'.")
                 else:
                     st.error(f"Failed to retrieve data for ticker '{ticker_input}'.")
+                    logging.error(f"Failed to retrieve data for ticker '{ticker_input}'.")
         else:
             st.error("Please enter a valid ticker symbol.")
+            logging.error("Empty ticker symbol entered.")
 
 # Function to analyze tickers
 def analyze_tickers():
@@ -112,45 +132,39 @@ def analyze_tickers():
     tickers = get_tickers_from_db(conn)
     if not tickers:
         st.warning("No tickers available for analysis. Please add tickers first.")
+        logging.warning("No tickers available for analysis.")
         return
     
-    selected_tickers = st.multiselect("Select Tickers for Analysis", tickers)
+    # Select tickers
+    selected_tickers = st.multiselect("Select Tickers for Analysis", tickers, default=tickers)
     
-    # Date range selection
-    st.sidebar.header("Analysis Date Range")
-    start_date = st.sidebar.date_input("Start Date", datetime(2020, 1, 1))
-    end_date = st.sidebar.date_input("End Date", datetime.today())
+    # Zoom days selection
+    st.subheader("📅 Zoom into Last N Days")
+    zoom_days = st.radio("Select the number of days to zoom into:", options=[30, 60, 90, 120], index=1)  # Default 60
     
-    if start_date > end_date:
-        st.sidebar.error("Error: End date must fall after start date.")
-        return
-    
-    if selected_tickers:
+    # Button to perform analysis
+    if st.button("Run Analysis"):
+        # Date range selection based on zoom_days
+        end_date = pd.Timestamp.today()
+        start_date = end_date - pd.Timedelta(days=zoom_days)
+        
         for ticker in selected_tickers:
             st.subheader(f"📊 Analysis for {ticker}")
             
-            # Fetch data from database within date range
-            query = """
-            SELECT * FROM Ticker 
-            WHERE Ticker = ? AND Date BETWEEN ? AND ?
-            ORDER BY Date ASC;
-            """
+            # Fetch data from database within the zoom_days range
+            query = "SELECT * FROM Ticker WHERE Ticker = ? AND Date BETWEEN ? AND ? ORDER BY Date ASC;"
             cursor = conn.cursor()
             cursor.execute(query, (ticker, start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d")))
             fetched_data = cursor.fetchall()
             columns = [description[0] for description in cursor.description]
             
             if not fetched_data:
-                st.warning(f"No data available for ticker '{ticker}' in the specified date range.")
+                st.warning(f"No data available for ticker '{ticker}' in the last {zoom_days} days.")
+                logging.warning(f"No data available for ticker '{ticker}' between {start_date} and {end_date}.")
                 continue
             
             # Convert fetched data to list of dictionaries
             data = [dict(zip(columns, row)) for row in fetched_data]
-            
-            # Check if the earliest date in data is after the specified start_date
-            earliest_date_in_data = pd.to_datetime(min([record['Date'] for record in data]))
-            if earliest_date_in_data > pd.to_datetime(start_date):
-                st.warning(f"Data for ticker '{ticker}' is only available from {earliest_date_in_data.date()}. Starting analysis from this date.")
             
             # Convert to DataFrame for analysis
             df = pd.DataFrame(data)
@@ -159,31 +173,55 @@ def analyze_tickers():
             df['Date'] = pd.to_datetime(df['Date'])
             df.set_index('Date', inplace=True)
             
-            # # Display a sample of the data
-            # st.write("Data Sample:")
-            # st.write(df.head())
+            # Enforce correct dtypes
+            try:
+                df = df.astype({
+                    "Open": "float64",
+                    "High": "float64",
+                    "Low": "float64",
+                    "Close": "float64",
+                    "Change": "float64",
+                    "Change (%)": "float64",
+                    "Volume": "int64"
+                })
+            except Exception as e:
+                st.error(f"Data type conversion error for ticker '{ticker}': {e}")
+                logging.error(f"Data type conversion error for ticker '{ticker}': {e}")
+                continue
             
-            # # Verify data types
-            # st.write("Data Types:")
-            # st.write(df.dtypes)
+            # # Display Data Sample
+            # st.markdown("**Data Sample:**")
+            # st.dataframe(df.head())
+            
+            # # Display Data Types
+            # st.markdown("**Data Types:**")
+            # st.table(pd.DataFrame(df.dtypes, columns=["Type"]))
             
             # Ensure all necessary columns are present and correct
             required_columns = ["Open", "High", "Low", "Close", "Change", "Change (%)", "Volume"]
             missing_columns = [col for col in required_columns if col not in df.columns]
             if missing_columns:
                 st.error(f"Missing columns in data: {missing_columns}")
+                logging.error(f"Missing columns for ticker '{ticker}': {missing_columns}")
                 continue
             
             # Check for any NaN or infinite values
             if df[required_columns].isnull().any().any():
                 st.warning("Data contains NaN values. These will be dropped before analysis.")
+                logging.warning(f"Data for ticker '{ticker}' contains NaN values.")
                 df.dropna(subset=required_columns, inplace=True)
             
             if not np.isfinite(df[required_columns]).all().all():
                 st.warning("Data contains infinite values. These will be dropped before analysis.")
+                logging.warning(f"Data for ticker '{ticker}' contains infinite values.")
                 df = df[np.isfinite(df[required_columns]).all(axis=1)]
             
-            # Define analysis parameters
+            if df.empty:
+                st.warning(f"All data for ticker '{ticker}' was dropped due to NaN or infinite values.")
+                logging.warning(f"All data for ticker '{ticker}' was dropped due to NaN or infinite values.")
+                continue
+            
+            # Define analysis parameters (use your original params)
             analysis_params = {
                 "bull_color": '#14D990',
                 "bear_color": '#F24968',
@@ -222,13 +260,13 @@ def analyze_tickers():
             # Perform analysis with a spinner
             with st.spinner(f"Performing analysis for '{ticker}'..."):
                 try:
-                    # Integrate original analysis code here
-                    # Assuming mxwll_suite_indicator returns a Plotly figure
                     fig = mxwll_suite_indicator(df, ticker, analysis_params)
                     st.plotly_chart(fig, use_container_width=True)
                     st.success(f"Analysis for ticker '{ticker}' completed successfully.")
+                    logging.info(f"Analysis for ticker '{ticker}' completed successfully.")
                 except Exception as e:
                     st.error(f"An error occurred during analysis for ticker '{ticker}': {e}")
+                    logging.error(f"Error during analysis for ticker '{ticker}': {e}")
 
 # Render different app modes
 if app_mode == "Synchronize Database":
