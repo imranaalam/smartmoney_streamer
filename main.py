@@ -16,6 +16,8 @@ from analysis.mxwll_suite_indicator import mxwll_suite_indicator
 import os
 import numpy as np
 import logging
+import sqlite3
+from datetime import datetime
 
 # Configure logging
 logging.basicConfig(
@@ -83,13 +85,17 @@ def synchronize_database():
             
             raw_data = get_stock_data(ticker, date_from, date_to)
             if raw_data:
-                success = insert_data_into_db(conn, raw_data, ticker)
+                success, records_added = insert_data_into_db(conn, raw_data, ticker)
                 if success:
-                    st.success(f"Data for ticker '{ticker}' updated successfully.")
-                    logging.info(f"Data for ticker '{ticker}' updated successfully.")
+                    if records_added > 0:
+                        st.success(f"Added {records_added} records for ticker '{ticker}'.")
+                        logging.info(f"Added {records_added} records for ticker '{ticker}'.")
+                    else:
+                        st.success(f"No new records to add for ticker '{ticker}'.")
+                        logging.info(f"No new records to add for ticker '{ticker}'.")
                 else:
-                    st.warning(f"No valid data to process for ticker '{ticker}'.")
-                    logging.warning(f"No valid data to process for ticker '{ticker}'.")
+                    st.error(f"Failed to add data for ticker '{ticker}'.")
+                    logging.error(f"Failed to add data for ticker '{ticker}'.")
             else:
                 st.error(f"Failed to retrieve data for ticker '{ticker}'.")
                 logging.error(f"Failed to retrieve data for ticker '{ticker}'.")
@@ -112,13 +118,17 @@ def add_new_ticker_ui():
                 with st.spinner(f"Fetching data for ticker '{ticker_input}'..."):
                     raw_data = get_stock_data(ticker_input, "01 Jan 2020", pd.Timestamp.today().strftime("%d %b %Y"))
                 if raw_data:
-                    success = insert_data_into_db(conn, raw_data, ticker_input)
+                    success, records_added = insert_data_into_db(conn, raw_data, ticker_input)
                     if success:
-                        st.success(f"Ticker '{ticker_input}' added successfully.")
-                        logging.info(f"Ticker '{ticker_input}' added successfully.")
+                        if records_added > 0:
+                            st.success(f"Added {records_added} records for ticker '{ticker_input}'.")
+                            logging.info(f"Added {records_added} records for ticker '{ticker_input}'.")
+                        else:
+                            st.success(f"No new records to add for ticker '{ticker_input}'.")
+                            logging.info(f"No new records to add for ticker '{ticker_input}'.")
                     else:
-                        st.error(f"No valid data to add for ticker '{ticker_input}'.")
-                        logging.error(f"No valid data to add for ticker '{ticker_input}'.")
+                        st.error(f"Failed to add data for ticker '{ticker_input}'.")
+                        logging.error(f"Failed to add data for ticker '{ticker_input}'.")
                 else:
                     st.error(f"Failed to retrieve data for ticker '{ticker_input}'.")
                     logging.error(f"Failed to retrieve data for ticker '{ticker_input}'.")
@@ -138,14 +148,44 @@ def analyze_tickers():
     # Select tickers
     selected_tickers = st.multiselect("Select Tickers for Analysis", tickers, default=tickers)
     
-    # Zoom days selection
-    st.subheader("📅 Zoom into Last N Days")
-    zoom_days = st.radio("Select the number of days to zoom into:", options=[30, 60, 90, 120], index=1)  # Default 60
+    if not selected_tickers:
+        st.warning("Please select at least one ticker for analysis.")
+        return
+    
+    # Determine the earliest available date among selected tickers
+    earliest_dates = []
+    for ticker in selected_tickers:
+        cursor = conn.cursor()
+        cursor.execute("SELECT MIN(Date) FROM Ticker WHERE Ticker = ?", (ticker,))
+        result = cursor.fetchone()
+        if result and result[0]:
+            earliest_dates.append(pd.to_datetime(result[0]))
+    
+    if earliest_dates:
+        overall_start_date = max(min(earliest_dates), pd.to_datetime("2020-01-01"))
+    else:
+        overall_start_date = pd.to_datetime("2020-01-01")
+    
+    overall_end_date = pd.Timestamp.today()
+    
+    # Slider for selecting time span
+    st.subheader("📅 Select Time Span for Analysis")
+    
+    # Calculate total available days
+    total_days = (overall_end_date - overall_start_date).days
+    
+    # Slider to select the number of days to include
+    zoom_days = st.slider(
+        "Select the number of days to include in the analysis:",
+        min_value=1,
+        max_value=total_days,
+        value=60,
+        step=1
+    )
     
     # Button to perform analysis
     if st.button("Run Analysis"):
-        # Date range selection based on zoom_days
-        end_date = pd.Timestamp.today()
+        end_date = overall_end_date
         start_date = end_date - pd.Timedelta(days=zoom_days)
         
         for ticker in selected_tickers:
@@ -159,7 +199,7 @@ def analyze_tickers():
             columns = [description[0] for description in cursor.description]
             
             if not fetched_data:
-                st.warning(f"No data available for ticker '{ticker}' in the last {zoom_days} days.")
+                st.warning(f"No data available for ticker '{ticker}' in the selected time span.")
                 logging.warning(f"No data available for ticker '{ticker}' between {start_date} and {end_date}.")
                 continue
             

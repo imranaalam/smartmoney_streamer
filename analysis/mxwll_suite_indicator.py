@@ -342,7 +342,9 @@ def mxwll_suite_indicator(df, ticker, params):
         high=df['High'],
         low=df['Low'],
         close=df['Close'],
-        name='Price'
+        name='Price',
+        increasing_line_color='green',
+        decreasing_line_color='red'
     ))
     
     # --- Plot Swing Highs ---
@@ -471,6 +473,7 @@ def mxwll_suite_indicator(df, ticker, params):
     fig.update_xaxes(rangeslider_visible=False)
     
     # --- Remove Repeated Legends ---
-    fig.update_layout(showlegend=False)
+    # Since showlegend=False for individual traces, only the main 'Price' and 'Main Line' legends will appear
+    fig.update_layout(showlegend=True)
     
     return fig
