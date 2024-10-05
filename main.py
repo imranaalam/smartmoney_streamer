@@ -159,13 +159,13 @@ def analyze_tickers():
             df['Date'] = pd.to_datetime(df['Date'])
             df.set_index('Date', inplace=True)
             
-            # Display a sample of the data
-            st.write("Data Sample:")
-            st.write(df.head())
+            # # Display a sample of the data
+            # st.write("Data Sample:")
+            # st.write(df.head())
             
-            # Verify data types
-            st.write("Data Types:")
-            st.write(df.dtypes)
+            # # Verify data types
+            # st.write("Data Types:")
+            # st.write(df.dtypes)
             
             # Ensure all necessary columns are present and correct
             required_columns = ["Open", "High", "Low", "Close", "Change", "Change (%)", "Volume"]

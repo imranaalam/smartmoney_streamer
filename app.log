@@ -1,2 +1,5 @@
 2024-10-05 19:58:47,539 - INFO - Ticker 'HUBC' added successfully.
 2024-10-05 19:58:57,617 - ERROR - Error during analysis for ticker 'HUBC': 'data_frequency'
+2024-10-05 20:15:51,225 - ERROR - Failed to retrieve data for ticker 'HUBC'.
+2024-10-05 20:15:51,226 - INFO - Database synchronization complete.
+2024-10-05 20:19:03,195 - ERROR - Error during analysis for ticker 'HUBC': 'data_frequency'

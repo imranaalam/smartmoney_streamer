@@ -1,4 +1,4 @@
-# File: stock_analysis_app/analysis/mxwll_suite_indicator.py
+# analysis/mxwll_suite_indicator.py
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -360,7 +360,8 @@ def mxwll_suite_indicator(df, ticker, params):
                 marker=dict(color=params['bear_color'], size=10, symbol='triangle-up'),
                 text=[label_text],
                 textposition='bottom center',
-                name='Swing High'
+                name='Swing High',
+                showlegend=False  # Remove from legend to avoid repetition
             ))
     
     # --- Plot Swing Lows ---
@@ -378,7 +379,8 @@ def mxwll_suite_indicator(df, ticker, params):
                 marker=dict(color=params['bull_color'], size=10, symbol='triangle-down'),
                 text=[label_text],
                 textposition='top center',
-                name='Swing Low'
+                name='Swing Low',
+                showlegend=False  # Remove from legend to avoid repetition
             ))
     
     # --- Plot Internal Swing Highs ---
@@ -393,7 +395,8 @@ def mxwll_suite_indicator(df, ticker, params):
                 y=[swing_price],
                 mode='markers',
                 marker=dict(color=params['bear_color'], size=6, symbol='triangle-up'),
-                name='Internal Swing High'
+                name='Internal Swing High',
+                showlegend=False  # Remove from legend to avoid repetition
             ))
     
     # --- Plot Internal Swing Lows ---
@@ -408,7 +411,8 @@ def mxwll_suite_indicator(df, ticker, params):
                 y=[swing_price],
                 mode='markers',
                 marker=dict(color=params['bull_color'], size=6, symbol='triangle-down'),
-                name='Internal Swing Low'
+                name='Internal Swing Low',
+                showlegend=False  # Remove from legend to avoid repetition
             ))
     
     # --- Plot Fair Value Gaps (FVG) ---
@@ -448,7 +452,7 @@ def mxwll_suite_indicator(df, ticker, params):
     
     # --- Draw Fibonacci Levels ---
     if main_line and params['show_fibs']:
-        draw_fibs(fig, main_line, df)
+        plot_fibonacci_levels(fig, main_line['y1'], main_line['y2'])
     
     # --- Add Volume Activity Annotation ---
     add_volume_annotation(fig, df)
@@ -459,7 +463,14 @@ def mxwll_suite_indicator(df, ticker, params):
         yaxis_title='Price',
         xaxis_title='Date',
         legend=dict(orientation="h"),
-        margin=dict(l=50, r=50, t=50, b=50)
+        margin=dict(l=50, r=50, t=50, b=50),
+        hovermode='x unified'
     )
+    
+    # --- Remove Separate Small Charts for Zooming ---
+    fig.update_xaxes(rangeslider_visible=False)
+    
+    # --- Remove Repeated Legends ---
+    fig.update_layout(showlegend=True)
     
     return fig
