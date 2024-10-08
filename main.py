@@ -2,6 +2,7 @@
 
 import streamlit as st 
 import pandas as pd
+import plotly.graph_objects as go  # Essential for type checking
 from utils.db_manager import (
     initialize_db, 
     get_tickers_from_db, 
@@ -9,13 +10,13 @@ from utils.db_manager import (
     insert_data_into_db
 )
 from utils.data_fetcher import get_stock_data  # Ensure this is correctly implemented
-from utils.helpers import format_date  # Newly added helper function
 from analysis.mxwll_suite_indicator import mxwll_suite_indicator
 
 import os
 import numpy as np
 import logging
 from datetime import datetime, timedelta
+
 
 # Configure logging
 logging.basicConfig(
@@ -134,7 +135,8 @@ def add_new_ticker_ui():
             st.error("Please enter a valid ticker symbol.")
             logging.error("Empty ticker symbol entered.")
 
-# Function to analyze tickers
+# main.py
+
 def analyze_tickers():
     st.header("🔍 Analyze Tickers")
     tickers = get_tickers_from_db(conn)
@@ -150,63 +152,29 @@ def analyze_tickers():
         st.warning("Please select at least one ticker for analysis.")
         return
     
-    # Determine the earliest date across all selected tickers
-    earliest_dates = []
-    for ticker in selected_tickers:
-        cursor = conn.cursor()
-        cursor.execute("SELECT MIN(Date) FROM Ticker WHERE Ticker = ?;", (ticker,))
-        result = cursor.fetchone()
-        if result and result[0]:
-            earliest_dates.append(pd.to_datetime(result[0]))
+    # Define time period options
+    time_period_options = {
+        "1 Month": 30,
+        "2 Months": 60,
+        "3 Months": 90,
+        "6 Months": 180,
+        "1 Year": 365,
+        "2 Years": 730,
+        "3 Years": 1095,
+        "5 Years": 1825
+    }
     
-    if earliest_dates:
-        global_start_date = min(earliest_dates)
-    else:
-        global_start_date = pd.to_datetime("2020-01-01")
+    # Select time period
+    st.subheader("📅 Select Time Period for Analysis")
+    selected_period = st.selectbox("Choose a time period:", list(time_period_options.keys()))
+    days = time_period_options[selected_period]
     
-    # Calculate total days from global_start_date to today
-    today = pd.Timestamp.today()
-    total_days = (today - global_start_date).days
+    # Calculate start_date and end_date based on selected period
+    end_date = pd.Timestamp.today()
+    start_date = end_date - pd.Timedelta(days=days)
     
-    # Divide the total_days into 10 equal parts
-    if total_days < 1:
-        st.error("Insufficient data range for analysis.")
-        logging.error("Insufficient data range for analysis.")
-        return
-    
-    segment_size = total_days // 10
-    
-    # Slider for selecting the segment (1 to 10)
-    st.subheader("📅 Select Time Span for Analysis")
-    
-    # Use format_func if supported, else display as integer
-    try:
-        segment = st.slider(
-            "Select a segment of the date range:",
-            min_value=1,
-            max_value=10,
-            value=6,  # Default to the 6th segment (mid-point)
-            step=1,
-            format_func=lambda x: f"Segment {x} ({(global_start_date + pd.Timedelta(days=(x-1)*segment_size)).date()} to {(global_start_date + pd.Timedelta(days=x*segment_size)).date()})"
-        )
-    except TypeError:
-        # If format_func is not supported, fall back to default slider
-        st.warning("Your Streamlit version does not support 'format_func' in sliders. Please update Streamlit to the latest version for enhanced functionality.")
-        segment = st.slider(
-            "Select a segment of the date range:",
-            min_value=1,
-            max_value=10,
-            value=6,
-            step=1
-        )
-    
-    # Calculate start_date and end_date based on the selected segment
-    start_date = global_start_date + pd.Timedelta(days=(segment-1)*segment_size)
-    end_date = global_start_date + pd.Timedelta(days=segment*segment_size)
-    
-    # Ensure end_date does not exceed today
-    if end_date > today:
-        end_date = today
+    # Initialize list to collect summary data
+    summary_list = []
     
     # Button to perform analysis
     if st.button("Run Analysis"):
@@ -221,7 +189,7 @@ def analyze_tickers():
             columns = [description[0] for description in cursor.description]
             
             if not fetched_data:
-                st.warning(f"No data available for ticker '{ticker}' in the selected segment.")
+                st.warning(f"No data available for ticker '{ticker}' in the selected period.")
                 logging.warning(f"No data available for ticker '{ticker}' between {start_date.date()} and {end_date.date()}.")
                 continue
             
@@ -251,13 +219,13 @@ def analyze_tickers():
                 logging.error(f"Data type conversion error for ticker '{ticker}': {e}")
                 continue
             
-            # Display Data Sample
-            st.markdown("**Data Sample:**")
-            st.dataframe(df.head())
+            # Remove Data Samples and Data Types Tables
+            # (These lines are removed/commented out as per your request)
+            # st.markdown("**Data Sample:**")
+            # st.dataframe(df.head())
             
-            # Display Data Types
-            st.markdown("**Data Types:**")
-            st.table(pd.DataFrame(df.dtypes, columns=["Type"]))
+            # st.markdown("**Data Types:**")
+            # st.table(pd.DataFrame(df.dtypes, columns=["Type"]))
             
             # Ensure all necessary columns are present and correct
             required_columns = ["Open", "High", "Low", "Close", "Change", "Change (%)", "Volume"]
@@ -322,13 +290,32 @@ def analyze_tickers():
             # Perform analysis with a spinner
             with st.spinner(f"Performing analysis for '{ticker}'..."):
                 try:
-                    fig = mxwll_suite_indicator(df, ticker, analysis_params)
+                    fig, summary = mxwll_suite_indicator(df, ticker, analysis_params)
+                    
+                    # Validate that fig is a Plotly figure
+                    if not isinstance(fig, go.Figure):
+                        st.error(f"Generated figure for ticker '{ticker}' is invalid.")
+                        logging.error(f"Generated figure for ticker '{ticker}' is invalid.")
+                        continue
+                    
                     st.plotly_chart(fig, use_container_width=True)
                     st.success(f"Analysis for ticker '{ticker}' completed successfully.")
                     logging.info(f"Analysis for ticker '{ticker}' completed successfully.")
+                    
+                    # Append summary data to the list
+                    summary_list.append(summary)
                 except Exception as e:
                     st.error(f"An error occurred during analysis for ticker '{ticker}': {e}")
                     logging.error(f"Error during analysis for ticker '{ticker}': {e}")
+        
+        # After all tickers are analyzed, display the summary table
+        if summary_list:
+            st.subheader("📊 Summary Table")
+            summary_df = pd.DataFrame(summary_list)
+            st.table(summary_df)
+
+
+
 
 # Render different app modes
 if app_mode == "Synchronize Database":
@@ -337,3 +324,5 @@ elif app_mode == "Add New Ticker":
     add_new_ticker_ui()
 elif app_mode == "Analyze Tickers":
     analyze_tickers()
+
+

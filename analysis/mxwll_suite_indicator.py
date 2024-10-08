@@ -1,10 +1,10 @@
 # analysis/mxwll_suite_indicator.py
-
 import pandas as pd
-import plotly.graph_objects as go
+import plotly.graph_objects as go  # Essential for Plotly figures
 from ta.volatility import AverageTrueRange
 import warnings
 from datetime import datetime, timedelta
+
 
 def mxwll_suite_indicator(df, ticker, params):
     """
@@ -212,26 +212,6 @@ def mxwll_suite_indicator(df, ticker, params):
         
         df['VolumeActivity'] = df['Volume'].apply(categorize_volume)
         return df
-    
-    def draw_fibs(fig, main_line, df):
-        """
-        Draws Fibonacci retracement levels based on the main line (latest swing points).
-        """
-        if not params['show_fibs']:
-            return
-        
-        # Extract main line coordinates
-        x1, y1 = main_line['x1'], main_line['y1']
-        x2, y2 = main_line['x2'], main_line['y2']
-        
-        # Calculate Fibonacci levels
-        fib_diff = y1 - y2
-        for level, color in zip(params['fib_levels'], params['fib_colors']):
-            if level == 0.5 and not params['show_fib5']:
-                continue
-            fib_level = y2 + fib_diff * level
-            fig.add_hline(y=fib_level, line=dict(color=color, dash='dash'), 
-                          annotation_text=f'Fib {level}', annotation_position="top left")
     
     def add_volume_annotation(fig, df):
         """
