@@ -31,3 +31,65 @@
 2024-10-05 21:30:48,619 - INFO - Analysis for ticker 'LUCK' completed successfully.
 2024-10-05 21:31:07,451 - INFO - Analysis for ticker 'HUBC' completed successfully.
 2024-10-05 21:31:07,507 - INFO - Analysis for ticker 'LUCK' completed successfully.
+2024-10-08 21:20:35,634 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:20:40,782 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:20:46,166 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:20:46,262 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:20:46,267 - INFO - Retrieved tickers from DB: ['HUBC', 'LUCK']
+2024-10-08 21:20:47,199 - INFO - Retrieved 1179 records for ticker 'PPL'.
+2024-10-08 21:20:47,205 - INFO - Added 0 records for ticker 'PPL'.
+2024-10-08 21:20:47,205 - INFO - No new records to add for ticker 'PPL'.
+2024-10-08 21:20:55,054 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:20:56,312 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:20:56,315 - INFO - Retrieved tickers from DB: ['HUBC', 'LUCK']
+2024-10-08 21:20:56,321 - INFO - Latest date for ticker 'HUBC': 2024-10-04
+2024-10-08 21:20:56,801 - INFO - Retrieved 2 records for ticker 'HUBC'.
+2024-10-08 21:20:56,801 - INFO - Added 0 records for ticker 'HUBC'.
+2024-10-08 21:20:56,802 - INFO - No new records to add for ticker 'HUBC'.
+2024-10-08 21:20:56,803 - INFO - Latest date for ticker 'LUCK': 2024-10-04
+2024-10-08 21:20:57,255 - INFO - Retrieved 2 records for ticker 'LUCK'.
+2024-10-08 21:20:57,256 - INFO - Added 0 records for ticker 'LUCK'.
+2024-10-08 21:20:57,257 - INFO - No new records to add for ticker 'LUCK'.
+2024-10-08 21:20:57,258 - INFO - Database synchronization complete.
+2024-10-08 21:21:01,020 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:21:01,025 - INFO - Retrieved tickers from DB: ['HUBC', 'LUCK']
+2024-10-08 21:23:32,630 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:23:36,872 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:23:36,876 - INFO - Retrieved tickers from DB: ['HUBC', 'LUCK']
+2024-10-08 21:23:43,303 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:23:43,306 - INFO - Retrieved tickers from DB: ['HUBC', 'LUCK']
+2024-10-08 21:23:45,314 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-08 21:23:45,483 - INFO - Analysis for ticker 'LUCK' completed successfully.
+2024-10-08 21:48:39,963 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:48:44,396 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:48:44,399 - INFO - Retrieved tickers from DB: ['HUBC', 'LUCK']
+2024-10-08 21:48:44,400 - INFO - Latest date for ticker 'HUBC': 2024-10-04
+2024-10-08 21:48:45,072 - INFO - Retrieved 2 records for ticker 'HUBC'.
+2024-10-08 21:48:45,073 - INFO - Added 0 records for ticker 'HUBC'.
+2024-10-08 21:48:45,073 - INFO - No new records to add for ticker 'HUBC'.
+2024-10-08 21:48:45,074 - INFO - Latest date for ticker 'LUCK': 2024-10-04
+2024-10-08 21:48:45,540 - INFO - Retrieved 2 records for ticker 'LUCK'.
+2024-10-08 21:48:45,540 - INFO - Added 0 records for ticker 'LUCK'.
+2024-10-08 21:48:45,541 - INFO - No new records to add for ticker 'LUCK'.
+2024-10-08 21:48:45,541 - INFO - Database synchronization complete.
+2024-10-08 21:48:49,381 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:48:49,385 - INFO - Retrieved tickers from DB: ['HUBC', 'LUCK']
+2024-10-08 21:48:52,056 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:48:52,059 - INFO - Retrieved tickers from DB: ['HUBC', 'LUCK']
+2024-10-08 21:48:53,337 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-08 21:48:53,470 - INFO - Analysis for ticker 'LUCK' completed successfully.
+2024-10-08 21:49:05,645 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:49:05,647 - INFO - Retrieved tickers from DB: ['HUBC', 'LUCK']
+2024-10-08 21:49:07,245 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:49:07,247 - INFO - Retrieved tickers from DB: ['HUBC', 'LUCK']
+2024-10-08 21:49:07,432 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-08 21:49:07,488 - INFO - Analysis for ticker 'LUCK' completed successfully.
+2024-10-08 21:55:33,466 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:55:38,223 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:55:38,225 - INFO - Retrieved tickers from DB: ['HUBC', 'LUCK']
+2024-10-08 21:55:42,611 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:55:42,622 - INFO - Retrieved tickers from DB: ['HUBC', 'LUCK']
+2024-10-08 21:55:44,025 - INFO - Database initialized at data/tick_data.db.
+2024-10-08 21:55:44,029 - INFO - Retrieved tickers from DB: ['HUBC', 'LUCK']
+2024-10-08 21:55:45,597 - ERROR - Error during analysis for ticker 'HUBC': The `figure_or_data` positional argument must be `dict`-like, `list`-like, or an instance of plotly.graph_objs.Figure
+2024-10-08 21:55:45,658 - ERROR - Error during analysis for ticker 'LUCK': The `figure_or_data` positional argument must be `dict`-like, `list`-like, or an instance of plotly.graph_objs.Figure

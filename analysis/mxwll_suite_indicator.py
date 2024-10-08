@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 def mxwll_suite_indicator(df, ticker, params):
     """
-    Generates a Plotly figure based on the mxwll suite indicator analysis.
+    Generates a Plotly figure based on the mxwll suite indicator analysis and provides summary statistics.
     
     Args:
         df (pd.DataFrame): DataFrame containing stock data.
@@ -16,7 +16,9 @@ def mxwll_suite_indicator(df, ticker, params):
         params (dict): Dictionary of analysis parameters.
     
     Returns:
-        plotly.graph_objects.Figure: The generated Plotly figure.
+        tuple:
+            - plotly.graph_objects.Figure: The generated Plotly figure.
+            - dict: Summary statistics for the analysis.
     """
     # Suppress warnings for cleaner output
     warnings.filterwarnings("ignore")
@@ -51,8 +53,8 @@ def mxwll_suite_indicator(df, ticker, params):
     
     # === Session Colors ===
     session_colors = {
-        'New York': params['bear_color'],  # Bear Color
-        'Asia': params['bull_color'],      # Bull Color
+        'New York': params['bear_color'],  # Bear Color (Red)
+        'Asia': params['bull_color'],      # Bull Color (Green)
         'London': params['fvg_color']      # FVG Color
     }
     
@@ -105,6 +107,7 @@ def mxwll_suite_indicator(df, ticker, params):
     def draw_aoe(fig, df):
         """
         Draws the Area of Interest (AOE) boxes based on ATR and recent price action.
+        Returns the highest and lowest points of the AOI.
         """
         atr_indicator = AverageTrueRange(high=df['High'], low=df['Low'], close=df['Close'], window=atr_window)
         df['ATR'] = atr_indicator.average_true_range()
@@ -148,6 +151,9 @@ def mxwll_suite_indicator(df, ticker, params):
                       line=dict(width=0),
                       layer='below',
                       name='Low AOE')
+        
+        # Return AOI points for summary
+        return high_aoe_y0, low_aoe_y1
     
     def highlight_sessions(fig, df):
         """
@@ -444,7 +450,13 @@ def mxwll_suite_indicator(df, ticker, params):
     
     # --- Draw Area of Interest (AOE) ---
     if params['show_aoe']:
-        draw_aoe(fig, df)
+        try:
+            high_aoi_y0, low_aoi_y1 = draw_aoe(fig, df)
+        except Exception as e:
+            high_aoi_y0, low_aoi_y1 = None, None
+            print(f"Error drawing AOE: {e}")
+    else:
+        high_aoi_y0, low_aoi_y1 = None, None
     
     # --- Highlight Trading Sessions ---
     highlight_sessions(fig, df)
@@ -459,9 +471,58 @@ def mxwll_suite_indicator(df, ticker, params):
     # --- Add Volume Activity Annotation ---
     add_volume_annotation(fig, df)
     
+    # === Summary Calculations ===
+    summary_data = {}
+    if params['show_aoe'] and high_aoi_y0 is not None and low_aoi_y1 is not None:
+        try:
+            # Last Candle (excluding wicks)
+            last_candle = df.iloc[-1]
+            last_candle_bottom = min(last_candle['Open'], last_candle['Close'])
+            last_candle_upper = max(last_candle['Open'], last_candle['Close'])
+            
+            # Differences
+            difference_bottom_to_AOI_top = high_aoi_y0 - last_candle_bottom
+            difference_upper_to_AOI_bottom = last_candle_upper - low_aoi_y1
+            
+            # Percentages
+            percentage_diff_bottom_to_AOI_top = (difference_bottom_to_AOI_top / high_aoi_y0) * 100 if high_aoi_y0 != 0 else None
+            percentage_diff_upper_to_AOI_bottom = (difference_upper_to_AOI_bottom / low_aoi_y1) * 100 if low_aoi_y1 != 0 else None
+            
+            # Populate summary data
+            summary_data = {
+                'Ticker': ticker,
+                'Highest AOI (Red)': round(high_aoi_y0, 2),
+                'Lowest AOI (Green)': round(low_aoi_y1, 2),
+                'Difference (Last Candle Bottom to AOI Top)': round(difference_bottom_to_AOI_top, 2),
+                'Difference (Last Candle Upper to AOI Bottom)': round(difference_upper_to_AOI_bottom, 2),
+                'Percentage (Bottom to AOI Top)': round(percentage_diff_bottom_to_AOI_top, 2) if percentage_diff_bottom_to_AOI_top is not None else None,
+                'Percentage (Upper to AOI Bottom)': round(percentage_diff_upper_to_AOI_bottom, 2) if percentage_diff_upper_to_AOI_bottom is not None else None
+            }
+        except Exception as e:
+            print(f"Error in summary calculations: {e}")
+            summary_data = {
+                'Ticker': ticker,
+                'Highest AOI (Red)': None,
+                'Lowest AOI (Green)': None,
+                'Difference (Last Candle Bottom to AOI Top)': None,
+                'Difference (Last Candle Upper to AOI Bottom)': None,
+                'Percentage (Bottom to AOI Top)': None,
+                'Percentage (Upper to AOI Bottom)': None
+            }
+    else:
+        summary_data = {
+            'Ticker': ticker,
+            'Highest AOI (Red)': None,
+            'Lowest AOI (Green)': None,
+            'Difference (Last Candle Bottom to AOI Top)': None,
+            'Difference (Last Candle Upper to AOI Bottom)': None,
+            'Percentage (Bottom to AOI Top)': None,
+            'Percentage (Upper to AOI Bottom)': None
+        }
+    
     # --- Final Layout Adjustments ---
     fig.update_layout(
-        title=f'Mxwll Suite Indicator for {ticker}',
+        title=f'AOI for {ticker}',
         yaxis_title='Price',
         xaxis_title='Date',
         legend=dict(orientation="h"),
@@ -476,4 +537,4 @@ def mxwll_suite_indicator(df, ticker, params):
     # Since showlegend=False for individual traces, only the main 'Price' and 'Main Line' legends will appear
     fig.update_layout(showlegend=True)
     
-    return fig
+    return fig, summary_data

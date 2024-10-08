@@ -6,18 +6,16 @@ from utils.db_manager import (
     initialize_db, 
     get_tickers_from_db, 
     get_latest_date_for_ticker, 
-    insert_data_into_db, 
-    add_new_ticker, 
-    format_date
+    insert_data_into_db
 )
 from utils.data_fetcher import get_stock_data  # Ensure this is correctly implemented
+from utils.helpers import format_date  # Newly added helper function
 from analysis.mxwll_suite_indicator import mxwll_suite_indicator
 
 import os
 import numpy as np
 import logging
-import sqlite3
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Configure logging
 logging.basicConfig(
@@ -152,46 +150,70 @@ def analyze_tickers():
         st.warning("Please select at least one ticker for analysis.")
         return
     
-    # Determine the earliest available date among selected tickers
+    # Determine the earliest date across all selected tickers
     earliest_dates = []
     for ticker in selected_tickers:
         cursor = conn.cursor()
-        cursor.execute("SELECT MIN(Date) FROM Ticker WHERE Ticker = ?", (ticker,))
+        cursor.execute("SELECT MIN(Date) FROM Ticker WHERE Ticker = ?;", (ticker,))
         result = cursor.fetchone()
         if result and result[0]:
             earliest_dates.append(pd.to_datetime(result[0]))
     
     if earliest_dates:
-        overall_start_date = max(min(earliest_dates), pd.to_datetime("2020-01-01"))
+        global_start_date = min(earliest_dates)
     else:
-        overall_start_date = pd.to_datetime("2020-01-01")
+        global_start_date = pd.to_datetime("2020-01-01")
     
-    overall_end_date = pd.Timestamp.today()
+    # Calculate total days from global_start_date to today
+    today = pd.Timestamp.today()
+    total_days = (today - global_start_date).days
     
-    # Slider for selecting time span
+    # Divide the total_days into 10 equal parts
+    if total_days < 1:
+        st.error("Insufficient data range for analysis.")
+        logging.error("Insufficient data range for analysis.")
+        return
+    
+    segment_size = total_days // 10
+    
+    # Slider for selecting the segment (1 to 10)
     st.subheader("📅 Select Time Span for Analysis")
     
-    # Calculate total available days
-    total_days = (overall_end_date - overall_start_date).days
+    # Use format_func if supported, else display as integer
+    try:
+        segment = st.slider(
+            "Select a segment of the date range:",
+            min_value=1,
+            max_value=10,
+            value=6,  # Default to the 6th segment (mid-point)
+            step=1,
+            format_func=lambda x: f"Segment {x} ({(global_start_date + pd.Timedelta(days=(x-1)*segment_size)).date()} to {(global_start_date + pd.Timedelta(days=x*segment_size)).date()})"
+        )
+    except TypeError:
+        # If format_func is not supported, fall back to default slider
+        st.warning("Your Streamlit version does not support 'format_func' in sliders. Please update Streamlit to the latest version for enhanced functionality.")
+        segment = st.slider(
+            "Select a segment of the date range:",
+            min_value=1,
+            max_value=10,
+            value=6,
+            step=1
+        )
     
-    # Slider to select the number of days to include
-    zoom_days = st.slider(
-        "Select the number of days to include in the analysis:",
-        min_value=1,
-        max_value=total_days,
-        value=60,
-        step=1
-    )
+    # Calculate start_date and end_date based on the selected segment
+    start_date = global_start_date + pd.Timedelta(days=(segment-1)*segment_size)
+    end_date = global_start_date + pd.Timedelta(days=segment*segment_size)
+    
+    # Ensure end_date does not exceed today
+    if end_date > today:
+        end_date = today
     
     # Button to perform analysis
     if st.button("Run Analysis"):
-        end_date = overall_end_date
-        start_date = end_date - pd.Timedelta(days=zoom_days)
-        
         for ticker in selected_tickers:
             st.subheader(f"📊 Analysis for {ticker}")
             
-            # Fetch data from database within the zoom_days range
+            # Fetch data from database within the selected date range
             query = "SELECT * FROM Ticker WHERE Ticker = ? AND Date BETWEEN ? AND ? ORDER BY Date ASC;"
             cursor = conn.cursor()
             cursor.execute(query, (ticker, start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d")))
@@ -199,8 +221,8 @@ def analyze_tickers():
             columns = [description[0] for description in cursor.description]
             
             if not fetched_data:
-                st.warning(f"No data available for ticker '{ticker}' in the selected time span.")
-                logging.warning(f"No data available for ticker '{ticker}' between {start_date} and {end_date}.")
+                st.warning(f"No data available for ticker '{ticker}' in the selected segment.")
+                logging.warning(f"No data available for ticker '{ticker}' between {start_date.date()} and {end_date.date()}.")
                 continue
             
             # Convert fetched data to list of dictionaries
@@ -229,13 +251,13 @@ def analyze_tickers():
                 logging.error(f"Data type conversion error for ticker '{ticker}': {e}")
                 continue
             
-            # # Display Data Sample
-            # st.markdown("**Data Sample:**")
-            # st.dataframe(df.head())
+            # Display Data Sample
+            st.markdown("**Data Sample:**")
+            st.dataframe(df.head())
             
-            # # Display Data Types
-            # st.markdown("**Data Types:**")
-            # st.table(pd.DataFrame(df.dtypes, columns=["Type"]))
+            # Display Data Types
+            st.markdown("**Data Types:**")
+            st.table(pd.DataFrame(df.dtypes, columns=["Type"]))
             
             # Ensure all necessary columns are present and correct
             required_columns = ["Open", "High", "Low", "Close", "Change", "Change (%)", "Volume"]

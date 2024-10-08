@@ -1,5 +1,8 @@
+# utils/data_fetcher.py
+
 import requests
 import json
+import logging
 
 def get_stock_data(ticker, date_from, date_to):
     """
@@ -44,16 +47,16 @@ def get_stock_data(ticker, date_from, date_to):
         response = requests.post(url, headers=headers, json=payload, timeout=60)
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
-        print(f"HTTP Request failed for ticker '{ticker}': {e}")
+        logging.error(f"HTTP Request failed for ticker '{ticker}': {e}")
         return None
     
     try:
         data = response.json()
         if not isinstance(data, list):
-            print(f"Unexpected JSON structure for ticker '{ticker}': Expected a list of records.")
+            logging.error(f"Unexpected JSON structure for ticker '{ticker}': Expected a list of records.")
             return None
-        print(f"[DEBUG] Retrieved {len(data)} records for ticker '{ticker}'.")
+        logging.info(f"Retrieved {len(data)} records for ticker '{ticker}'.")
         return data
     except json.JSONDecodeError:
-        print(f"Failed to parse JSON response for ticker '{ticker}'.")
+        logging.error(f"Failed to parse JSON response for ticker '{ticker}'.")
         return None
