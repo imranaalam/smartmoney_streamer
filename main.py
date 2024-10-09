@@ -1,22 +1,22 @@
 # main.py
 
-import streamlit as st 
+import streamlit as st
 import pandas as pd
-import plotly.graph_objects as go  # Essential for type checking
+import plotly.express as px  # Import Plotly Express
+import plotly.graph_objects as go  # Import Plotly Graph Objects
 from utils.db_manager import (
     initialize_db, 
     get_tickers_from_db, 
     get_latest_date_for_ticker, 
     insert_data_into_db
 )
-from utils.data_fetcher import get_stock_data  # Ensure this is correctly implemented
+from utils.data_fetcher import get_stock_data
 from analysis.mxwll_suite_indicator import mxwll_suite_indicator
 
 import os
 import numpy as np
 import logging
 from datetime import datetime, timedelta
-
 
 # Configure logging
 logging.basicConfig(
@@ -135,8 +135,7 @@ def add_new_ticker_ui():
             st.error("Please enter a valid ticker symbol.")
             logging.error("Empty ticker symbol entered.")
 
-# main.py
-
+# Function to analyze tickers
 def analyze_tickers():
     st.header("🔍 Analyze Tickers")
     tickers = get_tickers_from_db(conn)
@@ -173,8 +172,9 @@ def analyze_tickers():
     end_date = pd.Timestamp.today()
     start_date = end_date - pd.Timedelta(days=days)
     
-    # Initialize list to collect summary data
+    # Initialize list to collect summary data and comparison metrics
     summary_list = []
+    comparison_metrics = []
     
     # Button to perform analysis
     if st.button("Run Analysis"):
@@ -218,14 +218,6 @@ def analyze_tickers():
                 st.error(f"Data type conversion error for ticker '{ticker}': {e}")
                 logging.error(f"Data type conversion error for ticker '{ticker}': {e}")
                 continue
-            
-            # Remove Data Samples and Data Types Tables
-            # (These lines are removed/commented out as per your request)
-            # st.markdown("**Data Sample:**")
-            # st.dataframe(df.head())
-            
-            # st.markdown("**Data Types:**")
-            # st.table(pd.DataFrame(df.dtypes, columns=["Type"]))
             
             # Ensure all necessary columns are present and correct
             required_columns = ["Open", "High", "Low", "Close", "Change", "Change (%)", "Volume"]
@@ -302,20 +294,100 @@ def analyze_tickers():
                     st.success(f"Analysis for ticker '{ticker}' completed successfully.")
                     logging.info(f"Analysis for ticker '{ticker}' completed successfully.")
                     
+                    # --- Real-Time AOI and Potential Profit Calculation ---
+                    
+                    # Calculate AOI based on the analysis parameters
+                    if analysis_params['show_aoe']:
+                        try:
+                            # Assuming 'summary' contains 'Highest AOI (Red)' and 'Lowest AOI (Green)'
+                            low_aoi = summary.get('Lowest AOI (Green)')
+                            high_aoi = summary.get('Highest AOI (Red)')
+                            last_close = df['Close'].iloc[-1]
+                            
+                            # Calculate Potential Profit (%)
+                            potential_profit = ((last_close - low_aoi) / low_aoi) * 100 if low_aoi else None
+                            
+                            # Calculate Volatility (Optional Enhancement)
+                            df['Return'] = df['Close'].pct_change()
+                            volatility = df['Return'].std() * np.sqrt(252)  # Annualized volatility
+                            
+                            # Append to comparison metrics if calculation was successful
+                            if potential_profit is not None and volatility is not None:
+                                comparison_metrics.append({
+                                    'Ticker': ticker,
+                                    'Low_AOI': low_aoi,
+                                    'Last Close': last_close,
+                                    'Potential Profit (%)': round(potential_profit, 2),
+                                    'Volatility': round(volatility, 2)
+                                })
+                            else:
+                                logging.warning(f"Potential Profit or Volatility calculation failed for ticker '{ticker}'.")
+                        except Exception as e:
+                            st.error(f"Error calculating AOI, Potential Profit, or Volatility for '{ticker}': {e}")
+                            logging.error(f"Error calculating AOI, Potential Profit, or Volatility for '{ticker}': {e}")
+                    
                     # Append summary data to the list
                     summary_list.append(summary)
                 except Exception as e:
                     st.error(f"An error occurred during analysis for ticker '{ticker}': {e}")
                     logging.error(f"Error during analysis for ticker '{ticker}': {e}")
         
-        # After all tickers are analyzed, display the summary table
-        if summary_list:
-            st.subheader("📊 Summary Table")
-            summary_df = pd.DataFrame(summary_list)
-            st.table(summary_df)
-
-
-
+        # # After all tickers are analyzed, display the summary table
+        # if summary_list:
+        #     st.subheader("📊 Summary Table")
+        #     summary_df = pd.DataFrame(summary_list)
+        #     st.table(summary_df)
+        
+        # --- Generate Scatter Plot After All Analyses ---
+        
+        if comparison_metrics:
+            st.subheader("📈 Potential Profit Scatter Plot")
+            comparison_df = pd.DataFrame(comparison_metrics)
+            
+            # Scatter Plot: Potential Profit (%) vs Low AOI with Volatility as Color
+            fig_scatter = px.scatter(
+                comparison_df,
+                x='Low_AOI',
+                y='Potential Profit (%)',
+                color='Volatility',
+                size='Volatility',  # Optional: size can also represent volatility
+                hover_data=['Last Close'],
+                text='Ticker',
+                title='Potential Profit (%) vs Low AOI with Volatility',
+                labels={
+                    'Low_AOI': 'Low AOI',
+                    'Potential Profit (%)': 'Potential Profit (%)',
+                    'Volatility': 'Volatility'
+                },
+                color_continuous_scale='Viridis'
+            )
+            
+            # Enhance the plot with text labels
+            fig_scatter.update_traces(textposition='top center')
+            fig_scatter.update_layout(showlegend=True)
+            
+            st.plotly_chart(fig_scatter, use_container_width=True)
+            
+            # Optionally, display the DataFrame used for the scatter plot
+            st.subheader("📊 Potential Profit Data")
+            st.dataframe(comparison_df)
+            
+            # Export comparison results as CSV
+            csv = comparison_df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="📥 Download Comparison Data as CSV",
+                data=csv,
+                file_name='comparison_metrics.csv',
+                mime='text/csv',
+            )
+            
+            # Highlight the stock with the highest potential profit
+            top_stock = comparison_df.loc[comparison_df['Potential Profit (%)'].idxmax()]
+            st.success(f"**Top Performer:** {top_stock['Ticker']} with a potential profit of {top_stock['Potential Profit (%)']:.2f}% and volatility of {top_stock['Volatility']}%")
+        
+        else:
+            st.warning("No comparison metrics available to generate the scatter plot.")
+            logging.warning("No comparison metrics available after analysis.")
 
 # Render different app modes
 if app_mode == "Synchronize Database":
@@ -324,5 +396,3 @@ elif app_mode == "Add New Ticker":
     add_new_ticker_ui()
 elif app_mode == "Analyze Tickers":
     analyze_tickers()
-
-

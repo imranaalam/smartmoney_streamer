@@ -1705,3 +1705,72 @@
 2024-10-08 23:00:15,855 - INFO - Analysis for ticker 'HUBC' completed successfully.
 2024-10-08 23:00:16,009 - INFO - Analysis for ticker 'MCB' completed successfully.
 2024-10-08 23:00:16,120 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-09 16:45:13,347 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 16:45:24,166 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 16:45:24,168 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 16:45:26,842 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 16:45:26,846 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 16:45:28,451 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-09 16:45:28,760 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-09 16:45:28,964 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-09 16:45:44,299 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 16:45:51,112 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 16:45:51,114 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 16:45:53,094 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 16:45:53,098 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 16:45:53,139 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-09 16:45:53,212 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-09 16:45:53,255 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-09 16:51:56,664 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 16:52:02,079 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 16:52:02,082 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 16:52:11,104 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 16:52:11,106 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 16:52:12,407 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 16:52:12,409 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 16:52:13,549 - ERROR - Error during analysis for ticker 'HUBC': name 'go' is not defined
+2024-10-09 16:52:13,662 - ERROR - Error during analysis for ticker 'MCB': name 'go' is not defined
+2024-10-09 16:52:13,774 - ERROR - Error during analysis for ticker 'PPL': name 'go' is not defined
+2024-10-09 16:52:13,776 - WARNING - No comparison metrics available after analysis.
+2024-10-09 16:56:59,644 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 16:57:07,564 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 16:57:07,568 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 16:57:09,286 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 16:57:09,289 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 16:57:10,392 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-09 16:57:10,442 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-09 16:57:10,488 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-09 17:03:46,397 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:03:50,306 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:03:50,311 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:03:51,905 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:03:51,907 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:03:52,786 - ERROR - Error during analysis for ticker 'HUBC': name 'summary_data' is not defined
+2024-10-09 17:03:52,816 - ERROR - Error during analysis for ticker 'MCB': name 'summary_data' is not defined
+2024-10-09 17:03:52,853 - ERROR - Error during analysis for ticker 'PPL': name 'summary_data' is not defined
+2024-10-09 17:03:52,854 - WARNING - No comparison metrics available after analysis.
+2024-10-09 17:05:00,062 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:05:42,428 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:05:42,431 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:05:43,781 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:05:43,788 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:05:44,645 - ERROR - Error during analysis for ticker 'HUBC': too many values to unpack (expected 2)
+2024-10-09 17:05:44,675 - ERROR - Error during analysis for ticker 'MCB': too many values to unpack (expected 2)
+2024-10-09 17:05:44,712 - ERROR - Error during analysis for ticker 'PPL': too many values to unpack (expected 2)
+2024-10-09 17:05:44,712 - WARNING - No comparison metrics available after analysis.
+2024-10-09 17:07:00,146 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:07:03,376 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:07:03,380 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:07:05,226 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:07:05,229 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:07:06,267 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-09 17:07:06,352 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-09 17:07:06,453 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-09 17:08:31,669 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:08:35,279 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:08:35,283 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:08:36,831 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:08:36,834 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:08:37,733 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-09 17:08:37,769 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-09 17:08:37,820 - INFO - Analysis for ticker 'PPL' completed successfully.

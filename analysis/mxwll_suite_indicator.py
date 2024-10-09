@@ -1,4 +1,5 @@
 # analysis/mxwll_suite_indicator.py
+
 import pandas as pd
 import plotly.graph_objects as go  # Essential for Plotly figures
 from ta.volatility import AverageTrueRange
@@ -9,16 +10,16 @@ from datetime import datetime, timedelta
 def mxwll_suite_indicator(df, ticker, params):
     """
     Generates a Plotly figure based on the mxwll suite indicator analysis and provides summary statistics.
-    
+
     Args:
         df (pd.DataFrame): DataFrame containing stock data.
         ticker (str): Stock ticker symbol.
         params (dict): Dictionary of analysis parameters.
-    
+
     Returns:
         tuple:
             - plotly.graph_objects.Figure: The generated Plotly figure.
-            - dict: Summary statistics for the analysis.
+            - dict: Summary statistics for the analysis, including AOI metrics.
     """
     # Suppress warnings for cleaner output
     warnings.filterwarnings("ignore")
@@ -518,3 +519,4 @@ def mxwll_suite_indicator(df, ticker, params):
     fig.update_layout(showlegend=True)
     
     return fig, summary_data
+
