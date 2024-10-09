@@ -176,6 +176,11 @@ def analyze_tickers():
     summary_list = []
     comparison_metrics = []
     
+    # User filters for Potential Profit and Volume
+    st.subheader("🔧 Set Filters for Analysis")
+    min_profit = st.number_input("Minimum Potential Profit (%)", min_value=0.0, value=0.0, step=0.1)
+    min_volume = st.number_input("Minimum Volume", min_value=0, value=0, step=1000)
+    
     # Button to perform analysis
     if st.button("Run Analysis"):
         for ticker in selected_tickers:
@@ -294,34 +299,37 @@ def analyze_tickers():
                     st.success(f"Analysis for ticker '{ticker}' completed successfully.")
                     logging.info(f"Analysis for ticker '{ticker}' completed successfully.")
                     
-                    # --- Real-Time AOI and Potential Profit Calculation ---
+                    # --- Real-Time High_AOI and Potential Profit Calculation ---
                     
                     # Calculate AOI based on the analysis parameters
                     if analysis_params['show_aoe']:
                         try:
                             # Assuming 'summary' contains 'Highest AOI (Red)' and 'Lowest AOI (Green)'
-                            low_aoi = summary.get('Lowest AOI (Green)')
                             high_aoi = summary.get('Highest AOI (Red)')
+                            low_aoi = summary.get('Lowest AOI (Green)')
                             last_close = df['Close'].iloc[-1]
                             
-                            # Calculate Potential Profit (%)
-                            potential_profit = ((last_close - low_aoi) / low_aoi) * 100 if low_aoi else None
+                            # Calculate Potential Profit (%) based on High_AOI
+                            potential_profit = ((high_aoi - last_close) / high_aoi) * 100 if high_aoi else None
                             
-                            # Calculate Volatility (Optional Enhancement)
+                            # Calculate Volatility
                             df['Return'] = df['Close'].pct_change()
                             volatility = df['Return'].std() * np.sqrt(252)  # Annualized volatility
                             
-                            # Append to comparison metrics if calculation was successful
-                            if potential_profit is not None and volatility is not None:
+                            # Append to comparison metrics if calculation was successful and meets filters
+                            if (potential_profit is not None and 
+                                potential_profit >= min_profit and 
+                                df['Volume'].iloc[-1] >= min_volume):
                                 comparison_metrics.append({
                                     'Ticker': ticker,
-                                    'Low_AOI': low_aoi,
+                                    'High_AOI': high_aoi,
                                     'Last Close': last_close,
                                     'Potential Profit (%)': round(potential_profit, 2),
-                                    'Volatility': round(volatility, 2)
+                                    'Volatility': round(volatility, 2),
+                                    'Volume': df['Volume'].iloc[-1]
                                 })
                             else:
-                                logging.warning(f"Potential Profit or Volatility calculation failed for ticker '{ticker}'.")
+                                logging.info(f"Ticker '{ticker}' does not meet the filter criteria.")
                         except Exception as e:
                             st.error(f"Error calculating AOI, Potential Profit, or Volatility for '{ticker}': {e}")
                             logging.error(f"Error calculating AOI, Potential Profit, or Volatility for '{ticker}': {e}")
@@ -344,20 +352,21 @@ def analyze_tickers():
             st.subheader("📈 Potential Profit Scatter Plot")
             comparison_df = pd.DataFrame(comparison_metrics)
             
-            # Scatter Plot: Potential Profit (%) vs Low AOI with Volatility as Color
+            # Scatter Plot: Potential Profit (%) vs High_AOI with Volume as Size
             fig_scatter = px.scatter(
                 comparison_df,
-                x='Low_AOI',
+                x='High_AOI',
                 y='Potential Profit (%)',
                 color='Volatility',
-                size='Volatility',  # Optional: size can also represent volatility
+                size='Volume',
                 hover_data=['Last Close'],
                 text='Ticker',
-                title='Potential Profit (%) vs Low AOI with Volatility',
+                title='Potential Profit (%) vs High AOE with Volume',
                 labels={
-                    'Low_AOI': 'Low AOI',
+                    'High_AOI': 'High AOI',
                     'Potential Profit (%)': 'Potential Profit (%)',
-                    'Volatility': 'Volatility'
+                    'Volatility': 'Volatility',
+                    'Volume': 'Volume'
                 },
                 color_continuous_scale='Viridis'
             )
@@ -368,7 +377,7 @@ def analyze_tickers():
             
             st.plotly_chart(fig_scatter, use_container_width=True)
             
-            # Optionally, display the DataFrame used for the scatter plot
+            # Display the DataFrame used for the scatter plot
             st.subheader("📊 Potential Profit Data")
             st.dataframe(comparison_df)
             

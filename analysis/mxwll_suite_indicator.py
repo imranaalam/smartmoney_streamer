@@ -6,7 +6,6 @@ from ta.volatility import AverageTrueRange
 import warnings
 from datetime import datetime, timedelta
 
-
 def mxwll_suite_indicator(df, ticker, params):
     """
     Generates a Plotly figure based on the mxwll suite indicator analysis and provides summary statistics.
@@ -519,4 +518,3 @@ def mxwll_suite_indicator(df, ticker, params):
     fig.update_layout(showlegend=True)
     
     return fig, summary_data
-

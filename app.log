@@ -1774,3 +1774,23 @@
 2024-10-09 17:08:37,733 - INFO - Analysis for ticker 'HUBC' completed successfully.
 2024-10-09 17:08:37,769 - INFO - Analysis for ticker 'MCB' completed successfully.
 2024-10-09 17:08:37,820 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-09 17:31:56,521 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:32:00,409 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:32:00,412 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:32:02,317 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:32:02,325 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:32:03,611 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-09 17:32:03,611 - ERROR - Error during analysis for ticker 'HUBC': name 'params' is not defined
+2024-10-09 17:32:03,711 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-09 17:32:03,711 - ERROR - Error during analysis for ticker 'MCB': name 'params' is not defined
+2024-10-09 17:32:03,783 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-09 17:32:03,783 - ERROR - Error during analysis for ticker 'PPL': name 'params' is not defined
+2024-10-09 17:32:03,785 - WARNING - No comparison metrics available after analysis.
+2024-10-09 17:34:47,898 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:34:51,214 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:34:51,230 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:34:53,619 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:34:53,621 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:34:54,857 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-09 17:34:54,965 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-09 17:34:55,088 - INFO - Analysis for ticker 'PPL' completed successfully.
