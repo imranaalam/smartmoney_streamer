@@ -1794,3 +1794,11 @@
 2024-10-09 17:34:54,857 - INFO - Analysis for ticker 'HUBC' completed successfully.
 2024-10-09 17:34:54,965 - INFO - Analysis for ticker 'MCB' completed successfully.
 2024-10-09 17:34:55,088 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-09 17:42:03,775 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:42:14,936 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:42:14,939 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:42:20,902 - INFO - Database initialized at data/tick_data.db.
+2024-10-09 17:42:20,904 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-09 17:42:21,942 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-09 17:42:22,022 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-09 17:42:22,106 - INFO - Analysis for ticker 'PPL' completed successfully.
