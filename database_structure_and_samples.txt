@@ -1,0 +1,31 @@
+Database Analysis Report
+========================
+
+
+Database: tick_data.db
+=======================
+Table Structure:
+
+Table: Ticker
+Columns:
+ - (0, 'Ticker', 'TEXT', 0, None, 1)
+ - (1, 'Date', 'TEXT', 0, None, 2)
+ - (2, 'Open', 'REAL', 0, None, 0)
+ - (3, 'High', 'REAL', 0, None, 0)
+ - (4, 'Low', 'REAL', 0, None, 0)
+ - (5, 'Close', 'REAL', 0, None, 0)
+ - (6, 'Change', 'REAL', 0, None, 0)
+ - (7, 'Change (%)', 'REAL', 0, None, 0)
+ - (8, 'Volume', 'INTEGER', 0, None, 0)
+
+
+Sampled Data from Tables:
+
+Table: Ticker
+Ticker       Date   Open   High    Low  Close  Change  Change (%)  Volume
+   MCB 2021-06-28 155.16 156.00 152.51 152.94   -2.46       -1.58  412572
+  HUBC 2023-05-09  71.00  71.50  69.75  70.54   -0.27       -0.38 1802120
+  HUBC 2023-12-14 122.00 122.69 119.50 120.74   -0.89       -0.73 4909947
+   PPL 2021-11-25  72.30  73.00  71.10  71.72   -0.89       -1.23 1109965
+   PPL 2023-08-17  72.90  74.50  72.20  74.23    1.33        1.82 7307763
+

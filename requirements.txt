@@ -5,3 +5,4 @@ ta
 requests
 tabulate
 python-dateutil
+smartmoneyconcepts

@@ -64,12 +64,9 @@ def get_latest_date_for_ticker(conn, ticker):
     
     
     from datetime import datetime
-
+    
+    
 def insert_data_into_db(conn, data, ticker, batch_size=100):
-    """
-    Inserts the list of stock data into the SQLite database in batches.
-    Returns a tuple of (success, records_added).
-    """
     try:
         cursor = conn.cursor()
         insert_query = """
@@ -77,16 +74,12 @@ def insert_data_into_db(conn, data, ticker, batch_size=100):
             (Ticker, Date, Open, High, Low, Close, Change, "Change (%)", Volume) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
         """
-        
         # Prepare data for insertion
         data_to_insert = []
         for record in data:
             try:
-                # Parse and reformat the date to 'YYYY-MM-DD'
-                date_raw = record.get('Date', record.get('Date_'))  # Handle both 'Date' and 'Date_'
-                date = datetime.strptime(date_raw[:10], "%Y-%m-%d").strftime("%Y-%m-%d")  # Ensure the correct format
-
-                # Extract and round the numeric fields
+                date_raw = record.get('Date', record.get('Date_'))
+                date = pd.to_datetime(date_raw[:10], format="%Y-%m-%d").strftime("%Y-%m-%d")
                 open_ = round(float(record['Open']), 2)
                 high = round(float(record['High']), 2)
                 low = round(float(record['Low']), 2)
@@ -94,17 +87,15 @@ def insert_data_into_db(conn, data, ticker, batch_size=100):
                 change = round(float(record['Change']), 2)
                 change_p = round(float(record.get('Change (%)', record.get('ChangeP', record.get('change_valueP')))), 2)
                 volume = int(record['Volume'])
-
+                
                 if date and open_ and high and low and close and volume:
                     data_to_insert.append((ticker, date, open_, high, low, close, change, change_p, volume))
-
             except (ValueError, KeyError) as e:
                 logging.error(f"Error parsing data for ticker '{ticker}', record: {record}, error: {e}")
                 continue
-
-        # Log how many valid records are ready for insertion
+        
         logging.info(f"Prepared {len(data_to_insert)} valid records for insertion for ticker '{ticker}'.")
-
+        
         if not data_to_insert:
             logging.warning(f"No valid data to insert for ticker '{ticker}'.")
             return True, 0  # Success but no records added
@@ -117,21 +108,10 @@ def insert_data_into_db(conn, data, ticker, batch_size=100):
             logging.info(f"Inserting batch {i // batch_size + 1} for ticker '{ticker}' with {len(batch)} records.")
             cursor.executemany(insert_query, batch)
             conn.commit()
-            
-            # Log how many records were added
-            logging.info(f"Batch {i // batch_size + 1} inserted {cursor.rowcount} records (may include ignored records).")
             records_added += cursor.rowcount
         
-        # Log the total number of records added for this ticker
         logging.info(f"Added {records_added} records for ticker '{ticker}'.")
-
-        # Verify whether records were actually inserted by querying the database
-        cursor.execute("SELECT COUNT(*) FROM Ticker WHERE Ticker = ?;", (ticker,))
-        total_in_db = cursor.fetchone()[0]
-        logging.info(f"Total records in the database for ticker '{ticker}': {total_in_db}")
-
         return True, records_added
-
     except sqlite3.Error as e:
         logging.error(f"Failed to insert data into database for ticker '{ticker}': {e}")
-        return False, 0
+        raise e  # Re-raise exception instead of returning integers
