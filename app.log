@@ -13618,3 +13618,434 @@ Name: VolumeSpike, dtype: int32 for ticker 'PPL'
 2024-10-10 10:31:04,490 - INFO - Analysis for ticker 'HUBC' completed successfully.
 2024-10-10 10:31:07,049 - INFO - Analysis for ticker 'MCB' completed successfully.
 2024-10-10 10:31:10,500 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-10 11:49:07,418 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:49:10,644 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:49:10,647 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-10 11:49:12,165 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:49:12,168 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-10 11:49:13,118 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-10 11:49:13,191 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-10 11:49:13,237 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-10 11:50:20,655 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:50:28,529 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:50:28,634 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:50:28,641 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-10 11:50:29,434 - INFO - Retrieved 0 records for ticker 'SEARLE'.
+2024-10-10 11:50:29,436 - ERROR - Failed to retrieve data for ticker 'SEARLE'.
+2024-10-10 11:50:33,637 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:50:33,747 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:50:33,751 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-10 11:50:34,544 - INFO - Retrieved 1180 records for ticker 'SEARL'.
+2024-10-10 11:52:47,252 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:52:50,707 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:52:50,711 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-10 11:52:52,432 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:52:54,294 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:52:57,974 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:52:59,648 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:52:59,652 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-10 11:53:00,180 - INFO - Retrieved 0 records for ticker 'SEARLE'.
+2024-10-10 11:53:00,181 - ERROR - Failed to retrieve data for ticker 'SEARLE'.
+2024-10-10 11:53:05,657 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:53:05,754 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:53:05,758 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL']
+2024-10-10 11:53:06,526 - INFO - Retrieved 1180 records for ticker 'SEARL'.
+2024-10-10 11:53:06,551 - INFO - Prepared 1180 valid records for insertion for ticker 'SEARL'.
+2024-10-10 11:53:06,551 - INFO - Inserting batch 1 for ticker 'SEARL' with 100 records.
+2024-10-10 11:53:06,556 - INFO - Batch 1 inserted 100 records (may include ignored records).
+2024-10-10 11:53:06,557 - INFO - Inserting batch 2 for ticker 'SEARL' with 100 records.
+2024-10-10 11:53:06,561 - INFO - Batch 2 inserted 100 records (may include ignored records).
+2024-10-10 11:53:06,561 - INFO - Inserting batch 3 for ticker 'SEARL' with 100 records.
+2024-10-10 11:53:06,565 - INFO - Batch 3 inserted 100 records (may include ignored records).
+2024-10-10 11:53:06,565 - INFO - Inserting batch 4 for ticker 'SEARL' with 100 records.
+2024-10-10 11:53:06,570 - INFO - Batch 4 inserted 100 records (may include ignored records).
+2024-10-10 11:53:06,570 - INFO - Inserting batch 5 for ticker 'SEARL' with 100 records.
+2024-10-10 11:53:06,575 - INFO - Batch 5 inserted 100 records (may include ignored records).
+2024-10-10 11:53:06,575 - INFO - Inserting batch 6 for ticker 'SEARL' with 100 records.
+2024-10-10 11:53:06,579 - INFO - Batch 6 inserted 100 records (may include ignored records).
+2024-10-10 11:53:06,579 - INFO - Inserting batch 7 for ticker 'SEARL' with 100 records.
+2024-10-10 11:53:06,582 - INFO - Batch 7 inserted 100 records (may include ignored records).
+2024-10-10 11:53:06,582 - INFO - Inserting batch 8 for ticker 'SEARL' with 100 records.
+2024-10-10 11:53:06,586 - INFO - Batch 8 inserted 100 records (may include ignored records).
+2024-10-10 11:53:06,587 - INFO - Inserting batch 9 for ticker 'SEARL' with 100 records.
+2024-10-10 11:53:06,591 - INFO - Batch 9 inserted 100 records (may include ignored records).
+2024-10-10 11:53:06,591 - INFO - Inserting batch 10 for ticker 'SEARL' with 100 records.
+2024-10-10 11:53:06,594 - INFO - Batch 10 inserted 100 records (may include ignored records).
+2024-10-10 11:53:06,595 - INFO - Inserting batch 11 for ticker 'SEARL' with 100 records.
+2024-10-10 11:53:06,598 - INFO - Batch 11 inserted 100 records (may include ignored records).
+2024-10-10 11:53:06,598 - INFO - Inserting batch 12 for ticker 'SEARL' with 80 records.
+2024-10-10 11:53:06,603 - INFO - Batch 12 inserted 80 records (may include ignored records).
+2024-10-10 11:53:06,603 - INFO - Added 1180 records for ticker 'SEARL'.
+2024-10-10 11:53:06,603 - INFO - Total records in the database for ticker 'SEARL': 1180
+2024-10-10 11:53:06,605 - INFO - Added 1180 records for ticker 'SEARL'.
+2024-10-10 11:53:10,781 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:53:11,911 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:53:11,915 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL', 'SEARL']
+2024-10-10 11:53:11,917 - INFO - Latest date for ticker 'HUBC': 2024-10-08
+2024-10-10 11:53:12,389 - INFO - Retrieved 1 records for ticker 'HUBC'.
+2024-10-10 11:53:12,390 - INFO - Prepared 1 valid records for insertion for ticker 'HUBC'.
+2024-10-10 11:53:12,390 - INFO - Inserting batch 1 for ticker 'HUBC' with 1 records.
+2024-10-10 11:53:12,394 - INFO - Batch 1 inserted 1 records (may include ignored records).
+2024-10-10 11:53:12,394 - INFO - Added 1 records for ticker 'HUBC'.
+2024-10-10 11:53:12,395 - INFO - Total records in the database for ticker 'HUBC': 1180
+2024-10-10 11:53:12,395 - INFO - Added 1 records for ticker 'HUBC'.
+2024-10-10 11:53:12,396 - INFO - Latest date for ticker 'MCB': 2024-10-08
+2024-10-10 11:53:12,905 - INFO - Retrieved 1 records for ticker 'MCB'.
+2024-10-10 11:53:12,906 - INFO - Prepared 1 valid records for insertion for ticker 'MCB'.
+2024-10-10 11:53:12,906 - INFO - Inserting batch 1 for ticker 'MCB' with 1 records.
+2024-10-10 11:53:12,908 - INFO - Batch 1 inserted 1 records (may include ignored records).
+2024-10-10 11:53:12,908 - INFO - Added 1 records for ticker 'MCB'.
+2024-10-10 11:53:12,909 - INFO - Total records in the database for ticker 'MCB': 1180
+2024-10-10 11:53:12,909 - INFO - Added 1 records for ticker 'MCB'.
+2024-10-10 11:53:12,911 - INFO - Latest date for ticker 'PPL': 2024-10-08
+2024-10-10 11:53:13,387 - INFO - Retrieved 1 records for ticker 'PPL'.
+2024-10-10 11:53:13,388 - INFO - Prepared 1 valid records for insertion for ticker 'PPL'.
+2024-10-10 11:53:13,388 - INFO - Inserting batch 1 for ticker 'PPL' with 1 records.
+2024-10-10 11:53:13,390 - INFO - Batch 1 inserted 1 records (may include ignored records).
+2024-10-10 11:53:13,391 - INFO - Added 1 records for ticker 'PPL'.
+2024-10-10 11:53:13,391 - INFO - Total records in the database for ticker 'PPL': 1180
+2024-10-10 11:53:13,392 - INFO - Added 1 records for ticker 'PPL'.
+2024-10-10 11:53:13,393 - INFO - Latest date for ticker 'SEARL': 2024-10-09
+2024-10-10 11:53:13,820 - INFO - Retrieved 0 records for ticker 'SEARL'.
+2024-10-10 11:53:13,821 - ERROR - Failed to retrieve data for ticker 'SEARL'.
+2024-10-10 11:53:13,821 - INFO - Database synchronization complete.
+2024-10-10 11:55:15,835 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:55:18,487 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:55:25,513 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:56:17,361 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:56:17,468 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:56:17,472 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL', 'SEARL']
+2024-10-10 11:56:18,010 - INFO - Retrieved 0 records for ticker 'KSE100'.
+2024-10-10 11:56:18,012 - ERROR - Failed to retrieve data for ticker 'KSE100'.
+2024-10-10 11:56:28,856 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:56:28,944 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:56:28,948 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL', 'SEARL']
+2024-10-10 11:56:29,693 - INFO - Retrieved 1180 records for ticker 'PTC'.
+2024-10-10 11:56:29,721 - INFO - Prepared 1180 valid records for insertion for ticker 'PTC'.
+2024-10-10 11:56:29,722 - INFO - Inserting batch 1 for ticker 'PTC' with 100 records.
+2024-10-10 11:56:29,726 - INFO - Batch 1 inserted 100 records (may include ignored records).
+2024-10-10 11:56:29,726 - INFO - Inserting batch 2 for ticker 'PTC' with 100 records.
+2024-10-10 11:56:29,731 - INFO - Batch 2 inserted 100 records (may include ignored records).
+2024-10-10 11:56:29,731 - INFO - Inserting batch 3 for ticker 'PTC' with 100 records.
+2024-10-10 11:56:29,735 - INFO - Batch 3 inserted 100 records (may include ignored records).
+2024-10-10 11:56:29,735 - INFO - Inserting batch 4 for ticker 'PTC' with 100 records.
+2024-10-10 11:56:29,743 - INFO - Batch 4 inserted 100 records (may include ignored records).
+2024-10-10 11:56:29,743 - INFO - Inserting batch 5 for ticker 'PTC' with 100 records.
+2024-10-10 11:56:29,749 - INFO - Batch 5 inserted 100 records (may include ignored records).
+2024-10-10 11:56:29,750 - INFO - Inserting batch 6 for ticker 'PTC' with 100 records.
+2024-10-10 11:56:29,756 - INFO - Batch 6 inserted 100 records (may include ignored records).
+2024-10-10 11:56:29,756 - INFO - Inserting batch 7 for ticker 'PTC' with 100 records.
+2024-10-10 11:56:29,761 - INFO - Batch 7 inserted 100 records (may include ignored records).
+2024-10-10 11:56:29,761 - INFO - Inserting batch 8 for ticker 'PTC' with 100 records.
+2024-10-10 11:56:29,765 - INFO - Batch 8 inserted 100 records (may include ignored records).
+2024-10-10 11:56:29,765 - INFO - Inserting batch 9 for ticker 'PTC' with 100 records.
+2024-10-10 11:56:29,768 - INFO - Batch 9 inserted 100 records (may include ignored records).
+2024-10-10 11:56:29,768 - INFO - Inserting batch 10 for ticker 'PTC' with 100 records.
+2024-10-10 11:56:29,773 - INFO - Batch 10 inserted 100 records (may include ignored records).
+2024-10-10 11:56:29,773 - INFO - Inserting batch 11 for ticker 'PTC' with 100 records.
+2024-10-10 11:56:29,777 - INFO - Batch 11 inserted 100 records (may include ignored records).
+2024-10-10 11:56:29,778 - INFO - Inserting batch 12 for ticker 'PTC' with 80 records.
+2024-10-10 11:56:29,781 - INFO - Batch 12 inserted 80 records (may include ignored records).
+2024-10-10 11:56:29,781 - INFO - Added 1180 records for ticker 'PTC'.
+2024-10-10 11:56:29,782 - INFO - Total records in the database for ticker 'PTC': 1180
+2024-10-10 11:56:29,782 - INFO - Added 1180 records for ticker 'PTC'.
+2024-10-10 11:56:40,941 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:56:41,052 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:56:41,057 - INFO - Retrieved tickers from DB: ['HUBC', 'MCB', 'PPL', 'PTC', 'SEARL']
+2024-10-10 11:56:41,802 - INFO - Retrieved 1179 records for ticker 'FATIMA'.
+2024-10-10 11:56:41,829 - INFO - Prepared 1179 valid records for insertion for ticker 'FATIMA'.
+2024-10-10 11:56:41,830 - INFO - Inserting batch 1 for ticker 'FATIMA' with 100 records.
+2024-10-10 11:56:41,834 - INFO - Batch 1 inserted 100 records (may include ignored records).
+2024-10-10 11:56:41,835 - INFO - Inserting batch 2 for ticker 'FATIMA' with 100 records.
+2024-10-10 11:56:41,838 - INFO - Batch 2 inserted 100 records (may include ignored records).
+2024-10-10 11:56:41,838 - INFO - Inserting batch 3 for ticker 'FATIMA' with 100 records.
+2024-10-10 11:56:41,842 - INFO - Batch 3 inserted 100 records (may include ignored records).
+2024-10-10 11:56:41,843 - INFO - Inserting batch 4 for ticker 'FATIMA' with 100 records.
+2024-10-10 11:56:41,848 - INFO - Batch 4 inserted 100 records (may include ignored records).
+2024-10-10 11:56:41,848 - INFO - Inserting batch 5 for ticker 'FATIMA' with 100 records.
+2024-10-10 11:56:41,853 - INFO - Batch 5 inserted 100 records (may include ignored records).
+2024-10-10 11:56:41,853 - INFO - Inserting batch 6 for ticker 'FATIMA' with 100 records.
+2024-10-10 11:56:41,857 - INFO - Batch 6 inserted 100 records (may include ignored records).
+2024-10-10 11:56:41,857 - INFO - Inserting batch 7 for ticker 'FATIMA' with 100 records.
+2024-10-10 11:56:41,861 - INFO - Batch 7 inserted 100 records (may include ignored records).
+2024-10-10 11:56:41,861 - INFO - Inserting batch 8 for ticker 'FATIMA' with 100 records.
+2024-10-10 11:56:41,867 - INFO - Batch 8 inserted 100 records (may include ignored records).
+2024-10-10 11:56:41,867 - INFO - Inserting batch 9 for ticker 'FATIMA' with 100 records.
+2024-10-10 11:56:41,871 - INFO - Batch 9 inserted 100 records (may include ignored records).
+2024-10-10 11:56:41,871 - INFO - Inserting batch 10 for ticker 'FATIMA' with 100 records.
+2024-10-10 11:56:41,875 - INFO - Batch 10 inserted 100 records (may include ignored records).
+2024-10-10 11:56:41,875 - INFO - Inserting batch 11 for ticker 'FATIMA' with 100 records.
+2024-10-10 11:56:41,880 - INFO - Batch 11 inserted 100 records (may include ignored records).
+2024-10-10 11:56:41,881 - INFO - Inserting batch 12 for ticker 'FATIMA' with 79 records.
+2024-10-10 11:56:41,885 - INFO - Batch 12 inserted 79 records (may include ignored records).
+2024-10-10 11:56:41,885 - INFO - Added 1179 records for ticker 'FATIMA'.
+2024-10-10 11:56:41,885 - INFO - Total records in the database for ticker 'FATIMA': 1179
+2024-10-10 11:56:41,886 - INFO - Added 1179 records for ticker 'FATIMA'.
+2024-10-10 11:56:43,772 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:56:45,138 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:56:45,141 - INFO - Retrieved tickers from DB: ['FATIMA', 'HUBC', 'MCB', 'PPL', 'PTC', 'SEARL']
+2024-10-10 11:56:45,143 - INFO - Latest date for ticker 'FATIMA': 2024-10-09
+2024-10-10 11:56:45,622 - INFO - Retrieved 0 records for ticker 'FATIMA'.
+2024-10-10 11:56:45,623 - ERROR - Failed to retrieve data for ticker 'FATIMA'.
+2024-10-10 11:56:45,624 - INFO - Latest date for ticker 'HUBC': 2024-10-09
+2024-10-10 11:56:46,042 - INFO - Retrieved 0 records for ticker 'HUBC'.
+2024-10-10 11:56:46,043 - ERROR - Failed to retrieve data for ticker 'HUBC'.
+2024-10-10 11:56:46,044 - INFO - Latest date for ticker 'MCB': 2024-10-09
+2024-10-10 11:56:46,508 - INFO - Retrieved 0 records for ticker 'MCB'.
+2024-10-10 11:56:46,509 - ERROR - Failed to retrieve data for ticker 'MCB'.
+2024-10-10 11:56:46,510 - INFO - Latest date for ticker 'PPL': 2024-10-09
+2024-10-10 11:56:46,958 - INFO - Retrieved 0 records for ticker 'PPL'.
+2024-10-10 11:56:46,959 - ERROR - Failed to retrieve data for ticker 'PPL'.
+2024-10-10 11:56:46,960 - INFO - Latest date for ticker 'PTC': 2024-10-09
+2024-10-10 11:56:47,421 - INFO - Retrieved 0 records for ticker 'PTC'.
+2024-10-10 11:56:47,421 - ERROR - Failed to retrieve data for ticker 'PTC'.
+2024-10-10 11:56:47,423 - INFO - Latest date for ticker 'SEARL': 2024-10-09
+2024-10-10 11:56:47,848 - INFO - Retrieved 0 records for ticker 'SEARL'.
+2024-10-10 11:56:47,849 - ERROR - Failed to retrieve data for ticker 'SEARL'.
+2024-10-10 11:56:47,850 - INFO - Database synchronization complete.
+2024-10-10 11:57:56,338 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:57:58,111 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:57:58,115 - INFO - Retrieved tickers from DB: ['FATIMA', 'HUBC', 'MCB', 'PPL', 'PTC', 'SEARL']
+2024-10-10 11:57:58,116 - INFO - Latest date for ticker 'FATIMA': 2024-10-09
+2024-10-10 11:57:58,686 - INFO - Retrieved 0 records for ticker 'FATIMA'.
+2024-10-10 11:57:58,687 - ERROR - Failed to retrieve data for ticker 'FATIMA'.
+2024-10-10 11:57:58,689 - INFO - Latest date for ticker 'HUBC': 2024-10-09
+2024-10-10 11:57:59,165 - INFO - Retrieved 0 records for ticker 'HUBC'.
+2024-10-10 11:57:59,166 - ERROR - Failed to retrieve data for ticker 'HUBC'.
+2024-10-10 11:57:59,168 - INFO - Latest date for ticker 'MCB': 2024-10-09
+2024-10-10 11:57:59,616 - INFO - Retrieved 0 records for ticker 'MCB'.
+2024-10-10 11:57:59,617 - ERROR - Failed to retrieve data for ticker 'MCB'.
+2024-10-10 11:57:59,618 - INFO - Latest date for ticker 'PPL': 2024-10-09
+2024-10-10 11:58:00,073 - INFO - Retrieved 0 records for ticker 'PPL'.
+2024-10-10 11:58:00,073 - ERROR - Failed to retrieve data for ticker 'PPL'.
+2024-10-10 11:58:00,074 - INFO - Latest date for ticker 'PTC': 2024-10-09
+2024-10-10 11:58:00,491 - INFO - Retrieved 0 records for ticker 'PTC'.
+2024-10-10 11:58:00,492 - ERROR - Failed to retrieve data for ticker 'PTC'.
+2024-10-10 11:58:00,494 - INFO - Latest date for ticker 'SEARL': 2024-10-09
+2024-10-10 11:58:00,940 - INFO - Retrieved 0 records for ticker 'SEARL'.
+2024-10-10 11:58:00,941 - ERROR - Failed to retrieve data for ticker 'SEARL'.
+2024-10-10 11:58:00,942 - INFO - Database synchronization complete.
+2024-10-10 11:58:11,291 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:58:11,294 - INFO - Retrieved tickers from DB: ['FATIMA', 'HUBC', 'MCB', 'PPL', 'PTC', 'SEARL']
+2024-10-10 11:58:13,168 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:58:13,171 - INFO - Retrieved tickers from DB: ['FATIMA', 'HUBC', 'MCB', 'PPL', 'PTC', 'SEARL']
+2024-10-10 11:58:14,043 - INFO - Analysis for ticker 'FATIMA' completed successfully.
+2024-10-10 11:58:14,090 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-10 11:58:14,144 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-10 11:58:14,188 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-10 11:58:14,231 - INFO - Analysis for ticker 'PTC' completed successfully.
+2024-10-10 11:58:14,273 - INFO - Analysis for ticker 'SEARL' completed successfully.
+2024-10-10 11:58:23,050 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:58:40,177 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:58:40,267 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:58:40,270 - INFO - Retrieved tickers from DB: ['FATIMA', 'HUBC', 'MCB', 'PPL', 'PTC', 'SEARL']
+2024-10-10 11:58:41,005 - INFO - Retrieved 1180 records for ticker 'OGDC'.
+2024-10-10 11:58:41,030 - INFO - Prepared 1180 valid records for insertion for ticker 'OGDC'.
+2024-10-10 11:58:41,030 - INFO - Inserting batch 1 for ticker 'OGDC' with 100 records.
+2024-10-10 11:58:41,036 - INFO - Batch 1 inserted 100 records (may include ignored records).
+2024-10-10 11:58:41,036 - INFO - Inserting batch 2 for ticker 'OGDC' with 100 records.
+2024-10-10 11:58:41,040 - INFO - Batch 2 inserted 100 records (may include ignored records).
+2024-10-10 11:58:41,040 - INFO - Inserting batch 3 for ticker 'OGDC' with 100 records.
+2024-10-10 11:58:41,045 - INFO - Batch 3 inserted 100 records (may include ignored records).
+2024-10-10 11:58:41,045 - INFO - Inserting batch 4 for ticker 'OGDC' with 100 records.
+2024-10-10 11:58:41,049 - INFO - Batch 4 inserted 100 records (may include ignored records).
+2024-10-10 11:58:41,049 - INFO - Inserting batch 5 for ticker 'OGDC' with 100 records.
+2024-10-10 11:58:41,055 - INFO - Batch 5 inserted 100 records (may include ignored records).
+2024-10-10 11:58:41,056 - INFO - Inserting batch 6 for ticker 'OGDC' with 100 records.
+2024-10-10 11:58:41,060 - INFO - Batch 6 inserted 100 records (may include ignored records).
+2024-10-10 11:58:41,060 - INFO - Inserting batch 7 for ticker 'OGDC' with 100 records.
+2024-10-10 11:58:41,065 - INFO - Batch 7 inserted 100 records (may include ignored records).
+2024-10-10 11:58:41,065 - INFO - Inserting batch 8 for ticker 'OGDC' with 100 records.
+2024-10-10 11:58:41,069 - INFO - Batch 8 inserted 100 records (may include ignored records).
+2024-10-10 11:58:41,069 - INFO - Inserting batch 9 for ticker 'OGDC' with 100 records.
+2024-10-10 11:58:41,073 - INFO - Batch 9 inserted 100 records (may include ignored records).
+2024-10-10 11:58:41,073 - INFO - Inserting batch 10 for ticker 'OGDC' with 100 records.
+2024-10-10 11:58:41,079 - INFO - Batch 10 inserted 100 records (may include ignored records).
+2024-10-10 11:58:41,080 - INFO - Inserting batch 11 for ticker 'OGDC' with 100 records.
+2024-10-10 11:58:41,083 - INFO - Batch 11 inserted 100 records (may include ignored records).
+2024-10-10 11:58:41,083 - INFO - Inserting batch 12 for ticker 'OGDC' with 80 records.
+2024-10-10 11:58:41,087 - INFO - Batch 12 inserted 80 records (may include ignored records).
+2024-10-10 11:58:41,087 - INFO - Added 1180 records for ticker 'OGDC'.
+2024-10-10 11:58:41,087 - INFO - Total records in the database for ticker 'OGDC': 1180
+2024-10-10 11:58:41,088 - INFO - Added 1180 records for ticker 'OGDC'.
+2024-10-10 11:58:44,209 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:58:45,202 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 11:58:45,206 - INFO - Retrieved tickers from DB: ['FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PTC', 'SEARL']
+2024-10-10 11:58:45,208 - INFO - Latest date for ticker 'FATIMA': 2024-10-09
+2024-10-10 11:58:45,660 - INFO - Retrieved 0 records for ticker 'FATIMA'.
+2024-10-10 11:58:45,661 - ERROR - Failed to retrieve data for ticker 'FATIMA'.
+2024-10-10 11:58:45,662 - INFO - Latest date for ticker 'HUBC': 2024-10-09
+2024-10-10 11:58:46,093 - INFO - Retrieved 0 records for ticker 'HUBC'.
+2024-10-10 11:58:46,094 - ERROR - Failed to retrieve data for ticker 'HUBC'.
+2024-10-10 11:58:46,095 - INFO - Latest date for ticker 'MCB': 2024-10-09
+2024-10-10 11:58:46,563 - INFO - Retrieved 0 records for ticker 'MCB'.
+2024-10-10 11:58:46,564 - ERROR - Failed to retrieve data for ticker 'MCB'.
+2024-10-10 11:58:46,565 - INFO - Latest date for ticker 'OGDC': 2024-10-09
+2024-10-10 11:58:47,031 - INFO - Retrieved 0 records for ticker 'OGDC'.
+2024-10-10 11:58:47,032 - ERROR - Failed to retrieve data for ticker 'OGDC'.
+2024-10-10 11:58:47,034 - INFO - Latest date for ticker 'PPL': 2024-10-09
+2024-10-10 11:58:47,491 - INFO - Retrieved 0 records for ticker 'PPL'.
+2024-10-10 11:58:47,493 - ERROR - Failed to retrieve data for ticker 'PPL'.
+2024-10-10 11:58:47,493 - INFO - Latest date for ticker 'PTC': 2024-10-09
+2024-10-10 11:58:47,946 - INFO - Retrieved 0 records for ticker 'PTC'.
+2024-10-10 11:58:47,947 - ERROR - Failed to retrieve data for ticker 'PTC'.
+2024-10-10 11:58:47,948 - INFO - Latest date for ticker 'SEARL': 2024-10-09
+2024-10-10 11:58:48,372 - INFO - Retrieved 0 records for ticker 'SEARL'.
+2024-10-10 11:58:48,373 - ERROR - Failed to retrieve data for ticker 'SEARL'.
+2024-10-10 11:58:48,374 - INFO - Database synchronization complete.
+2024-10-10 12:00:50,526 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:00:55,069 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:00:55,074 - INFO - Retrieved tickers from DB: ['FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PTC', 'SEARL']
+2024-10-10 12:00:55,076 - INFO - Latest date for ticker 'FATIMA': 2024-10-09
+2024-10-10 12:00:55,665 - INFO - Retrieved 0 records for ticker 'FATIMA'.
+2024-10-10 12:00:55,666 - ERROR - Failed to retrieve data for ticker 'FATIMA'.
+2024-10-10 12:00:55,667 - INFO - Latest date for ticker 'HUBC': 2024-10-09
+2024-10-10 12:00:56,130 - INFO - Retrieved 0 records for ticker 'HUBC'.
+2024-10-10 12:00:56,131 - ERROR - Failed to retrieve data for ticker 'HUBC'.
+2024-10-10 12:00:56,132 - INFO - Latest date for ticker 'MCB': 2024-10-09
+2024-10-10 12:00:56,588 - INFO - Retrieved 0 records for ticker 'MCB'.
+2024-10-10 12:00:56,588 - ERROR - Failed to retrieve data for ticker 'MCB'.
+2024-10-10 12:00:56,590 - INFO - Latest date for ticker 'OGDC': 2024-10-09
+2024-10-10 12:00:57,047 - INFO - Retrieved 0 records for ticker 'OGDC'.
+2024-10-10 12:00:57,048 - ERROR - Failed to retrieve data for ticker 'OGDC'.
+2024-10-10 12:00:57,049 - INFO - Latest date for ticker 'PPL': 2024-10-09
+2024-10-10 12:00:57,519 - INFO - Retrieved 0 records for ticker 'PPL'.
+2024-10-10 12:00:57,520 - ERROR - Failed to retrieve data for ticker 'PPL'.
+2024-10-10 12:00:57,521 - INFO - Latest date for ticker 'PTC': 2024-10-09
+2024-10-10 12:00:57,958 - INFO - Retrieved 0 records for ticker 'PTC'.
+2024-10-10 12:00:57,960 - ERROR - Failed to retrieve data for ticker 'PTC'.
+2024-10-10 12:00:57,962 - INFO - Latest date for ticker 'SEARL': 2024-10-09
+2024-10-10 12:00:58,407 - INFO - Retrieved 0 records for ticker 'SEARL'.
+2024-10-10 12:00:58,408 - ERROR - Failed to retrieve data for ticker 'SEARL'.
+2024-10-10 12:00:58,409 - INFO - Database synchronization complete.
+2024-10-10 12:02:48,043 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:02:50,411 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:02:50,415 - INFO - Retrieved tickers from DB: ['FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PTC', 'SEARL']
+2024-10-10 12:02:50,417 - INFO - Latest date for ticker 'FATIMA': 2024-10-09
+2024-10-10 12:02:50,931 - INFO - Retrieved 0 records for ticker 'FATIMA'.
+2024-10-10 12:02:50,932 - ERROR - Failed to retrieve data for ticker 'FATIMA'.
+2024-10-10 12:02:50,934 - INFO - Latest date for ticker 'HUBC': 2024-10-09
+2024-10-10 12:02:51,413 - INFO - Retrieved 0 records for ticker 'HUBC'.
+2024-10-10 12:02:51,414 - ERROR - Failed to retrieve data for ticker 'HUBC'.
+2024-10-10 12:02:51,415 - INFO - Latest date for ticker 'MCB': 2024-10-09
+2024-10-10 12:02:51,878 - INFO - Retrieved 0 records for ticker 'MCB'.
+2024-10-10 12:02:51,878 - ERROR - Failed to retrieve data for ticker 'MCB'.
+2024-10-10 12:02:51,879 - INFO - Latest date for ticker 'OGDC': 2024-10-09
+2024-10-10 12:02:52,332 - INFO - Retrieved 0 records for ticker 'OGDC'.
+2024-10-10 12:02:52,333 - ERROR - Failed to retrieve data for ticker 'OGDC'.
+2024-10-10 12:02:52,334 - INFO - Latest date for ticker 'PPL': 2024-10-09
+2024-10-10 12:02:52,759 - INFO - Retrieved 0 records for ticker 'PPL'.
+2024-10-10 12:02:52,759 - ERROR - Failed to retrieve data for ticker 'PPL'.
+2024-10-10 12:02:52,760 - INFO - Latest date for ticker 'PTC': 2024-10-09
+2024-10-10 12:02:53,188 - INFO - Retrieved 0 records for ticker 'PTC'.
+2024-10-10 12:02:53,189 - ERROR - Failed to retrieve data for ticker 'PTC'.
+2024-10-10 12:02:53,189 - INFO - Latest date for ticker 'SEARL': 2024-10-09
+2024-10-10 12:02:53,616 - INFO - Retrieved 0 records for ticker 'SEARL'.
+2024-10-10 12:02:53,617 - ERROR - Failed to retrieve data for ticker 'SEARL'.
+2024-10-10 12:02:53,618 - INFO - Database synchronization complete.
+2024-10-10 12:05:47,604 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:05:51,091 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:05:51,097 - INFO - Retrieved tickers from DB: ['FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PTC', 'SEARL']
+2024-10-10 12:05:51,101 - INFO - Latest date for ticker 'FATIMA': 2024-10-09
+2024-10-10 12:05:51,104 - ERROR - Ticker 'FATIMA' is not yet synchronized for today. Today's new data will be available by 5 pm.
+2024-10-10 12:05:51,106 - INFO - Latest date for ticker 'HUBC': 2024-10-09
+2024-10-10 12:05:51,108 - ERROR - Ticker 'HUBC' is not yet synchronized for today. Today's new data will be available by 5 pm.
+2024-10-10 12:05:51,110 - INFO - Latest date for ticker 'MCB': 2024-10-09
+2024-10-10 12:05:51,112 - ERROR - Ticker 'MCB' is not yet synchronized for today. Today's new data will be available by 5 pm.
+2024-10-10 12:05:51,113 - INFO - Latest date for ticker 'OGDC': 2024-10-09
+2024-10-10 12:05:51,116 - ERROR - Ticker 'OGDC' is not yet synchronized for today. Today's new data will be available by 5 pm.
+2024-10-10 12:05:51,118 - INFO - Latest date for ticker 'PPL': 2024-10-09
+2024-10-10 12:05:51,120 - ERROR - Ticker 'PPL' is not yet synchronized for today. Today's new data will be available by 5 pm.
+2024-10-10 12:05:51,121 - INFO - Latest date for ticker 'PTC': 2024-10-09
+2024-10-10 12:05:51,123 - ERROR - Ticker 'PTC' is not yet synchronized for today. Today's new data will be available by 5 pm.
+2024-10-10 12:05:51,125 - INFO - Latest date for ticker 'SEARL': 2024-10-09
+2024-10-10 12:05:51,128 - ERROR - Ticker 'SEARL' is not yet synchronized for today. Today's new data will be available by 5 pm.
+2024-10-10 12:05:51,129 - INFO - All data is already up-to-date and synchronized.
+2024-10-10 12:05:51,129 - INFO - Database synchronization complete.
+2024-10-10 12:06:10,176 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:06:10,179 - INFO - Retrieved tickers from DB: ['FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PTC', 'SEARL']
+2024-10-10 12:06:12,395 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:06:12,397 - INFO - Retrieved tickers from DB: ['FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PTC', 'SEARL']
+2024-10-10 12:06:13,307 - INFO - Analysis for ticker 'FATIMA' completed successfully.
+2024-10-10 12:06:13,354 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-10 12:06:13,405 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-10 12:06:13,445 - INFO - Analysis for ticker 'OGDC' completed successfully.
+2024-10-10 12:06:13,484 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-10 12:06:13,524 - INFO - Analysis for ticker 'PTC' completed successfully.
+2024-10-10 12:06:13,561 - INFO - Analysis for ticker 'SEARL' completed successfully.
+2024-10-10 12:07:52,993 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:07:58,160 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:08:15,113 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:08:15,343 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:08:15,348 - INFO - Retrieved tickers from DB: ['FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PTC', 'SEARL']
+2024-10-10 12:08:16,058 - INFO - Retrieved 0 records for ticker 'FEBL'.
+2024-10-10 12:08:16,059 - ERROR - Failed to retrieve data for ticker 'FEBL'.
+2024-10-10 12:08:27,455 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:08:27,553 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:08:27,557 - INFO - Retrieved tickers from DB: ['FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PTC', 'SEARL']
+2024-10-10 12:08:28,186 - INFO - Retrieved 753 records for ticker 'AIRLINK'.
+2024-10-10 12:08:28,203 - INFO - Prepared 753 valid records for insertion for ticker 'AIRLINK'.
+2024-10-10 12:08:28,204 - INFO - Inserting batch 1 for ticker 'AIRLINK' with 100 records.
+2024-10-10 12:08:28,207 - INFO - Batch 1 inserted 100 records (may include ignored records).
+2024-10-10 12:08:28,207 - INFO - Inserting batch 2 for ticker 'AIRLINK' with 100 records.
+2024-10-10 12:08:28,211 - INFO - Batch 2 inserted 100 records (may include ignored records).
+2024-10-10 12:08:28,212 - INFO - Inserting batch 3 for ticker 'AIRLINK' with 100 records.
+2024-10-10 12:08:28,217 - INFO - Batch 3 inserted 100 records (may include ignored records).
+2024-10-10 12:08:28,217 - INFO - Inserting batch 4 for ticker 'AIRLINK' with 100 records.
+2024-10-10 12:08:28,220 - INFO - Batch 4 inserted 100 records (may include ignored records).
+2024-10-10 12:08:28,221 - INFO - Inserting batch 5 for ticker 'AIRLINK' with 100 records.
+2024-10-10 12:08:28,225 - INFO - Batch 5 inserted 100 records (may include ignored records).
+2024-10-10 12:08:28,225 - INFO - Inserting batch 6 for ticker 'AIRLINK' with 100 records.
+2024-10-10 12:08:28,234 - INFO - Batch 6 inserted 100 records (may include ignored records).
+2024-10-10 12:08:28,234 - INFO - Inserting batch 7 for ticker 'AIRLINK' with 100 records.
+2024-10-10 12:08:28,239 - INFO - Batch 7 inserted 100 records (may include ignored records).
+2024-10-10 12:08:28,239 - INFO - Inserting batch 8 for ticker 'AIRLINK' with 53 records.
+2024-10-10 12:08:28,242 - INFO - Batch 8 inserted 53 records (may include ignored records).
+2024-10-10 12:08:28,242 - INFO - Added 753 records for ticker 'AIRLINK'.
+2024-10-10 12:08:28,242 - INFO - Total records in the database for ticker 'AIRLINK': 753
+2024-10-10 12:08:28,243 - INFO - Added 753 records for ticker 'AIRLINK'.
+2024-10-10 12:08:36,710 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:08:36,778 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:08:36,789 - INFO - Retrieved tickers from DB: ['AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PTC', 'SEARL']
+2024-10-10 12:08:37,536 - INFO - Retrieved 1180 records for ticker 'PSO'.
+2024-10-10 12:08:37,562 - INFO - Prepared 1180 valid records for insertion for ticker 'PSO'.
+2024-10-10 12:08:37,563 - INFO - Inserting batch 1 for ticker 'PSO' with 100 records.
+2024-10-10 12:08:37,568 - INFO - Batch 1 inserted 100 records (may include ignored records).
+2024-10-10 12:08:37,568 - INFO - Inserting batch 2 for ticker 'PSO' with 100 records.
+2024-10-10 12:08:37,577 - INFO - Batch 2 inserted 100 records (may include ignored records).
+2024-10-10 12:08:37,578 - INFO - Inserting batch 3 for ticker 'PSO' with 100 records.
+2024-10-10 12:08:37,623 - INFO - Batch 3 inserted 100 records (may include ignored records).
+2024-10-10 12:08:37,623 - INFO - Inserting batch 4 for ticker 'PSO' with 100 records.
+2024-10-10 12:08:37,626 - INFO - Batch 4 inserted 100 records (may include ignored records).
+2024-10-10 12:08:37,627 - INFO - Inserting batch 5 for ticker 'PSO' with 100 records.
+2024-10-10 12:08:37,639 - INFO - Batch 5 inserted 100 records (may include ignored records).
+2024-10-10 12:08:37,639 - INFO - Inserting batch 6 for ticker 'PSO' with 100 records.
+2024-10-10 12:08:37,643 - INFO - Batch 6 inserted 100 records (may include ignored records).
+2024-10-10 12:08:37,643 - INFO - Inserting batch 7 for ticker 'PSO' with 100 records.
+2024-10-10 12:08:37,646 - INFO - Batch 7 inserted 100 records (may include ignored records).
+2024-10-10 12:08:37,646 - INFO - Inserting batch 8 for ticker 'PSO' with 100 records.
+2024-10-10 12:08:37,651 - INFO - Batch 8 inserted 100 records (may include ignored records).
+2024-10-10 12:08:37,651 - INFO - Inserting batch 9 for ticker 'PSO' with 100 records.
+2024-10-10 12:08:37,659 - INFO - Batch 9 inserted 100 records (may include ignored records).
+2024-10-10 12:08:37,659 - INFO - Inserting batch 10 for ticker 'PSO' with 100 records.
+2024-10-10 12:08:37,668 - INFO - Batch 10 inserted 100 records (may include ignored records).
+2024-10-10 12:08:37,668 - INFO - Inserting batch 11 for ticker 'PSO' with 100 records.
+2024-10-10 12:08:37,681 - INFO - Batch 11 inserted 100 records (may include ignored records).
+2024-10-10 12:08:37,682 - INFO - Inserting batch 12 for ticker 'PSO' with 80 records.
+2024-10-10 12:08:37,684 - INFO - Batch 12 inserted 80 records (may include ignored records).
+2024-10-10 12:08:37,684 - INFO - Added 1180 records for ticker 'PSO'.
+2024-10-10 12:08:37,684 - INFO - Total records in the database for ticker 'PSO': 1180
+2024-10-10 12:08:37,685 - INFO - Added 1180 records for ticker 'PSO'.
+2024-10-10 12:08:40,398 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:08:40,401 - INFO - Retrieved tickers from DB: ['AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-10 12:08:42,365 - INFO - Database initialized at data/tick_data.db.
+2024-10-10 12:08:42,367 - INFO - Retrieved tickers from DB: ['AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-10 12:08:43,733 - INFO - Analysis for ticker 'AIRLINK' completed successfully.
+2024-10-10 12:08:43,770 - INFO - Analysis for ticker 'FATIMA' completed successfully.
+2024-10-10 12:08:43,832 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-10 12:08:43,872 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-10 12:08:43,912 - INFO - Analysis for ticker 'OGDC' completed successfully.
+2024-10-10 12:08:43,952 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-10 12:08:43,995 - INFO - Analysis for ticker 'PSO' completed successfully.
+2024-10-10 12:08:44,038 - INFO - Analysis for ticker 'PTC' completed successfully.
+2024-10-10 12:08:44,079 - INFO - Analysis for ticker 'SEARL' completed successfully.
