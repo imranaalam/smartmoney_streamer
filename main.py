@@ -10,31 +10,40 @@ from utils.db_manager import (
     get_latest_date_for_ticker, 
     insert_ticker_data_into_db
 )
+
+
+# import os
+import numpy as np
+import logging
+# from datetime import datetime, timedelta
+from datetime import time
+
 from utils.data_fetcher import get_stock_data
 from analysis.mxwll_suite_indicator import mxwll_suite_indicator
 
-import os
-import numpy as np
-import logging
-from datetime import datetime, timedelta
+from utils.logger import setup_logging
 
-# Configure logging
-logging.basicConfig(
-    filename='app.log',
-    filemode='a',
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    level=logging.INFO
-)
+
+setup_logging()
+logger = logging.getLogger(__name__)
+
+# # Configure logging
+# logging.basicConfig(
+#     filename='app.log',
+#     filemode='a',
+#     format='%(asctime)s - %(levelname)s - %(message)s',
+#     level=logging.INFO
+# )
 
 # Configure Streamlit page
 st.set_page_config(
-    page_title="Stock Data Analyzer",
+    page_title="PSX Scanner",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
 # Title of the App
-st.title("📈 Stock Data Analyzer")
+st.title("📈 PSX Scanner")
 
 # Initialize database
 conn = initialize_db_and_tables()
@@ -45,12 +54,12 @@ if conn is None:
     st.stop()
 
 # Sidebar for navigation
-st.sidebar.header("Options")
+st.sidebar.header("Menu")
 
-app_mode = st.sidebar.selectbox("Choose the app mode",
+app_mode = st.sidebar.selectbox("Choose the Scanner mode",
     ["Synchronize Database", "Add New Ticker", "Analyze Tickers"])
 
-from datetime import time
+
 
 # Function to synchronize database
 def synchronize_database():

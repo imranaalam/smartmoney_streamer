@@ -7,23 +7,25 @@ from bs4 import BeautifulSoup
 import re
 import pandas as pd
 from io import StringIO
+from io import BytesIO
 
-# from utils.data_fetcher import (
-#     fetch_csv_data, split_data_sections, clean_and_parse_data, add_member_info,
-#     get_stock_data, get_kse_symbols, get_kse_market_watch, SECTOR_MAPPING, 
-#     get_kse_ticker_detail, get_kse_index_historical_data, get_listings_data, 
-#     get_defaulters_list, merge_data, internet_trading_subscribers
-# )
+# testing this script
+# from logger import setup_logging
 
+# when running main.py
 from utils.logger import setup_logging
 
-setup_logging()
 
+setup_logging()
 logger = logging.getLogger(__name__)
 
 
 # Base URL for the PSX Off Market Transactions CSV file
 BASE_OFF_MARKET_CSV_URL = "https://dps.psx.com.pk/download/omts/"
+
+# Constants for PSX URL format
+PSX_CONSTITUENT_URL = "https://dps.psx.com.pk/download/indhist/{}.xls"
+
 
 # Data from the PDF parsed into a dictionary
 internet_trading_subscribers = {
@@ -228,7 +230,7 @@ def get_stock_data(ticker, date_from, date_to):
 
 
 
-def get_kse_market_watch(sector_mapping):
+def fetch_kse_market_watch(sector_mapping):
     """
     Fetches and returns the daily KSE market watch data with sector names instead of codes.
     Each entry in `LISTED IN` field is split into separate rows for easy database insertion.
@@ -761,6 +763,7 @@ def get_all_kse_indices_historical_data(index_symbols):
 
 
 
+
 def fetch_psx_transaction_data(date):
     """
     Fetches and processes PSX broker-to-broker (B2B) and institution-to-institution (I2I) transactions for a given date.
@@ -862,6 +865,46 @@ def fetch_psx_transaction_data(date):
 
 
 
+# ---- Function to Fetch PSX Constituent Data ---- #
+def fetch_psx_constituents(date):
+    """
+    Fetches the PSX constituents Excel file for the given date and returns the data in a format suitable for insertion.
+
+    Args:
+        date (str): The date in format 'YYYY-MM-DD'.
+
+    Returns:
+        list: A list of dictionaries with the PSX data.
+    """
+    try:
+        # Construct the URL with the given date
+        url = PSX_CONSTITUENT_URL.format(date)
+        logging.info(f"Fetching PSX data from {url}")
+
+        # Download the Excel file
+        response = requests.get(url)
+        response.raise_for_status()  # Ensure the request was successful
+
+        # Load the Excel content into a Pandas DataFrame
+        excel_file = BytesIO(response.content)
+        df = pd.read_excel(excel_file)
+
+        # Ensure the columns are in the expected format
+        required_columns = ['ISIN', 'SYMBOL', 'COMPANY', 'PRICE', 'IDX WT %', 'FF BASED SHARES', 'FF BASED MCAP', 'ORD SHARES', 'ORD SHARES MCAP', 'VOLUME']
+        if not set(required_columns).issubset(df.columns):
+            logging.error("Excel file does not contain the expected columns.")
+            return []
+
+        # Convert the DataFrame into a list of dictionaries for insertion
+        psx_data = df[required_columns].to_dict(orient='records')
+        return psx_data
+
+    except Exception as e:
+        logging.error(f"Error fetching PSX data: {e}")
+        return []
+    
+
+
 
 def main():
     """
@@ -869,6 +912,24 @@ def main():
     off-market and cross transactions, and merge them into a unified dataset.
     """
 
+    logging.info("-" * 50)  # Separator for visual clarity
+
+    # Step 1: Define the date for fetching the PSX constituents
+    date = '2024-10-11'  # Example date
+    logging.info(f"Fetching PSX constituent data for {date}...")
+
+    # Step 2: Fetch the PSX constituent data for the given date
+    psx_data = fetch_psx_constituents(date)
+
+    if psx_data is None or len(psx_data) == 0:
+        logging.error("Failed to fetch PSX constituent data or no data available.")
+        return
+
+    # Step 3: Log and display the fetched PSX constituent data
+    logging.info(f"Fetched {len(psx_data)} rows of PSX constituent data.")
+    
+    # Optionally display a sample of the data
+    logging.info(f"Sample PSX Constituent Data:\n{psx_data[:5]}")  # Displaying the first 5 records as a sample
 
 
 
@@ -923,7 +984,7 @@ def main():
 
     # ---- Step 7: Test get_kse_market_watch with predefined sector mapping  ----- #
     logging.info("Fetching market watch data...")
-    market_data = get_kse_market_watch(SECTOR_MAPPING)
+    market_data = fetch_kse_market_watch(SECTOR_MAPPING)
 
     if market_data:
         logging.info(f"Successfully retrieved market watch data.")

@@ -3,12 +3,22 @@
 import sqlite3
 import logging
 from datetime import datetime
-from utils.data_fetcher import SECTOR_MAPPING, get_kse_market_watch, get_listings_data, get_defaulters_list, fetch_psx_transaction_data
 import pandas as pd
+
+# when running the app main.py
+from utils.data_fetcher import SECTOR_MAPPING, fetch_kse_market_watch, get_listings_data, get_defaulters_list, fetch_psx_transaction_data, fetch_psx_constituents
+
+
+
+# when testing indviduall
+# from data_fetcher import SECTOR_MAPPING, fetch_kse_market_watch, get_listings_data, get_defaulters_list, fetch_psx_transaction_data, fetch_psx_constituents
+# from logger import 
+
+# when running main.py
 from utils.logger import setup_logging
 
-setup_logging()
 
+setup_logging()
 logger = logging.getLogger(__name__)
 
 def initialize_db_and_tables(db_path='data/tick_data.db'):
@@ -78,6 +88,32 @@ def initialize_db_and_tables(db_path='data/tick_data.db'):
                 PRIMARY KEY (Date, Symbol_Code, Buyer_Code, Seller_Code)
             );
         """)
+
+        # Create the Portfolios table
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS Portfolios (
+                Portfolio_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                Name TEXT UNIQUE NOT NULL,
+                Stocks TEXT NOT NULL
+            );
+        """)
+
+
+        # Crate the PSXConstituents table
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS PSXConstituents (
+            ISIN TEXT PRIMARY KEY,
+            SYMBOL TEXT,
+            COMPANY TEXT,
+            PRICE REAL,
+            IDX_WT REAL,
+            FF_BASED_SHARES INTEGER,
+            FF_BASED_MCAP REAL,
+            ORD_SHARES INTEGER,
+            ORD_SHARES_MCAP REAL,
+            VOLUME INTEGER
+        );
+    """)
         
 
         conn.commit()
@@ -194,24 +230,37 @@ def insert_ticker_data_into_db(conn, data, ticker, batch_size=100):
 
 
 
-def insert_market_watch_data_into_db(conn, data, batch_size=100):
+
+
+
+
+def insert_market_watch_data_into_db(conn, batch_size=100):
     """
-    Inserts the list of market watch data into the SQLite database in batches.
-    If a record with the same SYMBOL, SECTOR, and LISTED IN exists, it updates the record.
-    Returns a tuple of (success, records_added).
+    Inserts or updates market watch data into the SQLite database in batches.
+    Fetches data internally and ensures the database has the latest information.
     
     Args:
         conn (sqlite3.Connection): SQLite database connection.
-        data (list): A list of dictionaries containing the market watch data.
         batch_size (int): Number of records to insert per batch.
     
     Returns:
-        tuple: (success, records_added) where 'success' is a boolean and 'records_added' is the count.
+        tuple: (success, records_added) where 'success' is a boolean and 'records_added' is the count of records inserted/updated.
     """
+    
+    # ---- Step 1: Fetch Market Watch Data ---- #
+    logging.info("Fetching market watch data...")
+    market_data = fetch_kse_market_watch(SECTOR_MAPPING)  # Assuming fetch_kse_market_watch is defined elsewhere
+    
+    if not market_data:
+        logging.error("Failed to fetch market watch data.")
+        return False, 0
+    else:
+        logging.info(f"Fetched {len(market_data)} market watch records.")
+    
     try:
         cursor = conn.cursor()
 
-        # SQL insert query with ON CONFLICT to handle updates
+        # SQL insert query with ON CONFLICT clause for updating existing records
         insert_query = """
             INSERT INTO MarketWatch 
             (SYMBOL, SECTOR, "LISTED IN", LDCP, OPEN, HIGH, LOW, CURRENT, CHANGE, "CHANGE (%)", VOLUME, DEFAULTER, DEFAULTING_CLAUSE)
@@ -232,9 +281,9 @@ def insert_market_watch_data_into_db(conn, data, batch_size=100):
         
         # Prepare data for insertion
         data_to_insert = []
-        for record in data:
+        for record in market_data:
             try:
-                # Extract and round the numeric fields
+                # Extract and round numeric fields, default to None for missing values
                 symbol = record['SYMBOL']
                 sector = record['SECTOR']
                 listed_in = record['LISTED IN']
@@ -256,30 +305,26 @@ def insert_market_watch_data_into_db(conn, data, batch_size=100):
                 logging.error(f"Error parsing market watch data record: {record}, error: {e}")
                 continue
 
-        # Log how many valid records are ready for insertion
-        logging.info(f"Prepared {len(data_to_insert)} valid records for market watch insertion.")
-
         if not data_to_insert:
-            logging.warning(f"No valid market watch data to insert.")
+            logging.warning("No valid market watch data to insert.")
             return True, 0  # Success but no records added
 
-        # Insert data in batches
+        # ---- Step 2: Insert Data in Batches ---- #
         total_records = len(data_to_insert)
         records_added = 0
+        
         for i in range(0, total_records, batch_size):
             batch = data_to_insert[i:i + batch_size]
             logging.info(f"Inserting batch {i // batch_size + 1} with {len(batch)} records.")
             cursor.executemany(insert_query, batch)
             conn.commit()
             
-            # Log how many records were added
-            logging.info(f"Batch {i // batch_size + 1} inserted {cursor.rowcount} records (may include updates).")
+            # Count records added or updated
             records_added += cursor.rowcount
 
-        # Log the total number of records added for the market watch
-        logging.info(f"Added {records_added} records for market watch data.")
+        logging.info(f"Successfully inserted/updated {records_added} records for market watch data.")
 
-        # Verify how many records were inserted/updated by querying the database
+        # ---- Step 3: Confirm Database Status ---- #
         cursor.execute("SELECT COUNT(*) FROM MarketWatch;")
         total_in_db = cursor.fetchone()[0]
         logging.info(f"Total records in the MarketWatch table: {total_in_db}")
@@ -652,161 +697,515 @@ def get_psx_off_market_transactions(conn, from_date, to_date=None):
     else:
         logging.error("No records found for the provided date or date range.")
         return None
+    
+
+def create_portfolio(conn, name, stocks):
+    """
+    Creates a new portfolio with the given name and list of stocks.
+
+    Args:
+        conn (sqlite3.Connection): SQLite database connection.
+        name (str): Name of the portfolio.
+        stocks (list or str): List of stock tickers or a comma-separated string.
+
+    Returns:
+        bool: True if creation was successful, False otherwise.
+    """
+    if isinstance(stocks, list):
+        stocks_str = ','.join([stock.strip().upper() for stock in stocks])
+    elif isinstance(stocks, str):
+        stocks_str = ','.join([stock.strip().upper() for stock in stocks.split(',')])
+    else:
+        logger.error("Invalid format for stocks. Must be a list or comma-separated string.")
+        return False
+
+    try:
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO Portfolios (Name, Stocks) VALUES (?, ?);
+        """, (name, stocks_str))
+        conn.commit()
+        logger.info(f"Portfolio '{name}' created with stocks: {stocks_str}.")
+        return True
+    except sqlite3.IntegrityError as e:
+        logger.error(f"Failed to create portfolio '{name}': {e}")
+        return False
+    except sqlite3.Error as e:
+        logger.error(f"Database error while creating portfolio '{name}': {e}")
+        return False
+
+
+
+def get_all_portfolios(conn):
+    """
+    Retrieves all portfolios from the database.
+
+    Args:
+        conn (sqlite3.Connection): SQLite database connection.
+
+    Returns:
+        list of dict: List containing portfolio details.
+    """
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT Portfolio_ID, Name, Stocks FROM Portfolios;")
+        rows = cursor.fetchall()
+        portfolios = []
+        for row in rows:
+            portfolios.append({
+                'Portfolio_ID': row[0],
+                'Name': row[1],
+                'Stocks': [stock.strip() for stock in row[2].split(',') if stock.strip()]
+            })
+        logger.info(f"Retrieved {len(portfolios)} portfolios from the database.")
+        return portfolios
+    except sqlite3.Error as e:
+        logger.error(f"Failed to retrieve portfolios: {e}")
+        return []
+
+
+
+def update_portfolio(conn, portfolio_id, new_name=None, new_stocks=None):
+    """
+    Updates an existing portfolio's name and/or stocks.
+
+    Args:
+        conn (sqlite3.Connection): SQLite database connection.
+        portfolio_id (int): ID of the portfolio to update.
+        new_name (str, optional): New name for the portfolio.
+        new_stocks (list or str, optional): New list of stock tickers or a comma-separated string.
+
+    Returns:
+        bool: True if update was successful, False otherwise.
+    """
+    if not new_name and not new_stocks:
+        logger.warning("No new data provided for update.")
+        return False
+
+    updates = []
+    parameters = []
+
+    if new_name:
+        updates.append("Name = ?")
+        parameters.append(new_name)
+
+    if new_stocks:
+        if isinstance(new_stocks, list):
+            stocks_str = ','.join([stock.strip().upper() for stock in new_stocks])
+        elif isinstance(new_stocks, str):
+            stocks_str = ','.join([stock.strip().upper() for stock in new_stocks.split(',')])
+        else:
+            logger.error("Invalid format for new_stocks. Must be a list or comma-separated string.")
+            return False
+        updates.append("Stocks = ?")
+        parameters.append(stocks_str)
+
+    parameters.append(portfolio_id)
+
+    try:
+        cursor = conn.cursor()
+        query = f"UPDATE Portfolios SET {', '.join(updates)} WHERE Portfolio_ID = ?;"
+        cursor.execute(query, tuple(parameters))
+        if cursor.rowcount == 0:
+            logger.warning(f"No portfolio found with Portfolio_ID = {portfolio_id}.")
+            return False
+        conn.commit()
+        logger.info(f"Portfolio ID '{portfolio_id}' updated successfully.")
+        return True
+    except sqlite3.IntegrityError as e:
+        logger.error(f"Failed to update portfolio ID '{portfolio_id}': {e}")
+        return False
+    except sqlite3.Error as e:
+        logger.error(f"Database error while updating portfolio ID '{portfolio_id}': {e}")
+        return False
+
+
+def delete_portfolio(conn, portfolio_id):
+    """
+    Deletes a portfolio from the database.
+
+    Args:
+        conn (sqlite3.Connection): SQLite database connection.
+        portfolio_id (int): ID of the portfolio to delete.
+
+    Returns:
+        bool: True if deletion was successful, False otherwise.
+    """
+    try:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM Portfolios WHERE Portfolio_ID = ?;", (portfolio_id,))
+        if cursor.rowcount == 0:
+            logger.warning(f"No portfolio found with Portfolio_ID = {portfolio_id}.")
+            return False
+        conn.commit()
+        logger.info(f"Portfolio ID '{portfolio_id}' deleted successfully.")
+        return True
+    except sqlite3.Error as e:
+        logger.error(f"Failed to delete portfolio ID '{portfolio_id}': {e}")
+        return False
+
+
+def get_portfolio_by_name(conn, name):
+    """
+    Retrieves a portfolio by its name.
+
+    Args:
+        conn (sqlite3.Connection): SQLite database connection.
+        name (str): Name of the portfolio.
+
+    Returns:
+        dict or None: Portfolio details if found, else None.
+    """
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT Portfolio_ID, Name, Stocks FROM Portfolios WHERE Name = ?;", (name,))
+        row = cursor.fetchone()
+        if row:
+            portfolio = {
+                'Portfolio_ID': row[0],
+                'Name': row[1],
+                'Stocks': [stock.strip() for stock in row[2].split(',') if stock.strip()]
+            }
+            logger.info(f"Retrieved portfolio '{name}' with ID {row[0]}.")
+            return portfolio
+        else:
+            logger.warning(f"No portfolio found with name '{name}'.")
+            return None
+    except sqlite3.Error as e:
+        logger.error(f"Failed to retrieve portfolio '{name}': {e}")
+        return None
+
+
+# ---- Insert PSX Data into the Table ---- #
+def insert_psx_constituents(conn, psx_data):
+    """
+    Inserts or updates PSX constituents data into the database.
+
+    Args:
+        conn (sqlite3.Connection): SQLite connection object.
+        psx_data (list): A list of dictionaries containing PSX constituent data.
+    """
+    cursor = conn.cursor()
+    insert_query = """
+        INSERT INTO PSXConstituents 
+        (ISIN, SYMBOL, COMPANY, PRICE, IDX_WT, FF_BASED_SHARES, FF_BASED_MCAP, ORD_SHARES, ORD_SHARES_MCAP, VOLUME)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(ISIN) 
+        DO UPDATE SET 
+            SYMBOL = excluded.SYMBOL,
+            COMPANY = excluded.COMPANY,
+            PRICE = excluded.PRICE,
+            IDX_WT = excluded.IDX_WT,
+            FF_BASED_SHARES = excluded.FF_BASED_SHARES,
+            FF_BASED_MCAP = excluded.FF_BASED_MCAP,
+            ORD_SHARES = excluded.ORD_SHARES,
+            ORD_SHARES_MCAP = excluded.ORD_SHARES_MCAP,
+            VOLUME = excluded.VOLUME;
+    """
+    
+    # Prepare the data for insertion
+    for record in psx_data:
+        cursor.execute(insert_query, (
+            record['ISIN'], 
+            record['SYMBOL'], 
+            record['COMPANY'], 
+            record['PRICE'], 
+            record['IDX WT %'], 
+            record['FF BASED SHARES'], 
+            record['FF BASED MCAP'], 
+            record['ORD SHARES'], 
+            record['ORD SHARES MCAP'], 
+            record['VOLUME']
+        ))
+    
+    conn.commit()
+
+# ---- Search PSX Constituents by Name ---- #
+def search_psx_constituents_by_name(conn, company_name):
+    """
+    Searches the PSX constituents by company name.
+
+    Args:
+        conn (sqlite3.Connection): SQLite connection object.
+        company_name (str): The name of the company to search.
+
+    Returns:
+        list: A list of matching records.
+    """
+    cursor = conn.cursor()
+    query = "SELECT * FROM PSXConstituents WHERE COMPANY LIKE ?"
+    cursor.execute(query, ('%' + company_name + '%',))
+    return cursor.fetchall()
+
+# ---- Search PSX Constituents by Symbol ---- #
+def search_psx_constituents_by_symbol(conn, symbol):
+    """
+    Searches the PSX constituents by stock symbol.
+
+    Args:
+        conn (sqlite3.Connection): SQLite connection object.
+        symbol (str): The stock symbol to search.
+
+    Returns:
+        list: A list of matching records.
+    """
+    cursor = conn.cursor()
+    query = "SELECT * FROM PSXConstituents WHERE SYMBOL = ?"
+    cursor.execute(query, (symbol,))
+    return cursor.fetchall()
+
+
+
 
 
 
 
 def main():
     """
-    Main function to fetch and test stock data, KSE symbols, market watch data, listings, defaulters, 
-    and merge them into a unified dataset.
+    Main function to orchestrate the fetching, processing, and testing of stock-related data.
+
+    This function performs the following steps:
+    1. Initializes an in-memory database for testing purposes.
+    2. Fetches PSX constituents data for a specific date and inserts it into the database.
+    3. Manages portfolios by creating, reading, updating, and deleting portfolio entries.
+    4. Fetches and inserts PSX transaction data into the database.
+    5. Retrieves and displays transaction data for verification.
+    6. Inserts market watch data and retrieves top advancers, decliners, and active stocks.
+    7. Fetches listings and defaulters data, merges them, and logs the results.
+    8. Closes the database connection after all operations are complete.
     """
+    try:
+        # ---- Step 1: Initialize In-Memory Database ---- #
+        logger.info("Initializing in-memory database for testing...")
+        conn = initialize_db_and_tables(':memory:')  # Using in-memory SQLite DB for testing
 
-    # ---- Step 1: Initialize in-memory database ---- #
-    logging.info("Initializing in-memory database for testing...")
-    conn = initialize_db_and_tables(':memory:')  # Using in-memory SQLite DB for testing
+        if not conn:
+            logger.error("Failed to initialize the in-memory database.")
+            return
+        logger.info("In-memory database initialized successfully.")
 
-    if not conn:
-        logging.error("Failed to initialize the in-memory database.")
-        return
-    
+        # ---- Step 2: Fetch and Insert PSX Constituents Data ---- #
+        date = "2024-10-11"
+        logger.info(f"Fetching PSX constituents data for date: {date}")
+        psx_data = fetch_psx_constituents(date)
 
+        if psx_data:
+            insert_psx_constituents(conn, psx_data)
+            logger.info(f"Inserted or updated {len(psx_data)} PSX constituent records into the database.")
+        else:
+            logger.warning(f"No PSX constituent data fetched for date: {date}")
 
-    # ---- Step 2: Fetch the PSX transaction data for a specific date ---- #
-    date = '2024-10-11'  # Example date in 'YYYY-MM-DD' format
-    logging.info(f"Fetching PSX transaction data for {date}...")
-    transaction_data = fetch_psx_transaction_data(date)
+        # ---- Step 3: Search PSX Constituents ---- #
+        logger.info("Performing search operations on PSX constituents.")
 
-    if transaction_data is None:
-        logging.error("Failed to fetch PSX transaction data.")
-        return
+        # Search by company name example
+        company_name = "Al-Abbas"
+        logger.debug(f"Searching PSX constituents by company name: {company_name}")
+        company_search_results = search_psx_constituents_by_name(conn, company_name)
+        if company_search_results:
+            logger.info(f"Search results for company '{company_name}': {company_search_results}")
+        else:
+            logger.info(f"No search results found for company '{company_name}'.")
 
-    # ---- Step 3: Insert the fetched transaction data into the database ---- #
-    logging.info(f"Inserting transaction data for {date} into the database...")
-    insert_off_market_transaction_data(conn, transaction_data, 'Off Market & Cross Transactions')
+        # Search by symbol example
+        symbol = "AABS"
+        logger.debug(f"Searching PSX constituents by symbol: {symbol}")
+        symbol_search_results = search_psx_constituents_by_symbol(conn, symbol)
+        if symbol_search_results:
+            logger.info(f"Search results for symbol '{symbol}': {symbol_search_results}")
+        else:
+            logger.info(f"No search results found for symbol '{symbol}'.")
 
-    # ---- Step 4: Retrieve and display the transaction data for verification ---- #
-    logging.info(f"Fetching transaction data from {date} to {date} from the database...")
-    fetched_data = get_psx_off_market_transactions(conn, from_date=date)
+        # ---- Step 4: Portfolio Management ---- #
+        logger.info("---- Portfolio Management Operations ----")
 
-    if fetched_data is not None:
-        logging.info(f"Fetched Data for {date}:\n{fetched_data.head()}")
-    else:
-        logging.error(f"No transaction data found for {date}.")
+        # 1. Create a new portfolio
+        portfolio_name = "Tech Giants"
+        stocks = ["AAPL", "GOOGL", "MSFT", "AMZN", "FB"]
+        logger.debug(f"Creating portfolio '{portfolio_name}' with stocks: {stocks}")
+        success = create_portfolio(conn, portfolio_name, stocks)
+        if success:
+            logger.info(f"Portfolio '{portfolio_name}' created successfully.")
+        else:
+            logger.error(f"Failed to create portfolio '{portfolio_name}'.")
 
-    # ---- Example of fetching a date range ---- #
-    from_date = '2024-10-10'
-    to_date = '2024-10-12'
-    logging.info(f"Fetching transaction data from {from_date} to {to_date} from the database...")
-    fetched_data_range = get_psx_off_market_transactions(conn, from_date=from_date, to_date=to_date)
+        # 2. Read all portfolios
+        logger.debug("Retrieving all existing portfolios.")
+        portfolios = get_all_portfolios(conn)
+        if portfolios:
+            logger.info("Existing Portfolios:")
+            for portfolio in portfolios:
+                logger.info(f"ID: {portfolio['Portfolio_ID']}, Name: {portfolio['Name']}, Stocks: {portfolio['Stocks']}")
+        else:
+            logger.info("No portfolios found in the database.")
 
-    if fetched_data_range is not None:
-        logging.info(f"Fetched Data from {from_date} to {to_date}:\n{fetched_data_range.head()}")
-    else:
-        logging.error(f"No transaction data found from {from_date} to {to_date}.")
+        # 3. Update an existing portfolio
+        if portfolios:
+            portfolio_id = portfolios[0]['Portfolio_ID']
+            new_name = "Tech Leaders"
+            new_stocks = ["AAPL", "GOOGL", "MSFT", "TSLA"]  # Updated list
+            logger.debug(f"Updating portfolio ID '{portfolio_id}' to name '{new_name}' with stocks: {new_stocks}")
+            success = update_portfolio(conn, portfolio_id, new_name=new_name, new_stocks=new_stocks)
+            if success:
+                logger.info(f"Portfolio ID '{portfolio_id}' updated successfully to '{new_name}'.")
+            else:
+                logger.error(f"Failed to update Portfolio ID '{portfolio_id}'.")
+        else:
+            logger.warning("No portfolios available to update.")
 
+        # 4. Delete a portfolio
+        if portfolios:
+            portfolio_id = portfolios[0]['Portfolio_ID']
+            logger.debug(f"Deleting portfolio ID '{portfolio_id}'.")
+            success = delete_portfolio(conn, portfolio_id)
+            if success:
+                logger.info(f"Portfolio ID '{portfolio_id}' deleted successfully.")
+            else:
+                logger.error(f"Failed to delete Portfolio ID '{portfolio_id}'.")
+        else:
+            logger.warning("No portfolios available to delete.")
 
-    # ---- Step 4: Fetch Market Watch Data ---- #
-    logging.info("Fetching market watch data...")
-    market_data = get_kse_market_watch(SECTOR_MAPPING)
+        # 5. Read portfolios after deletion
+        logger.debug("Retrieving portfolios after deletion operation.")
+        portfolios = get_all_portfolios(conn)
+        if portfolios:
+            logger.info("Portfolios after deletion:")
+            for portfolio in portfolios:
+                logger.info(f"ID: {portfolio['Portfolio_ID']}, Name: {portfolio['Name']}, Stocks: {portfolio['Stocks']}")
+        else:
+            logger.info("No portfolios remaining after deletion.")
 
-    if not market_data:
-        logging.error("Failed to fetch market watch data.")
-        return
-    else:
-        logging.info(f"Fetched {len(market_data)} market watch records.")
+        logger.info("---- End of Portfolio Management Operations ----")
 
-    # ---- Step 5: Insert Market Watch data into the database ---- #
-    logging.info("Inserting market watch data into the database...")
-    success, records_added = insert_market_watch_data_into_db(conn, market_data)
-    
-    if success:
-        logging.info(f"Successfully inserted {records_added} market watch records into the database.")
-    else:
-        logging.error("Failed to insert market watch data into the database.")
-        return
+        # ---- Step 5: Fetch and Insert PSX Transaction Data ---- #
+        transaction_date = '2024-10-11'  # Example date in 'YYYY-MM-DD' format
+        logger.info(f"Fetching PSX transaction data for date: {transaction_date}")
+        transaction_data = fetch_psx_transaction_data(transaction_date)
 
-    # ---- Step 6: Query top advancers ---- #
-    logging.info("Fetching top 10 advancers...")
-    top_advancers = get_top_advancers(conn)
-    if top_advancers:
-        logging.info("Top 10 Advancers:")
-        for idx, advancer in enumerate(top_advancers, start=1):
-            logging.info(f"{idx}. {advancer}")
-    else:
-        logging.error("Failed to fetch top advancers.")
+        if transaction_data is not None and not transaction_data.empty:
+            logger.info(f"Inserting transaction data for {transaction_date} into the database.")
+            insert_off_market_transaction_data(conn, transaction_data, 'Off Market & Cross Transactions')
+            logger.info(f"Inserted {len(transaction_data)} transaction records into the database.")
+        else:
+            logger.error(f"No transaction data fetched for date: {transaction_date}")
+            # Continue execution if transaction data is not critical
+            # return  # Uncomment if you want to exit on missing transaction data
 
-    logging.info("-" * 50)  # Separator for visual clarity
+        # ---- Step 6: Retrieve and Display Transaction Data ---- #
+        logger.info(f"Retrieving transaction data for date: {transaction_date}")
+        fetched_data = get_psx_off_market_transactions(conn, from_date=transaction_date)
 
-    # ---- Step 7: Query top decliners ---- #
-    logging.info("Fetching top 10 decliners...")
-    top_decliners = get_top_decliners(conn)
-    if top_decliners:
-        logging.info("Top 10 Decliners:")
-        for idx, decliner in enumerate(top_decliners, start=1):
-            logging.info(f"{idx}. {decliner}")
-    else:
-        logging.error("Failed to fetch top decliners.")
+        if fetched_data is not None and not fetched_data.empty:
+            logger.info(f"Fetched Transaction Data for {transaction_date}:\n{fetched_data.head()}")
+        else:
+            logger.error(f"No transaction data found for date: {transaction_date}")
 
-    logging.info("-" * 50)  # Separator for visual clarity
+        # Example of fetching a date range
+        from_date = '2024-10-10'
+        to_date = '2024-10-12'
+        logger.info(f"Fetching transaction data from {from_date} to {to_date}.")
+        fetched_data_range = get_psx_off_market_transactions(conn, from_date=from_date, to_date=to_date)
 
-    # ---- Step 8: Query top active stocks ---- #
-    logging.info("Fetching top 10 most active stocks...")
-    top_active = get_top_active(conn)
-    if top_active:
-        logging.info("Top 10 Most Active Stocks:")
-        for idx, active in enumerate(top_active, start=1):
-            logging.info(f"{idx}. {active}")
-    else:
-        logging.error("Failed to fetch top active stocks.")
+        if fetched_data_range is not None and not fetched_data_range.empty:
+            logger.info(f"Fetched Transaction Data from {from_date} to {to_date}:\n{fetched_data_range.head()}")
+        else:
+            logger.error(f"No transaction data found from {from_date} to {to_date}.")
 
-    logging.info("-" * 50)  # Separator for visual clarity
+        # ---- Step 7: Insert Market Watch Data ---- #
+        logger.info("Inserting market watch data into the database.")
+        success, records_added = insert_market_watch_data_into_db(conn)
 
-    # ---- Step 9: Fetch Listings Data ---- #
-    logging.info("Fetching listings data...")
-    listings_data = get_listings_data()
+        if success:
+            logger.info(f"Successfully inserted/updated {records_added} market watch records into the database.")
+        else:
+            logger.error("Failed to insert market watch data into the database.")
+            # Continue execution if market watch data is not critical
+            # return  # Uncomment if you want to exit on failure
 
-    if listings_data:
-        logging.info(f"Successfully retrieved {len(listings_data)} listings records.")
-        logging.info(f"Sample Listings Data: {listings_data[:5]}")  # Display first 5 records
-    else:
-        logging.error("Failed to retrieve listings data.")
-    
-    logging.info("-" * 50)  # Separator for visual clarity
+        # ---- Step 8: Retrieve and Display Market Insights ---- #
+        logger.info("---- Market Insights ----")
 
-    # ---- Step 10: Fetch Defaulters Data ---- #
-    logging.info("Fetching defaulters data...")
-    defaulters_data = get_defaulters_list()
+        # Fetch Top Advancers
+        logger.info("Fetching top 10 advancers.")
+        top_advancers = get_top_advancers(conn)
+        if top_advancers:
+            logger.info("Top 10 Advancers:")
+            for idx, advancer in enumerate(top_advancers, start=1):
+                logger.info(f"{idx}. {advancer}")
+        else:
+            logger.error("Failed to fetch top advancers.")
 
-    if defaulters_data:
-        logging.info(f"Successfully retrieved {len(defaulters_data)} defaulters records.")
-        logging.info(f"Sample Defaulters Data: {defaulters_data[:5]}")  # Display first 5 records
-    else:
-        logging.error("Failed to retrieve defaulters data.")
-    
-    logging.info("-" * 50)  # Separator for visual clarity
+        logger.info("-" * 50)  # Separator for visual clarity
 
-    # ---- Step 11: Merge Data ---- #
-    logging.info("Merging market watch, listings, and defaulters data...")
-    merged_data = merge_data(market_data, listings_data, defaulters_data)
+        # Fetch Top Decliners
+        logger.info("Fetching top 10 decliners.")
+        top_decliners = get_top_decliners(conn)
+        if top_decliners:
+            logger.info("Top 10 Decliners:")
+            for idx, decliner in enumerate(top_decliners, start=1):
+                logger.info(f"{idx}. {decliner}")
+        else:
+            logger.error("Failed to fetch top decliners.")
 
-    if merged_data:
-        logging.info(f"Successfully merged data into {len(merged_data)} records.")
-        logging.info(f"Sample Merged Data (Defaulter Info Included): {merged_data[:5]}")  # Display first 5 records
-    else:
-        logging.error("Failed to merge data.")
-    
-    logging.info("-" * 50)  # Separator for visual clarity
+        logger.info("-" * 50)  # Separator for visual clarity
 
-    # ---- Step 12: Close the database connection ---- #
-    conn.close()
-    logging.info("In-memory database closed after testing.")
+        # Fetch Top Active Stocks
+        logger.info("Fetching top 10 most active stocks.")
+        top_active = get_top_active(conn)
+        if top_active:
+            logger.info("Top 10 Most Active Stocks:")
+            for idx, active in enumerate(top_active, start=1):
+                logger.info(f"{idx}. {active}")
+        else:
+            logger.error("Failed to fetch top active stocks.")
 
-# This block ensures that the main function is only executed when the script is run directly
+        logger.info("-" * 50)  # Separator for visual clarity
+
+        # ---- Step 9: Fetch Listings Data ---- #
+        logger.info("Fetching listings data.")
+        listings_data = get_listings_data()
+
+        if listings_data:
+            logger.info(f"Successfully retrieved {len(listings_data)} listings records.")
+            logger.debug(f"Sample Listings Data: {listings_data[:5]}")  # Display first 5 records
+        else:
+            logger.error("Failed to retrieve listings data.")
+
+        logger.info("-" * 50)  # Separator for visual clarity
+
+        # ---- Step 10: Fetch Defaulters Data ---- #
+        logger.info("Fetching defaulters data.")
+        defaulters_data = get_defaulters_list()
+
+        if defaulters_data:
+            logger.info(f"Successfully retrieved {len(defaulters_data)} defaulters records.")
+            logger.debug(f"Sample Defaulters Data: {defaulters_data[:5]}")  # Display first 5 records
+        else:
+            logger.error("Failed to retrieve defaulters data.")
+
+        logger.info("-" * 50)  # Separator for visual clarity
+
+        # ---- Step 11: Merge Data ---- #
+        logger.info("Merging market watch, listings, and defaulters data.")
+        merged_data = merge_data(psx_data, listings_data, defaulters_data)  # Ensure psx_data is correctly passed
+
+        if merged_data:
+            logger.info(f"Successfully merged data into {len(merged_data)} records.")
+            logger.debug(f"Sample Merged Data (Defaulter Info Included): {merged_data[:5]}")  # Display first 5 records
+        else:
+            logger.error("Failed to merge data.")
+
+        logger.info("-" * 50)  # Separator for visual clarity
+
+    except Exception as e:
+        logger.exception(f"An unexpected error occurred: {e}")
+
+    finally:
+        # ---- Step 12: Close the Database Connection ---- #
+        if 'conn' in locals() and conn:
+            conn.close()
+            logger.info("In-memory database connection closed.")
+
+# Ensure that the main function runs only when the script is executed directly
 if __name__ == "__main__":
     main()
-
-
-
-
-
