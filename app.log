@@ -1026,3 +1026,103 @@ ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), 
 2024-10-13 01:37:44,496 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
 2024-10-13 01:37:44,509 - INFO - Portfolio 'beta' created with stocks: FATIMA,MCB,PSO.
 2024-10-13 01:37:44,525 - INFO - Portfolio 'beta' created with tickers: ['FATIMA', 'MCB', 'PSO'].
+2024-10-13 01:37:57,889 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:37:57,895 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:38:03,044 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:38:03,048 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:38:03,056 - INFO - Retrieved 2 portfolios from the database.
+2024-10-13 01:38:03,061 - INFO - Retrieved portfolio 'alpha' with ID 1.
+2024-10-13 01:38:03,064 - INFO - Selected Portfolio 'alpha' with tickers: [].
+2024-10-13 01:38:06,383 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:38:06,402 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:38:06,412 - INFO - Retrieved 2 portfolios from the database.
+2024-10-13 01:38:06,413 - INFO - Retrieved portfolio 'beta' with ID 2.
+2024-10-13 01:38:06,461 - INFO - Selected Portfolio 'beta' with tickers: [].
+2024-10-13 01:38:11,734 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:38:11,747 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:38:11,850 - INFO - Retrieved 2 portfolios from the database.
+2024-10-13 01:38:11,952 - INFO - Retrieved portfolio 'alpha' with ID 1.
+2024-10-13 01:38:12,004 - INFO - Selected Portfolio 'alpha' with tickers: [].
+2024-10-13 01:38:18,840 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:38:18,846 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:50:20,317 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:50:28,288 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:50:28,293 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:50:28,296 - INFO - Latest date for ticker 'ABL': 2024-10-11
+2024-10-13 01:50:28,790 - INFO - Retrieved 0 records for ticker 'ABL'.
+2024-10-13 01:50:28,792 - ERROR - Failed to retrieve data for ticker 'ABL'.
+2024-10-13 01:50:28,793 - INFO - Latest date for ticker 'AIRLINK': 2024-10-11
+2024-10-13 01:50:29,235 - INFO - Retrieved 0 records for ticker 'AIRLINK'.
+2024-10-13 01:50:29,237 - ERROR - Failed to retrieve data for ticker 'AIRLINK'.
+2024-10-13 01:50:29,238 - INFO - Latest date for ticker 'FATIMA': 2024-10-11
+2024-10-13 01:50:29,680 - INFO - Retrieved 0 records for ticker 'FATIMA'.
+2024-10-13 01:50:29,681 - ERROR - Failed to retrieve data for ticker 'FATIMA'.
+2024-10-13 01:50:29,682 - INFO - Latest date for ticker 'HUBC': 2024-10-11
+2024-10-13 01:50:30,113 - INFO - Retrieved 0 records for ticker 'HUBC'.
+2024-10-13 01:50:30,114 - ERROR - Failed to retrieve data for ticker 'HUBC'.
+2024-10-13 01:50:30,115 - INFO - Latest date for ticker 'MCB': 2024-10-11
+2024-10-13 01:50:30,553 - INFO - Retrieved 0 records for ticker 'MCB'.
+2024-10-13 01:50:30,555 - ERROR - Failed to retrieve data for ticker 'MCB'.
+2024-10-13 01:50:30,558 - INFO - Latest date for ticker 'OGDC': 2024-10-11
+2024-10-13 01:50:31,011 - INFO - Retrieved 0 records for ticker 'OGDC'.
+2024-10-13 01:50:31,013 - ERROR - Failed to retrieve data for ticker 'OGDC'.
+2024-10-13 01:50:31,015 - INFO - Latest date for ticker 'PPL': 2024-10-11
+2024-10-13 01:50:31,500 - INFO - Retrieved 0 records for ticker 'PPL'.
+2024-10-13 01:50:31,502 - ERROR - Failed to retrieve data for ticker 'PPL'.
+2024-10-13 01:50:31,505 - INFO - Latest date for ticker 'PSO': 2024-10-11
+2024-10-13 01:50:31,983 - INFO - Retrieved 0 records for ticker 'PSO'.
+2024-10-13 01:50:31,984 - ERROR - Failed to retrieve data for ticker 'PSO'.
+2024-10-13 01:50:31,988 - INFO - Latest date for ticker 'PTC': 2024-10-11
+2024-10-13 01:50:32,771 - INFO - Retrieved 0 records for ticker 'PTC'.
+2024-10-13 01:50:32,772 - ERROR - Failed to retrieve data for ticker 'PTC'.
+2024-10-13 01:50:32,773 - INFO - Latest date for ticker 'SEARL': 2024-10-11
+2024-10-13 01:50:33,224 - INFO - Retrieved 0 records for ticker 'SEARL'.
+2024-10-13 01:50:33,225 - ERROR - Failed to retrieve data for ticker 'SEARL'.
+2024-10-13 01:50:33,227 - INFO - Database synchronization complete.
+2024-10-13 01:50:38,478 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:50:38,801 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:50:41,450 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:50:41,453 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:50:42,454 - INFO - Analysis for ticker 'ABL' completed successfully.
+2024-10-13 01:50:42,501 - INFO - Analysis for ticker 'AIRLINK' completed successfully.
+2024-10-13 01:50:42,552 - INFO - Analysis for ticker 'FATIMA' completed successfully.
+2024-10-13 01:50:42,619 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-13 01:50:42,659 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-13 01:50:42,705 - INFO - Analysis for ticker 'OGDC' completed successfully.
+2024-10-13 01:50:42,752 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-13 01:50:42,791 - INFO - Analysis for ticker 'PSO' completed successfully.
+2024-10-13 01:50:42,836 - INFO - Analysis for ticker 'PTC' completed successfully.
+2024-10-13 01:50:42,880 - INFO - Analysis for ticker 'SEARL' completed successfully.
+2024-10-13 01:50:52,376 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:51:34,569 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:51:34,692 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:51:34,699 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:51:35,490 - INFO - Retrieved 1182 records for ticker 'HUMNL'.
+2024-10-13 01:51:35,518 - INFO - Prepared 1182 valid records for insertion for ticker 'HUMNL'.
+2024-10-13 01:51:35,518 - INFO - Inserting batch 1 for ticker 'HUMNL' with 100 records.
+2024-10-13 01:51:35,527 - INFO - Batch 1 inserted 100 records (may include ignored records).
+2024-10-13 01:51:35,529 - INFO - Inserting batch 2 for ticker 'HUMNL' with 100 records.
+2024-10-13 01:51:35,534 - INFO - Batch 2 inserted 100 records (may include ignored records).
+2024-10-13 01:51:35,534 - INFO - Inserting batch 3 for ticker 'HUMNL' with 100 records.
+2024-10-13 01:51:35,538 - INFO - Batch 3 inserted 100 records (may include ignored records).
+2024-10-13 01:51:35,552 - INFO - Inserting batch 4 for ticker 'HUMNL' with 100 records.
+2024-10-13 01:51:35,561 - INFO - Batch 4 inserted 100 records (may include ignored records).
+2024-10-13 01:51:35,565 - INFO - Inserting batch 5 for ticker 'HUMNL' with 100 records.
+2024-10-13 01:51:35,568 - INFO - Batch 5 inserted 100 records (may include ignored records).
+2024-10-13 01:51:35,576 - INFO - Inserting batch 6 for ticker 'HUMNL' with 100 records.
+2024-10-13 01:51:35,579 - INFO - Batch 6 inserted 100 records (may include ignored records).
+2024-10-13 01:51:35,581 - INFO - Inserting batch 7 for ticker 'HUMNL' with 100 records.
+2024-10-13 01:51:35,584 - INFO - Batch 7 inserted 100 records (may include ignored records).
+2024-10-13 01:51:35,585 - INFO - Inserting batch 8 for ticker 'HUMNL' with 100 records.
+2024-10-13 01:51:35,591 - INFO - Batch 8 inserted 100 records (may include ignored records).
+2024-10-13 01:51:35,598 - INFO - Inserting batch 9 for ticker 'HUMNL' with 100 records.
+2024-10-13 01:51:35,602 - INFO - Batch 9 inserted 100 records (may include ignored records).
+2024-10-13 01:51:35,608 - INFO - Inserting batch 10 for ticker 'HUMNL' with 100 records.
+2024-10-13 01:51:35,614 - INFO - Batch 10 inserted 100 records (may include ignored records).
+2024-10-13 01:51:35,616 - INFO - Inserting batch 11 for ticker 'HUMNL' with 100 records.
+2024-10-13 01:51:35,620 - INFO - Batch 11 inserted 100 records (may include ignored records).
+2024-10-13 01:51:35,625 - INFO - Inserting batch 12 for ticker 'HUMNL' with 82 records.
+2024-10-13 01:51:35,629 - INFO - Batch 12 inserted 82 records (may include ignored records).
+2024-10-13 01:51:35,630 - INFO - Added 1182 records for ticker 'HUMNL'.
+2024-10-13 01:51:35,631 - INFO - Total records in the database for ticker 'HUMNL': 1182
+2024-10-13 01:51:35,633 - INFO - Added 1182 records for ticker 'HUMNL'.
