@@ -894,3 +894,135 @@ ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), 
 2024-10-13 00:47:25,616 - INFO - Retrieved 0 records for ticker 'SEARL'.
 2024-10-13 00:47:25,617 - ERROR - Failed to retrieve data for ticker 'SEARL'.
 2024-10-13 00:47:25,619 - INFO - Database synchronization complete.
+2024-10-13 00:59:05,099 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 00:59:25,415 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:04:37,132 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:04:58,542 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:05:00,296 - INFO - Retrieved 960 records from market watch.
+2024-10-13 01:16:47,088 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:16:54,830 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:16:56,755 - INFO - Retrieved 855 index symbols.
+2024-10-13 01:20:48,743 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:20:54,099 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:20:54,142 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:20:54,234 - INFO - Latest date for ticker 'ABL': 2024-10-11
+2024-10-13 01:20:54,913 - INFO - Retrieved 0 records for ticker 'ABL'.
+2024-10-13 01:20:54,928 - ERROR - Failed to retrieve data for ticker 'ABL'.
+2024-10-13 01:20:54,932 - INFO - Latest date for ticker 'AIRLINK': 2024-10-11
+2024-10-13 01:20:55,376 - INFO - Retrieved 0 records for ticker 'AIRLINK'.
+2024-10-13 01:20:55,385 - ERROR - Failed to retrieve data for ticker 'AIRLINK'.
+2024-10-13 01:20:55,402 - INFO - Latest date for ticker 'FATIMA': 2024-10-11
+2024-10-13 01:20:55,925 - INFO - Retrieved 0 records for ticker 'FATIMA'.
+2024-10-13 01:20:55,982 - ERROR - Failed to retrieve data for ticker 'FATIMA'.
+2024-10-13 01:20:55,994 - INFO - Latest date for ticker 'HUBC': 2024-10-11
+2024-10-13 01:20:56,425 - INFO - Retrieved 0 records for ticker 'HUBC'.
+2024-10-13 01:20:56,466 - ERROR - Failed to retrieve data for ticker 'HUBC'.
+2024-10-13 01:20:56,470 - INFO - Latest date for ticker 'MCB': 2024-10-11
+2024-10-13 01:20:56,951 - INFO - Retrieved 0 records for ticker 'MCB'.
+2024-10-13 01:20:56,952 - ERROR - Failed to retrieve data for ticker 'MCB'.
+2024-10-13 01:20:56,954 - INFO - Latest date for ticker 'OGDC': 2024-10-11
+2024-10-13 01:20:57,411 - INFO - Retrieved 0 records for ticker 'OGDC'.
+2024-10-13 01:20:57,412 - ERROR - Failed to retrieve data for ticker 'OGDC'.
+2024-10-13 01:20:57,414 - INFO - Latest date for ticker 'PPL': 2024-10-11
+2024-10-13 01:20:57,886 - INFO - Retrieved 0 records for ticker 'PPL'.
+2024-10-13 01:20:57,899 - ERROR - Failed to retrieve data for ticker 'PPL'.
+2024-10-13 01:20:57,937 - INFO - Latest date for ticker 'PSO': 2024-10-11
+2024-10-13 01:20:58,411 - INFO - Retrieved 0 records for ticker 'PSO'.
+2024-10-13 01:20:58,413 - ERROR - Failed to retrieve data for ticker 'PSO'.
+2024-10-13 01:20:58,417 - INFO - Latest date for ticker 'PTC': 2024-10-11
+2024-10-13 01:20:58,879 - INFO - Retrieved 0 records for ticker 'PTC'.
+2024-10-13 01:20:58,888 - ERROR - Failed to retrieve data for ticker 'PTC'.
+2024-10-13 01:20:58,896 - INFO - Latest date for ticker 'SEARL': 2024-10-11
+2024-10-13 01:20:59,402 - INFO - Retrieved 0 records for ticker 'SEARL'.
+2024-10-13 01:20:59,403 - ERROR - Failed to retrieve data for ticker 'SEARL'.
+2024-10-13 01:20:59,406 - INFO - Database synchronization complete.
+2024-10-13 01:21:07,359 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:07,368 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:21:22,211 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:22,284 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:21:33,989 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:34,109 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:21:35,650 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:35,674 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:21:37,103 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:37,112 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:21:38,114 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:38,135 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:21:38,650 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:38,667 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:21:39,138 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:39,160 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:21:39,576 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:39,600 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:21:40,182 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:40,199 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:21:40,982 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:41,018 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:21:41,773 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:41,790 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:21:44,405 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:44,418 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:21:44,475 - INFO - Portfolio 'alpha' created with stocks: HUBC,FATIMA,AIRLINK,ABL,OGDC,PSO,SEARL,PTC,PPL,MCB.
+2024-10-13 01:21:44,516 - INFO - Portfolio 'alpha' created with tickers: ['HUBC', 'FATIMA', 'AIRLINK', 'ABL', 'OGDC', 'PSO', 'SEARL', 'PTC', 'PPL', 'MCB'].
+2024-10-13 01:21:52,445 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:21:52,475 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:22:04,606 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:22:13,035 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:22:13,062 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:22:18,181 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:22:18,199 - INFO - Retrieved 1 portfolios from the database.
+2024-10-13 01:37:03,978 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:37:15,324 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:37:16,743 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:37:16,801 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:37:16,974 - INFO - Latest date for ticker 'ABL': 2024-10-11
+2024-10-13 01:37:17,667 - INFO - Retrieved 0 records for ticker 'ABL'.
+2024-10-13 01:37:17,668 - ERROR - Failed to retrieve data for ticker 'ABL'.
+2024-10-13 01:37:17,669 - INFO - Latest date for ticker 'AIRLINK': 2024-10-11
+2024-10-13 01:37:18,163 - INFO - Retrieved 0 records for ticker 'AIRLINK'.
+2024-10-13 01:37:18,169 - ERROR - Failed to retrieve data for ticker 'AIRLINK'.
+2024-10-13 01:37:18,177 - INFO - Latest date for ticker 'FATIMA': 2024-10-11
+2024-10-13 01:37:18,626 - INFO - Retrieved 0 records for ticker 'FATIMA'.
+2024-10-13 01:37:18,629 - ERROR - Failed to retrieve data for ticker 'FATIMA'.
+2024-10-13 01:37:18,638 - INFO - Latest date for ticker 'HUBC': 2024-10-11
+2024-10-13 01:37:19,096 - INFO - Retrieved 0 records for ticker 'HUBC'.
+2024-10-13 01:37:19,109 - ERROR - Failed to retrieve data for ticker 'HUBC'.
+2024-10-13 01:37:19,159 - INFO - Latest date for ticker 'MCB': 2024-10-11
+2024-10-13 01:37:19,593 - INFO - Retrieved 0 records for ticker 'MCB'.
+2024-10-13 01:37:19,594 - ERROR - Failed to retrieve data for ticker 'MCB'.
+2024-10-13 01:37:19,598 - INFO - Latest date for ticker 'OGDC': 2024-10-11
+2024-10-13 01:37:20,038 - INFO - Retrieved 0 records for ticker 'OGDC'.
+2024-10-13 01:37:20,038 - ERROR - Failed to retrieve data for ticker 'OGDC'.
+2024-10-13 01:37:20,041 - INFO - Latest date for ticker 'PPL': 2024-10-11
+2024-10-13 01:37:20,453 - INFO - Retrieved 0 records for ticker 'PPL'.
+2024-10-13 01:37:20,454 - ERROR - Failed to retrieve data for ticker 'PPL'.
+2024-10-13 01:37:20,455 - INFO - Latest date for ticker 'PSO': 2024-10-11
+2024-10-13 01:37:20,966 - INFO - Retrieved 0 records for ticker 'PSO'.
+2024-10-13 01:37:20,971 - ERROR - Failed to retrieve data for ticker 'PSO'.
+2024-10-13 01:37:20,975 - INFO - Latest date for ticker 'PTC': 2024-10-11
+2024-10-13 01:37:21,472 - INFO - Retrieved 0 records for ticker 'PTC'.
+2024-10-13 01:37:21,476 - ERROR - Failed to retrieve data for ticker 'PTC'.
+2024-10-13 01:37:21,490 - INFO - Latest date for ticker 'SEARL': 2024-10-11
+2024-10-13 01:37:21,973 - INFO - Retrieved 0 records for ticker 'SEARL'.
+2024-10-13 01:37:21,974 - ERROR - Failed to retrieve data for ticker 'SEARL'.
+2024-10-13 01:37:21,976 - INFO - Database synchronization complete.
+2024-10-13 01:37:25,326 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:37:25,340 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:37:31,069 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:37:31,077 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:37:32,317 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:37:32,348 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:37:32,750 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:37:32,758 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:37:33,230 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:37:33,241 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:37:35,007 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:37:35,017 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:37:35,020 - ERROR - Failed to create portfolio 'alpha': UNIQUE constraint failed: Portfolios.Name
+2024-10-13 01:37:35,025 - ERROR - Failed to create portfolio 'alpha'.
+2024-10-13 01:37:44,405 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:37:44,413 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:37:44,487 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:37:44,496 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:37:44,509 - INFO - Portfolio 'beta' created with stocks: FATIMA,MCB,PSO.
+2024-10-13 01:37:44,525 - INFO - Portfolio 'beta' created with tickers: ['FATIMA', 'MCB', 'PSO'].

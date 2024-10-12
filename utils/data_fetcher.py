@@ -228,7 +228,12 @@ def get_stock_data(ticker, date_from, date_to):
         logging.error(f"Failed to parse JSON response for ticker '{ticker}'.")
         return None
 
+# data_fetcher.py
+# data_fetcher.py
 
+import requests
+from bs4 import BeautifulSoup
+import logging
 
 def fetch_kse_market_watch(sector_mapping):
     """
@@ -239,7 +244,7 @@ def fetch_kse_market_watch(sector_mapping):
         sector_mapping (dict): A dictionary mapping sector codes to sector names.
 
     Returns:
-        list of dict: Each dictionary represents a row of market data with a single 'LISTED IN' value.
+        tuple: (success_flag (bool), records_added (int))
     """
     url = 'https://dps.psx.com.pk/market-watch'
     try:
@@ -247,14 +252,14 @@ def fetch_kse_market_watch(sector_mapping):
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         logging.error(f"HTTP Request failed for market watch: {e}")
-        return None
+        return False, 0  # Return failure and zero records
 
     soup = BeautifulSoup(response.text, 'html.parser')
     table = soup.find('table', {'class': 'tbl'})
     
     if not table:
         logging.error("No table found for market watch data.")
-        return None
+        return False, 0
 
     market_data = []
 
@@ -293,8 +298,11 @@ def fetch_kse_market_watch(sector_mapping):
                 'VOLUME': volume
             })
     
-    logging.info(f"Retrieved {len(market_data)} records from market watch.")
-    return market_data
+    records_added = len(market_data)
+    logging.info(f"Retrieved {records_added} records from market watch.")
+    return True, records_added  # Return success and number of records
+
+
 
 def get_defaulters_list():
     """

@@ -8,36 +8,33 @@ from utils.db_manager import (
     initialize_db_and_tables, 
     get_unique_tickers_from_db, 
     get_latest_date_for_ticker, 
-    insert_ticker_data_into_db
+    insert_ticker_data_into_db,
+    get_all_portfolios,
+    create_portfolio,
+    update_portfolio,
+    delete_portfolio,
+    get_portfolio_by_name,
+    search_psx_constituents_by_name,
+    search_psx_constituents_by_symbol,
+    insert_psx_constituents  # Ensure this is imported
 )
 
-
-# import os
 import numpy as np
 import logging
-# from datetime import datetime, timedelta
-from datetime import time
+from datetime import time, datetime
 
-from utils.data_fetcher import get_stock_data
+from utils.data_fetcher import get_stock_data, fetch_kse_market_watch, get_kse_symbols
 from analysis.mxwll_suite_indicator import mxwll_suite_indicator
 
 from utils.logger import setup_logging
 
-
+# Initialize logging
 setup_logging()
 logger = logging.getLogger(__name__)
 
-# # Configure logging
-# logging.basicConfig(
-#     filename='app.log',
-#     filemode='a',
-#     format='%(asctime)s - %(levelname)s - %(message)s',
-#     level=logging.INFO
-# )
-
 # Configure Streamlit page
 st.set_page_config(
-    page_title="PSX Scanner",
+    page_title="📈 PSX Scanner",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -57,8 +54,7 @@ if conn is None:
 st.sidebar.header("Menu")
 
 app_mode = st.sidebar.selectbox("Choose the Scanner mode",
-    ["Synchronize Database", "Add New Ticker", "Analyze Tickers"])
-
+    ["Synchronize Database", "Add New Ticker", "Analyze Tickers", "Manage Portfolios"])
 
 
 # Function to synchronize database
@@ -182,6 +178,7 @@ def add_new_ticker_ui():
             st.error("Please enter a valid ticker symbol.")
             logging.error("Empty ticker symbol entered.")
 
+
 # Function to analyze tickers
 def analyze_tickers():
     st.header("🔍 Analyze Tickers")
@@ -191,8 +188,30 @@ def analyze_tickers():
         logging.warning("No tickers available for analysis.")
         return
     
-    # Select tickers
-    selected_tickers = st.multiselect("Select Tickers for Analysis", tickers, default=tickers)
+    # Select analysis type
+    analysis_type = st.selectbox("Select Analysis Type", ["All Tickers", "By Portfolio"])
+    
+    selected_tickers = []
+    
+    if analysis_type == "All Tickers":
+        selected_tickers = st.multiselect("Select Tickers for Analysis", tickers, default=tickers)
+    elif analysis_type == "By Portfolio":
+        portfolios = get_all_portfolios(conn)
+        if portfolios:
+            portfolio_names = [portfolio['Name'] for portfolio in portfolios]
+            selected_portfolio = st.selectbox("Select a Portfolio", portfolio_names)
+            portfolio = get_portfolio_by_name(conn, selected_portfolio)
+            if portfolio:
+                selected_tickers = portfolio.get('Tickers', [])  # Ensure correct key
+                st.info(f"Selected Portfolio: {selected_portfolio} with {len(selected_tickers)} tickers.")
+                logging.info(f"Selected Portfolio '{selected_portfolio}' with tickers: {selected_tickers}.")
+            else:
+                st.error("Selected portfolio not found.")
+                logging.error(f"Selected portfolio '{selected_portfolio}' not found.")
+        else:
+            st.warning("No portfolios available. Please create a portfolio first.")
+            logging.warning("No portfolios available for analysis by portfolio.")
+            return
     
     if not selected_tickers:
         st.warning("Please select at least one ticker for analysis.")
@@ -387,12 +406,6 @@ def analyze_tickers():
                     st.error(f"An error occurred during analysis for ticker '{ticker}': {e}")
                     logging.error(f"Error during analysis for ticker '{ticker}': {e}")
         
-        # # After all tickers are analyzed, display the summary table
-        # if summary_list:
-        #     st.subheader("📊 Summary Table")
-        #     summary_df = pd.DataFrame(summary_list)
-        #     st.table(summary_df)
-        
         # --- Generate Scatter Plot After All Analyses ---
         
         if comparison_metrics:
@@ -408,7 +421,7 @@ def analyze_tickers():
                 size='Volume',
                 hover_data=['Last Close'],
                 text='Ticker',
-                title='Potential Profit (%) vs High AOE with Volume',
+                title='Potential Profit (%) vs High AOI with Volume',
                 labels={
                     'High_AOI': 'High AOI',
                     'Potential Profit (%)': 'Potential Profit (%)',
@@ -445,6 +458,163 @@ def analyze_tickers():
             st.warning("No comparison metrics available to generate the scatter plot.")
             logging.warning("No comparison metrics available after analysis.")
 
+
+# Function to manage portfolios
+def manage_portfolios():
+    st.header("📁 Manage Portfolios")
+    
+    # Sub-menu for Portfolio Management
+    sub_menu = st.selectbox("Select an option", ["Create New Portfolio", "View Portfolios", "Update Portfolio", "Delete Portfolio", "Search and Add to Portfolio"])
+    
+    if sub_menu == "Create New Portfolio":
+        st.subheader("➕ Create New Portfolio")
+        portfolio_name = st.text_input("Enter Portfolio Name:")
+        available_tickers = get_unique_tickers_from_db(conn)
+        selected_tickers = st.multiselect("Select Tickers for Portfolio", available_tickers)
+        
+        if st.button("Create Portfolio"):
+            if portfolio_name and selected_tickers:
+                success = create_portfolio(conn, portfolio_name, selected_tickers)
+                if success:
+                    st.success(f"Portfolio '{portfolio_name}' created successfully.")
+                    logging.info(f"Portfolio '{portfolio_name}' created with tickers: {selected_tickers}.")
+                else:
+                    st.error(f"Failed to create portfolio '{portfolio_name}'. It may already exist.")
+                    logging.error(f"Failed to create portfolio '{portfolio_name}'.")
+            else:
+                st.error("Please provide a portfolio name and select at least one ticker.")
+                logging.error("Incomplete data provided for portfolio creation.")
+
+    elif sub_menu == "View Portfolios":
+        st.subheader("📋 View Portfolios")
+        portfolios = get_all_portfolios(conn)
+        if portfolios:
+            for portfolio in portfolios:
+                with st.expander(f"Portfolio: {portfolio['Name']}"):
+                    st.write(f"**ID:** {portfolio['Portfolio_ID']}")
+                    # Safely access 'Tickers' key
+                    tickers = portfolio.get('Tickers') or portfolio.get('tickers') or portfolio.get('Stocks') or []
+                    st.write(f"**Tickers:** {', '.join(tickers)}")
+        else:
+            st.info("No portfolios found. Please create a new portfolio.")
+            logging.info("No portfolios available to view.")
+
+    elif sub_menu == "Update Portfolio":
+        st.subheader("🔄 Update Portfolio")
+        portfolios = get_all_portfolios(conn)
+        
+        if portfolios:
+            portfolio_names = [portfolio['Name'] for portfolio in portfolios]
+            selected_portfolio = st.selectbox("Select Portfolio to Update", portfolio_names)
+            portfolio = get_portfolio_by_name(conn, selected_portfolio)
+            
+            if portfolio:
+                current_tickers = portfolio.get('Tickers') or portfolio.get('tickers') or portfolio.get('Stocks') or []
+                st.write(f"**Current Tickers:** {', '.join(current_tickers)}")
+                available_tickers = get_unique_tickers_from_db(conn)
+                new_selected_tickers = st.multiselect("Select New Tickers for Portfolio", available_tickers, default=current_tickers)
+                
+                if st.button("Update Portfolio"):
+                    if new_selected_tickers:
+                        success = update_portfolio(conn, portfolio['Portfolio_ID'], new_tickers=new_selected_tickers)
+                        if success:
+                            st.success(f"Portfolio '{selected_portfolio}' updated successfully.")
+                            logging.info(f"Portfolio '{selected_portfolio}' updated with tickers: {new_selected_tickers}.")
+                        else:
+                            st.error(f"Failed to update portfolio '{selected_portfolio}'.")
+                            logging.error(f"Failed to update portfolio '{selected_portfolio}'.")
+                    else:
+                        st.error("Please select at least one ticker for the portfolio.")
+                        logging.error("No tickers selected during portfolio update.")
+        else:
+            st.info("No portfolios available to update. Please create a portfolio first.")
+            logging.info("No portfolios available for update.")
+
+    elif sub_menu == "Delete Portfolio":
+        st.subheader("🗑️ Delete Portfolio")
+        portfolios = get_all_portfolios(conn)
+        
+        if portfolios:
+            portfolio_names = [portfolio['Name'] for portfolio in portfolios]
+            selected_portfolio = st.selectbox("Select Portfolio to Delete", portfolio_names)
+            
+            if st.button("Delete Portfolio"):
+                confirm = st.checkbox(f"Are you sure you want to delete portfolio '{selected_portfolio}'?")
+                if confirm:
+                    portfolio = get_portfolio_by_name(conn, selected_portfolio)
+                    if portfolio:
+                        success = delete_portfolio(conn, portfolio['Portfolio_ID'])
+                        if success:
+                            st.success(f"Portfolio '{selected_portfolio}' deleted successfully.")
+                            logging.info(f"Portfolio '{selected_portfolio}' deleted.")
+                        else:
+                            st.error(f"Failed to delete portfolio '{selected_portfolio}'.")
+                            logging.error(f"Failed to delete portfolio '{selected_portfolio}'.")
+                    else:
+                        st.error("Selected portfolio not found.")
+                        logging.error(f"Selected portfolio '{selected_portfolio}' not found.")
+        else:
+            st.info("No portfolios available to delete. Please create a portfolio first.")
+            logging.info("No portfolios available for deletion.")
+
+    elif sub_menu == "Search and Add to Portfolio":
+        st.subheader("🔍 Search and Add PSX Constituents to Portfolio")
+        
+        # Search by company name or symbol
+        search_option = st.radio("Search PSX Constituents By", ["Company Name", "Symbol"])
+        search_query = st.text_input(f"Enter {search_option}:")
+        
+        if st.button("Search"):
+            if search_query:
+                if search_option == "Company Name":
+                    results = search_psx_constituents_by_name(conn, search_query)
+                else:
+                    results = search_psx_constituents_by_symbol(conn, search_query.upper())
+                
+                if results:
+                    # Display search results
+                    search_df = pd.DataFrame(results, columns=[
+                        'ISIN', 'SYMBOL', 'COMPANY', 'PRICE', 'IDX_WT', 
+                        'FF_BASED_SHARES', 'FF_BASED_MCAP', 'ORD_SHARES', 
+                        'ORD_SHARES_MCAP', 'VOLUME'
+                    ])
+                    st.dataframe(search_df)
+                    
+                    # Select ticker to add
+                    selected_ticker = st.selectbox("Select Ticker to Add to Portfolio", search_df['SYMBOL'].unique())
+                    
+                    # Select portfolio to add to
+                    portfolios = get_all_portfolios(conn)
+                    if portfolios:
+                        portfolio_names = [portfolio['Name'] for portfolio in portfolios]
+                        selected_portfolio = st.selectbox("Select Portfolio to Add To", portfolio_names)
+                        if st.button("Add to Portfolio"):
+                            portfolio = get_portfolio_by_name(conn, selected_portfolio)
+                            if portfolio:
+                                current_tickers = portfolio.get('Tickers') or portfolio.get('tickers') or portfolio.get('Stocks') or []
+                                if selected_ticker in current_tickers:
+                                    st.warning(f"Ticker '{selected_ticker}' is already in portfolio '{selected_portfolio}'.")
+                                    logging.warning(f"Ticker '{selected_ticker}' already exists in portfolio '{selected_portfolio}'.")
+                                else:
+                                    updated_tickers = current_tickers + [selected_ticker]
+                                    success = update_portfolio(conn, portfolio['Portfolio_ID'], new_tickers=updated_tickers)
+                                    if success:
+                                        st.success(f"Ticker '{selected_ticker}' added to portfolio '{selected_portfolio}'.")
+                                        logging.info(f"Ticker '{selected_ticker}' added to portfolio '{selected_portfolio}'.")
+                                    else:
+                                        st.error(f"Failed to add ticker '{selected_ticker}' to portfolio '{selected_portfolio}'.")
+                                        logging.error(f"Failed to add ticker '{selected_ticker}' to portfolio '{selected_portfolio}'.")
+                    else:
+                        st.info("No portfolios found. Please create a portfolio first.")
+                        logging.info("No portfolios available to add tickers.")
+                else:
+                    st.info("No matching PSX constituents found.")
+                    logging.info("No PSX constituents matched the search query.")
+            else:
+                st.error("Please enter a search query.")
+                logging.error("Empty search query entered.")
+
+
 # Render different app modes
 if app_mode == "Synchronize Database":
     synchronize_database()
@@ -452,3 +622,5 @@ elif app_mode == "Add New Ticker":
     add_new_ticker_ui()
 elif app_mode == "Analyze Tickers":
     analyze_tickers()
+elif app_mode == "Manage Portfolios":
+    manage_portfolios()
