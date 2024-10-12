@@ -1126,3 +1126,18 @@ ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), 
 2024-10-13 01:51:35,630 - INFO - Added 1182 records for ticker 'HUMNL'.
 2024-10-13 01:51:35,631 - INFO - Total records in the database for ticker 'HUMNL': 1182
 2024-10-13 01:51:35,633 - INFO - Added 1182 records for ticker 'HUMNL'.
+2024-10-13 01:51:42,659 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:51:42,673 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:51:44,385 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-13 01:51:44,389 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-13 01:51:44,436 - INFO - Analysis for ticker 'ABL' completed successfully.
+2024-10-13 01:51:44,501 - INFO - Analysis for ticker 'AIRLINK' completed successfully.
+2024-10-13 01:51:44,588 - INFO - Analysis for ticker 'FATIMA' completed successfully.
+2024-10-13 01:51:44,637 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-13 01:51:44,703 - INFO - Analysis for ticker 'HUMNL' completed successfully.
+2024-10-13 01:51:44,772 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-13 01:51:44,820 - INFO - Analysis for ticker 'OGDC' completed successfully.
+2024-10-13 01:51:44,889 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-13 01:51:44,938 - INFO - Analysis for ticker 'PSO' completed successfully.
+2024-10-13 01:51:44,982 - INFO - Analysis for ticker 'PTC' completed successfully.
+2024-10-13 01:51:45,033 - INFO - Analysis for ticker 'SEARL' completed successfully.
