@@ -5,10 +5,10 @@ import pandas as pd
 import plotly.express as px  # Import Plotly Express
 import plotly.graph_objects as go  # Import Plotly Graph Objects
 from utils.db_manager import (
-    initialize_db, 
-    get_tickers_from_db, 
+    initialize_db_and_tables, 
+    get_unique_tickers_from_db, 
     get_latest_date_for_ticker, 
-    insert_data_into_db
+    insert_ticker_data_into_db
 )
 from utils.data_fetcher import get_stock_data
 from analysis.mxwll_suite_indicator import mxwll_suite_indicator
@@ -37,7 +37,7 @@ st.set_page_config(
 st.title("📈 Stock Data Analyzer")
 
 # Initialize database
-conn = initialize_db()
+conn = initialize_db_and_tables()
 
 if conn is None:
     st.error("Failed to connect to the database. Please check the logs.")
@@ -56,7 +56,7 @@ from datetime import time
 def synchronize_database():
     st.header("🔄 Synchronize Database")
     if st.button("Start Synchronization"):
-        tickers = get_tickers_from_db(conn)
+        tickers = get_unique_tickers_from_db(conn)
         if not tickers:
             st.warning("No tickers found in the database. Please add new tickers first.")
             logging.warning("No tickers found during synchronization.")
@@ -108,7 +108,7 @@ def synchronize_database():
             # Try to fetch new data for the ticker
             raw_data = get_stock_data(ticker, date_from, date_to)
             if raw_data:
-                success, records_added = insert_data_into_db(conn, raw_data, ticker)
+                success, records_added = insert_ticker_data_into_db(conn, raw_data, ticker)
                 if success:
                     if records_added > 0:
                         st.success(f"Added {records_added} records for ticker '{ticker}'.")
@@ -147,7 +147,7 @@ def add_new_ticker_ui():
     ticker_input = st.text_input("Enter Ticker Symbol (e.g., AAPL, MSFT):").upper()
     if st.button("Add Ticker"):
         if ticker_input:
-            tickers_in_db = get_tickers_from_db(conn)
+            tickers_in_db = get_unique_tickers_from_db(conn)
             if ticker_input in tickers_in_db:
                 st.warning(f"Ticker '{ticker_input}' already exists in the database.")
                 logging.warning(f"Attempted to add existing ticker '{ticker_input}'.")
@@ -155,7 +155,7 @@ def add_new_ticker_ui():
                 with st.spinner(f"Fetching data for ticker '{ticker_input}'..."):
                     raw_data = get_stock_data(ticker_input, "01 Jan 2020", pd.Timestamp.today().strftime("%d %b %Y"))
                 if raw_data:
-                    success, records_added = insert_data_into_db(conn, raw_data, ticker_input)
+                    success, records_added = insert_ticker_data_into_db(conn, raw_data, ticker_input)
                     if success:
                         if records_added > 0:
                             st.success(f"Added {records_added} records for ticker '{ticker_input}'.")
@@ -176,7 +176,7 @@ def add_new_ticker_ui():
 # Function to analyze tickers
 def analyze_tickers():
     st.header("🔍 Analyze Tickers")
-    tickers = get_tickers_from_db(conn)
+    tickers = get_unique_tickers_from_db(conn)
     if not tickers:
         st.warning("No tickers available for analysis. Please add tickers first.")
         logging.warning("No tickers available for analysis.")
