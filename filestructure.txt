@@ -5,19 +5,28 @@
         |-- mxwll_suite_indicator.cpython-312.pyc
 |-- app.log
 |-- data
+    |-- tick_data - Copy (2).db
+    |-- tick_data - Copy.db
     |-- tick_data.db
 |-- databasestructure.py
 |-- database_structure_and_samples.txt
 |-- main.py
 |-- requirements.txt
+|-- tests
+    |-- data
+    |-- tests
 |-- test_mxll.py
 |-- utils
     |-- data_fetcher.py
     |-- db_manager.py
     |-- helpers.py
+    |-- logger.py
+    |-- __init__.py
     |-- __pycache__
         |-- data_fetcher.cpython-310.pyc
         |-- data_fetcher.cpython-312.pyc
         |-- db_manager.cpython-310.pyc
         |-- db_manager.cpython-312.pyc
         |-- helpers.cpython-312.pyc
+        |-- logger.cpython-312.pyc
+        |-- __init__.cpython-312.pyc
