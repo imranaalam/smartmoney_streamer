@@ -210,34 +210,7 @@ async def synchronize_tickers_async(conn, tickers, summary, progress_callback=No
 
 
 
-def get_unique_tickers_from_db(conn):
-    """
-    Retrieves a list of unique tickers from the database.
-    """
-    try:
-        cursor = conn.cursor()
-        cursor.execute("SELECT DISTINCT Ticker FROM Ticker;")
-        tickers = [row[0] for row in cursor.fetchall()]
-        logging.info(f"Retrieved tickers from DB: {tickers}")
-        return tickers
-    except sqlite3.Error as e:
-        logging.error(f"Failed to retrieve tickers: {e}")
-        return []
 
-def get_latest_date_for_ticker(conn, ticker):
-    """
-    Retrieves the latest date for a given ticker.
-    """
-    try:
-        cursor = conn.cursor()
-        cursor.execute("SELECT MAX(Date) FROM Ticker WHERE Ticker = ?;", (ticker,))
-        result = cursor.fetchone()
-        latest_date = result[0] if result and result[0] else None
-        logging.info(f"Latest date for ticker '{ticker}': {latest_date}")
-        return latest_date
-    except sqlite3.Error as e:
-        logging.error(f"Failed to retrieve latest date for ticker '{ticker}': {e}")
-        return None
     
     
 # utils/db_manager.py
@@ -1088,6 +1061,54 @@ def search_psx_constituents_by_symbol(conn, symbol):
     cursor.execute(query, (symbol,))
     return cursor.fetchall()
 
+def search_marketwatch_by_symbol(conn, symbol_query):
+    """
+    Searches MarketWatch symbols by symbol.
+    
+    Args:
+        conn (sqlite3.Connection): SQLite database connection.
+        symbol_query (str): Exact or partial symbol to search.
+    
+    Returns:
+        list: List of matching records as tuples.
+    """
+    try:
+        with conn:
+            cursor = conn.cursor()
+            query = """
+                SELECT DISTINCT SYMBOL
+                FROM MarketWatch
+                WHERE SYMBOL LIKE ?
+                LIMIT 50;
+            """
+            cursor.execute(query, ('%' + symbol_query + '%',))
+            results = cursor.fetchall()
+            logging.info(f"Found {len(results)} MarketWatch symbols matching symbol '{symbol_query}'.")
+            return results
+    except sqlite3.Error as e:
+        logging.error(f"Error searching MarketWatch symbols by symbol '{symbol_query}': {e}")
+        return []
+
+def get_unique_tickers_from_db(conn):
+    """
+    Retrieves a list of unique tickers from the MarketWatch table.
+    
+    Args:
+        conn (sqlite3.Connection): SQLite database connection.
+    
+    Returns:
+        list: List of unique ticker symbols.
+    """
+    try:
+        with conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT DISTINCT SYMBOL FROM MarketWatch;")
+            tickers = [row[0] for row in cursor.fetchall()]
+            logging.info(f"Retrieved tickers from MarketWatch: {tickers}")
+            return tickers
+    except sqlite3.Error as e:
+        logging.error(f"Failed to retrieve unique tickers from MarketWatch: {e}")
+        return []
 
 
 def synchronize_database(conn, date, progress_bar=None, status_text=None):
