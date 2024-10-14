@@ -1,21 +1,26 @@
 # utils/db_manager.py
 
+
 import sqlite3
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 import pandas as pd
 
 # when running the app main.py
-from utils.data_fetcher import SECTOR_MAPPING, fetch_kse_market_watch, get_listings_data, get_defaulters_list, fetch_psx_transaction_data, fetch_psx_constituents
-
-
-
-# when testing indviduall
-# from data_fetcher import SECTOR_MAPPING, fetch_kse_market_watch, get_listings_data, get_defaulters_list, fetch_psx_transaction_data, fetch_psx_constituents
-# from logger import 
+from utils.data_fetcher import (
+    fetch_kse_market_watch,
+    get_listings_data,
+    get_defaulters_list,
+    fetch_psx_transaction_data,
+    fetch_psx_constituents,
+    get_stock_data
+)
 
 # when running main.py
 from utils.logger import setup_logging
+
+
+
 
 
 setup_logging()
@@ -36,23 +41,27 @@ def initialize_db_and_tables(db_path='data/tick_data.db'):
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
 
-        # Create the Ticker table
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS Ticker (
-                Ticker TEXT,
-                Date TEXT,
-                Open REAL,
-                High REAL,
-                Low REAL,
-                Close REAL,
-                Change REAL,
-                "Change (%)" REAL,
-                Volume INTEGER,
-                PRIMARY KEY (Ticker, Date)
-            );
-        """)
+    #     # Create the Ticker table
+    #     cursor.execute("""
+    #         CREATE TABLE IF NOT EXISTS Ticker (
+    #             Ticker TEXT,
+    #             Date TEXT,
+    #             Open REAL,
+    #             High REAL,
+    #             Low REAL,
+    #             Close REAL,
+    #             Change REAL,
+    #             "Change (%)" REAL,
+    #             Volume INTEGER,
+    #             PRIMARY KEY (Ticker, Date)
+    #         );
+    #     """)
 
-        # Create the MarketWatch table with a unique constraint on SYMBOL, SECTOR, and LISTED IN
+        # # ---- Drop MarketWatch table if it exists ---- #
+        # cursor.execute("DROP TABLE IF EXISTS MarketWatch")
+        # logging.info("MarketWatch table dropped.")
+
+    #     # Create the MarketWatch table with a unique constraint on SYMBOL, SECTOR, and LISTED IN
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS MarketWatch (
                 SYMBOL TEXT,
@@ -68,56 +77,62 @@ def initialize_db_and_tables(db_path='data/tick_data.db'):
                 VOLUME INTEGER,
                 DEFAULTER BOOLEAN DEFAULT FALSE,
                 DEFAULTING_CLAUSE TEXT,
+                PRICE REAL,
+                IDX_WT REAL,
+                FF_BASED_SHARES INTEGER,
+                FF_BASED_MCAP REAL,
+                ORD_SHARES INTEGER,
+                ORD_SHARES_MCAP REAL,
                 PRIMARY KEY (SYMBOL, SECTOR, "LISTED IN")
             );
         """)
 
-        # Create the Transactions table for Off Market and Cross Transactions
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS Transactions (
-                Date TEXT,
-                Settlement_Date TEXT,
-                Buyer_Code TEXT,
-                Seller_Code TEXT,
-                Symbol_Code TEXT,
-                Company TEXT,
-                Turnover INTEGER,
-                Rate REAL,
-                Value REAL,
-                Transaction_Type TEXT,
-                PRIMARY KEY (Date, Symbol_Code, Buyer_Code, Seller_Code)
-            );
-        """)
+    #     # Create the Transactions table for Off Market and Cross Transactions
+    #     cursor.execute("""
+    #         CREATE TABLE IF NOT EXISTS Transactions (
+    #             Date TEXT,
+    #             Settlement_Date TEXT,
+    #             Buyer_Code TEXT,
+    #             Seller_Code TEXT,
+    #             Symbol_Code TEXT,
+    #             Company TEXT,
+    #             Turnover INTEGER,
+    #             Rate REAL,
+    #             Value REAL,
+    #             Transaction_Type TEXT,
+    #             PRIMARY KEY (Date, Symbol_Code, Buyer_Code, Seller_Code)
+    #         );
+    #     """)
 
-        # Create the Portfolios table
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS Portfolios (
-                Portfolio_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                Name TEXT UNIQUE NOT NULL,
-                Stocks TEXT NOT NULL
-            );
-        """)
+    #     # Create the Portfolios table
+    #     cursor.execute("""
+    #         CREATE TABLE IF NOT EXISTS Portfolios (
+    #             Portfolio_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    #             Name TEXT UNIQUE NOT NULL,
+    #             Stocks TEXT NOT NULL
+    #         );
+    #     """)
 
 
-        # Crate the PSXConstituents table
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS PSXConstituents (
-            ISIN TEXT PRIMARY KEY,
-            SYMBOL TEXT,
-            COMPANY TEXT,
-            PRICE REAL,
-            IDX_WT REAL,
-            FF_BASED_SHARES INTEGER,
-            FF_BASED_MCAP REAL,
-            ORD_SHARES INTEGER,
-            ORD_SHARES_MCAP REAL,
-            VOLUME INTEGER
-        );
-    """)
+    #     # Crate the PSXConstituents table
+    #     cursor.execute("""
+    #     CREATE TABLE IF NOT EXISTS PSXConstituents (
+    #         ISIN TEXT PRIMARY KEY,
+    #         SYMBOL TEXT,
+    #         COMPANY TEXT,
+    #         PRICE REAL,
+    #         IDX_WT REAL,
+    #         FF_BASED_SHARES INTEGER,
+    #         FF_BASED_MCAP REAL,
+    #         ORD_SHARES INTEGER,
+    #         ORD_SHARES_MCAP REAL,
+    #         VOLUME INTEGER
+    #     );
+    # """)
         
 
-        conn.commit()
-        logging.info(f"Database initialized with Ticker and MarketWatch and Transactions table tables at {db_path}.")
+    #     conn.commit()
+    #     logging.info(f"Database initialized with Ticker and MarketWatch and Transactions table tables at {db_path}.")
        
         return conn
     except sqlite3.Error as e:
@@ -227,44 +242,110 @@ def insert_ticker_data_into_db(conn, data, ticker, batch_size=100):
         logging.error(f"Failed to insert data into database for ticker '{ticker}': {e}")
         return False, 0
 
-
-
-
-
-
-
-
 def insert_market_watch_data_into_db(conn, batch_size=100):
     """
-    Inserts or updates market watch data into the SQLite database in batches.
-    Fetches data internally and ensures the database has the latest information.
-    
+    Deletes old market watch data and inserts or updates new market watch data into the SQLite database in batches.
+    Fetches data for the specified date and ensures the database has the latest information, including defaulter status
+    and PSX constituent information.
+
     Args:
         conn (sqlite3.Connection): SQLite database connection.
         batch_size (int): Number of records to insert per batch.
-    
+
     Returns:
         tuple: (success, records_added) where 'success' is a boolean and 'records_added' is the count of records inserted/updated.
     """
-    
-    # ---- Step 1: Fetch Market Watch Data ---- #
-    logging.info("Fetching market watch data...")
-    market_data = fetch_kse_market_watch(SECTOR_MAPPING)  # Assuming fetch_kse_market_watch is defined elsewhere
-    
-    if not market_data:
-        logging.error("Failed to fetch market watch data.")
-        return False, 0
-    else:
-        logging.info(f"Fetched {len(market_data)} market watch records.")
-    
     try:
+        import logging
+        from datetime import datetime
+
         cursor = conn.cursor()
 
-        # SQL insert query with ON CONFLICT clause for updating existing records
+        # ---- Step 1: Delete Previous Data ---- #
+        logger.info("Deleting previous MarketWatch data...")
+        cursor.execute("DELETE FROM MarketWatch")
+        conn.commit()
+        logger.info("Previous MarketWatch data deleted.")
+
+        # ---- Step 2: Fetch Market Watch Data ---- #
+        logger.info("Fetching market watch data...")
+        market_data = fetch_kse_market_watch()
+
+        if not market_data:
+            logger.error("Failed to fetch market watch data.")
+            return False, 0
+        else:
+            logger.info(f"Fetched {len(market_data)} market watch records.")
+
+        # ---- Step 3: Fetch Defaulters Data ---- #
+        logger.info("Fetching defaulters data...")
+        defaulters_data = get_defaulters_list()
+        defaulters_dict = {d['SYMBOL']: d for d in defaulters_data}
+
+        # ---- Step 4: Fetch PSX Constituents Data ---- #
+        date = datetime.today().strftime('%Y-%m-%d')
+        logger.info(f"Fetching PSX constituents data for date: {date}...")
+        psx_data = fetch_psx_constituents()
+        psx_constituents_dict = {d['SYMBOL']: d for d in psx_data}
+
+        # ---- Step 5: Merge and Prepare Data for Insertion ---- #
+        data_to_insert = []
+        for record in market_data:
+            try:
+                symbol = record.get('SYMBOL')
+                sector = record.get('SECTOR')
+                listed_in = record.get('LISTED IN')  # This will be split into multiple rows
+                ldcp = round(float(record['LDCP']), 2) if record.get('LDCP') else None
+                open_ = round(float(record['OPEN']), 2) if record.get('OPEN') else None
+                high = round(float(record['HIGH']), 2) if record.get('HIGH') else None
+                low = round(float(record['LOW']), 2) if record.get('LOW') else None
+                current = round(float(record['CURRENT']), 2) if record.get('CURRENT') else None
+                change = round(float(record['CHANGE']), 2) if record.get('CHANGE') else None
+                change_p = round(float(record['CHANGE (%)']), 2) if record.get('CHANGE (%)') else None
+                volume = int(record['VOLUME']) if record.get('VOLUME') else None
+                defaulter = defaulters_dict.get(symbol, {}).get('DEFAULTING CLAUSE', None) is not None
+                defaulting_clause = defaulters_dict.get(symbol, {}).get('DEFAULTING CLAUSE', None)
+
+                # Fetch PSX constituent data
+                psx_record = psx_constituents_dict.get(symbol, {})
+                price = psx_record.get('PRICE')
+                idx_wt = psx_record.get('IDX_WT')
+                ff_based_shares = psx_record.get('FF_BASED_SHARES')
+                ff_based_mcap = psx_record.get('FF_BASED_MCAP')
+                ord_shares = psx_record.get('ORD_SHARES')
+                ord_shares_mcap = psx_record.get('ORD_SHARES_MCAP')
+
+                # Split the "LISTED IN" field by comma and insert one row per index
+                listed_indices = listed_in.split(',') if listed_in else []
+                for index in listed_indices:
+                    index = index.strip()  # Remove any extra whitespace
+                    data_to_insert.append((
+                        symbol, sector, index, ldcp, open_, high, low, 
+                        current, change, change_p, volume, defaulter, 
+                        defaulting_clause, price, idx_wt, ff_based_shares, 
+                        ff_based_mcap, ord_shares, ord_shares_mcap
+                    ))
+
+            except (ValueError, KeyError) as e:
+                logger.error(f"Error parsing market watch data record: {record}, error: {e}")
+                continue
+
+        # Insert a new row with "DEFAULT" for symbols in defaulters but not in market_data
+        for symbol, defaulter in defaulters_dict.items():
+            if symbol not in [record.get('SYMBOL') for record in market_data]:
+                data_to_insert.append((
+                    symbol, None, "DEFAULT", None, None, None, None, None, 
+                    None, None, None, True, defaulter['DEFAULTING CLAUSE'], 
+                    None, None, None, None, None, None
+                ))
+
+        # ---- Step 6: Insert Data in Batches ---- #
         insert_query = """
             INSERT INTO MarketWatch 
-            (SYMBOL, SECTOR, "LISTED IN", LDCP, OPEN, HIGH, LOW, CURRENT, CHANGE, "CHANGE (%)", VOLUME, DEFAULTER, DEFAULTING_CLAUSE)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (SYMBOL, SECTOR, "LISTED IN", LDCP, OPEN, HIGH, LOW, CURRENT, 
+             CHANGE, "CHANGE (%)", VOLUME, DEFAULTER, DEFAULTING_CLAUSE, 
+             PRICE, IDX_WT, FF_BASED_SHARES, FF_BASED_MCAP, ORD_SHARES, ORD_SHARES_MCAP)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(SYMBOL, SECTOR, "LISTED IN") 
             DO UPDATE SET 
                 LDCP = excluded.LDCP,
@@ -276,67 +357,78 @@ def insert_market_watch_data_into_db(conn, batch_size=100):
                 "CHANGE (%)" = excluded."CHANGE (%)",
                 VOLUME = excluded.VOLUME,
                 DEFAULTER = excluded.DEFAULTER,
-                DEFAULTING_CLAUSE = excluded.DEFAULTING_CLAUSE;
+                DEFAULTING_CLAUSE = excluded.DEFAULTING_CLAUSE,
+                PRICE = excluded.PRICE,
+                IDX_WT = excluded.IDX_WT,
+                FF_BASED_SHARES = excluded.FF_BASED_SHARES,
+                FF_BASED_MCAP = excluded.FF_BASED_MCAP,
+                ORD_SHARES = excluded.ORD_SHARES,
+                ORD_SHARES_MCAP = excluded.ORD_SHARES_MCAP;
         """
-        
-        # Prepare data for insertion
-        data_to_insert = []
-        for record in market_data:
-            try:
-                # Extract and round numeric fields, default to None for missing values
-                symbol = record['SYMBOL']
-                sector = record['SECTOR']
-                listed_in = record['LISTED IN']
-                ldcp = round(float(record['LDCP']), 2) if record.get('LDCP') else None
-                open_ = round(float(record['OPEN']), 2) if record.get('OPEN') else None
-                high = round(float(record['HIGH']), 2) if record.get('HIGH') else None
-                low = round(float(record['LOW']), 2) if record.get('LOW') else None
-                current = round(float(record['CURRENT']), 2) if record.get('CURRENT') else None
-                change = round(float(record['CHANGE']), 2) if record.get('CHANGE') else None
-                change_p = round(float(record['CHANGE (%)']), 2) if record.get('CHANGE (%)') else None
-                volume = int(record['VOLUME']) if record.get('VOLUME') else None
-                defaulter = record.get('DEFAULTER', False)
-                defaulting_clause = record.get('DEFAULTING_CLAUSE', None)
 
-                # Append the record tuple to data_to_insert list
-                data_to_insert.append((symbol, sector, listed_in, ldcp, open_, high, low, current, change, change_p, volume, defaulter, defaulting_clause))
-
-            except (ValueError, KeyError) as e:
-                logging.error(f"Error parsing market watch data record: {record}, error: {e}")
-                continue
-
-        if not data_to_insert:
-            logging.warning("No valid market watch data to insert.")
-            return True, 0  # Success but no records added
-
-        # ---- Step 2: Insert Data in Batches ---- #
         total_records = len(data_to_insert)
         records_added = 0
-        
+
         for i in range(0, total_records, batch_size):
             batch = data_to_insert[i:i + batch_size]
-            logging.info(f"Inserting batch {i // batch_size + 1} with {len(batch)} records.")
+            logger.info(f"Inserting batch {i // batch_size + 1} with {len(batch)} records.")
             cursor.executemany(insert_query, batch)
             conn.commit()
-            
+
             # Count records added or updated
             records_added += cursor.rowcount
 
-        logging.info(f"Successfully inserted/updated {records_added} records for market watch data.")
+        logger.info(f"Successfully inserted/updated {records_added} records for market watch data.")
 
-        # ---- Step 3: Confirm Database Status ---- #
+        # ---- Step 7: Confirm Database Status ---- #
         cursor.execute("SELECT COUNT(*) FROM MarketWatch;")
         total_in_db = cursor.fetchone()[0]
-        logging.info(f"Total records in the MarketWatch table: {total_in_db}")
+        logger.info(f"Total records in the MarketWatch table: {total_in_db}")
 
         return True, records_added
 
     except sqlite3.Error as e:
-        logging.error(f"Failed to insert market watch data into database: {e}")
+        logger.error(f"Failed to insert market watch data into database: {e}")
         return False, 0
 
 
-def get_tickers_of_sector(conn, sector):
+
+def get_stocks_by_index(conn):
+    """
+    Retrieves a comma-separated list of stocks for each index from the MarketWatch table.
+
+    Args:
+        conn (sqlite3.Connection): SQLite database connection.
+
+    Returns:
+        dict: A dictionary where the keys are indices and the values are comma-separated stock symbols.
+    """
+    try:
+        cursor = conn.cursor()
+        # SQL query to get distinct symbols for each index
+        query = """
+            SELECT "LISTED IN", GROUP_CONCAT(DISTINCT SYMBOL, ', ') as symbols
+            FROM MarketWatch
+            GROUP BY "LISTED IN"
+            ORDER BY "LISTED IN";
+        """
+        cursor.execute(query)
+        rows = cursor.fetchall()
+
+        # Create a dictionary to store the results
+        index_to_stocks = {row[0]: row[1] for row in rows}
+
+        logging.info(f"Retrieved stocks for {len(index_to_stocks)} indices.")
+        return index_to_stocks
+
+    except sqlite3.Error as e:
+        logging.error(f"Failed to retrieve stocks by index: {e}")
+        return {}
+
+
+
+
+def get_stocks_of_sector(conn, sector):
     """
     Retrieves all symbols for a given sector from the MarketWatch table.
 
@@ -365,35 +457,6 @@ def get_tickers_of_sector(conn, sector):
         logging.error(f"Failed to retrieve symbols for sector '{sector}': {e}")
         return []
 
-
-def get_tickers_of_index(conn, index):
-    """
-    Retrieves all symbols for a given index (LISTED IN) from the MarketWatch table.
-
-    Args:
-        conn (sqlite3.Connection): SQLite database connection.
-        index (str): The name of the index to filter by.
-
-    Returns:
-        list: A list of symbols that are listed in the specified index.
-    """
-    try:
-        cursor = conn.cursor()
-        query = """
-            SELECT DISTINCT SYMBOL FROM MarketWatch
-            WHERE "LISTED IN" = ?;
-        """
-        cursor.execute(query, (index,))
-        rows = cursor.fetchall()
-
-        # Extract symbols from the result and return as a list
-        symbols = [row[0] for row in rows]
-        logging.info(f"Retrieved {len(symbols)} symbols for index '{index}'.")
-        return symbols
-
-    except sqlite3.Error as e:
-        logging.error(f"Failed to retrieve symbols for index '{index}': {e}")
-        return []
 
 
 def get_top_advancers(conn):
@@ -957,6 +1020,133 @@ def search_psx_constituents_by_symbol(conn, symbol):
 
 
 
+
+# utils/db_manager.py
+
+def synchronize_database(conn, date, progress_callback=None):
+    """
+    Synchronizes the database by performing the following tasks:
+    1. Inserts or updates Market Watch data.
+    2. Synchronizes all tickers in the Ticker table with up-to-date data.
+    3. Fetches and inserts PSX Transaction data.
+
+    Args:
+        conn (sqlite3.Connection): SQLite database connection.
+        date (str): The date for which to synchronize data in 'YYYY-MM-DD' format.
+        progress_callback (function): A callback function to update progress.
+
+    Returns:
+        dict: Summary of synchronization results with detailed messages.
+    """
+    summary = {
+        'market_watch': {'success': False, 'records_added': 0, 'message': ''},
+        'tickers': {'success': False, 'records_added': 0, 'message': '', 'errors': []},
+        'psx_transactions': {'success': False, 'records_added': 0, 'message': ''}
+    }
+
+    try:
+        # ---- Task 1: Insert/Update Market Watch Data ---- #
+        try:
+            logging.info("Starting synchronization: Inserting/Updating Market Watch data.")
+            if progress_callback:
+                progress_callback(0.05, "Inserting/Updating Market Watch data...")
+            success, records_added = insert_market_watch_data_into_db(conn)
+            summary['market_watch']['success'] = success
+            summary['market_watch']['records_added'] = records_added
+            if success:
+                summary['market_watch']['message'] = f"Successfully synchronized Market Watch data with {records_added} records added/updated."
+                logging.info(summary['market_watch']['message'])
+            else:
+                summary['market_watch']['message'] = "Failed to synchronize Market Watch data."
+                logging.error(summary['market_watch']['message'])
+        except Exception as e:
+            summary['market_watch']['message'] = f"Exception during Market Watch synchronization: {str(e)}"
+            logging.exception(summary['market_watch']['message'])
+
+        # ---- Task 2: Synchronize All Tickers ---- #
+        try:
+            logging.info("Starting synchronization: Synchronizing all tickers.")
+            tickers = get_unique_tickers_from_db(conn)
+            if not tickers:
+                summary['tickers']['message'] = "No tickers found in the database to synchronize."
+                logging.warning(summary['tickers']['message'])
+            else:
+                total_tickers = len(tickers)
+                logging.info(f"Found {total_tickers} tickers to synchronize.")
+                data_total_added = 0
+                for idx, ticker in enumerate(tickers, start=1):
+                    logging.info(f"Synchronizing ticker {idx}/{total_tickers}: {ticker}")
+                    
+                    if progress_callback:
+                        progress = 0.05 + (0.7 * idx / total_tickers)
+                        progress_callback(progress, f"Synchronizing ticker {idx}/{total_tickers}: {ticker}")
+                    
+                    latest_date = get_latest_date_for_ticker(conn, ticker)
+                    if latest_date:
+                        # Convert latest_date to 'DD MMM YYYY' format and add one day to fetch data after the latest_date
+                        latest_date_dt = datetime.strptime(latest_date, "%Y-%m-%d")
+                        date_from = (latest_date_dt + timedelta(days=1)).strftime("%d %b %Y")
+                    else:
+                        # If no records exist, fetch data from a default start date, e.g., '01 Jan 2000'
+                        date_from = "01 Jan 2000"
+                    
+                    # Define date_to as the synchronization date, converted to 'DD MMM YYYY'
+                    date_to_dt = datetime.strptime(date, "%Y-%m-%d")
+                    date_to = date_to_dt.strftime("%d %b %Y")
+                    
+                    new_data = get_stock_data(ticker, date_from, date_to)
+                    if new_data:
+                        success, records_added = insert_ticker_data_into_db(conn, new_data, ticker)
+                        if success:
+                            data_total_added += records_added
+                            logging.info(f"Added {records_added} new records for ticker '{ticker}'.")
+                        else:
+                            error_msg = f"Failed to insert data for ticker '{ticker}'."
+                            summary['tickers']['errors'].append(error_msg)
+                            logging.error(error_msg)
+                    else:
+                        logging.info(f"No new data fetched for ticker '{ticker}'.")
+                summary['tickers']['success'] = True
+                summary['tickers']['records_added'] = data_total_added
+                summary['tickers']['message'] = f"Successfully synchronized tickers with {data_total_added} new records added."
+                if summary['tickers']['errors']:
+                    summary['tickers']['message'] += f" Encountered errors with {len(summary['tickers']['errors'])} tickers."
+        except Exception as e:
+            summary['tickers']['message'] = f"Exception during Ticker synchronization: {str(e)}"
+            logging.exception(summary['tickers']['message'])
+
+        # ---- Task 3: Fetch and Insert PSX Transaction Data ---- #
+        try:
+            logging.info("Starting synchronization: Fetching and Inserting PSX Transaction data.")
+            if progress_callback:
+                progress_callback(0.80, "Fetching and Inserting PSX Transaction data...")
+            logging.debug(f"Fetching PSX Transaction data for date: {date}")
+            transaction_data = fetch_psx_transaction_data(date)
+            if transaction_data is not None and not transaction_data.empty:
+                insert_off_market_transaction_data(conn, transaction_data, 'Off Market & Cross Transactions')
+                summary['psx_transactions']['success'] = True
+                summary['psx_transactions']['records_added'] = len(transaction_data)
+                summary['psx_transactions']['message'] = f"Successfully synchronized PSX Transaction data with {len(transaction_data)} records inserted."
+                logging.info(summary['psx_transactions']['message'])
+            else:
+                summary['psx_transactions']['message'] = "No PSX Transaction data fetched."
+                logging.warning(summary['psx_transactions']['message'])
+        except Exception as e:
+            summary['psx_transactions']['message'] = f"Exception during PSX Transaction synchronization: {str(e)}"
+            logging.exception(summary['psx_transactions']['message'])
+
+        # ---- Completion ---- #
+        if progress_callback:
+            progress_callback(1.0, "Synchronization complete.")
+
+    except Exception as e:
+        # Catch any unexpected exceptions
+        logging.exception(f"An unexpected error occurred during synchronization: {e}")
+        summary['market_watch']['message'] += f" | Unexpected error: {str(e)}"
+        summary['tickers']['message'] += f" | Unexpected error: {str(e)}"
+        summary['psx_transactions']['message'] += f" | Unexpected error: {str(e)}"
+
+    return summary
 
 
 

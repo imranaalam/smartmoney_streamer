@@ -6,6 +6,7 @@ import logging
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
+from datetime import datetime, timedelta
 from io import StringIO
 from io import BytesIO
 
@@ -20,10 +21,8 @@ setup_logging()
 logger = logging.getLogger(__name__)
 
 
-# Base URL for the PSX Off Market Transactions CSV file
-BASE_OFF_MARKET_CSV_URL = "https://dps.psx.com.pk/download/omts/"
-
-# Constants for PSX URL format
+# Base URLs for PSX data files
+BASE_OFF_MARKET_CSV_URL = "https://dps.psx.com.pk/download/omts/{}.csv"
 PSX_CONSTITUENT_URL = "https://dps.psx.com.pk/download/indhist/{}.xls"
 
 
@@ -228,79 +227,68 @@ def get_stock_data(ticker, date_from, date_to):
         logging.error(f"Failed to parse JSON response for ticker '{ticker}'.")
         return None
 
-# data_fetcher.py
-# data_fetcher.py
 
-import requests
-from bs4 import BeautifulSoup
-import logging
 
-def fetch_kse_market_watch(sector_mapping):
+
+
+
+
+def fetch_kse_market_watch():
     """
-    Fetches and returns the daily KSE market watch data with sector names instead of codes.
-    Each entry in `LISTED IN` field is split into separate rows for easy database insertion.
-
+    Fetches and parses market watch data from the KSE website.
+    
     Args:
-        sector_mapping (dict): A dictionary mapping sector codes to sector names.
-
+        SECTOR_MAPPING (dict): Mapping of sector codes to sector names.
+    
     Returns:
-        tuple: (success_flag (bool), records_added (int))
+        list: List of dictionaries containing market watch data.
     """
-    url = 'https://dps.psx.com.pk/market-watch'
     try:
+        # URL for the market watch page
+        url = "https://dps.psx.com.pk/market-watch"
+        
+        # Fetch the page
         response = requests.get(url, timeout=60)
         response.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        logging.error(f"HTTP Request failed for market watch: {e}")
-        return False, 0  # Return failure and zero records
-
-    soup = BeautifulSoup(response.text, 'html.parser')
-    table = soup.find('table', {'class': 'tbl'})
-    
-    if not table:
-        logging.error("No table found for market watch data.")
-        return False, 0
-
-    market_data = []
-
-    # Iterate through rows in the table body
-    for row in table.find('tbody').find_all('tr'):
-        cols = row.find_all('td')
-        if len(cols) != 11:  # Check number of columns
-            continue
         
-        symbol = cols[0].find('strong').text.strip()
-        sector_code = cols[1].text.strip()
-        sector_name = sector_mapping.get(sector_code, "Unknown")
-        listed_in_values = cols[2].text.strip().split(",")
-        ldcp = float(cols[3].get('data-order', '0'))
-        open_price = float(cols[4].get('data-order', '0'))
-        high = float(cols[5].get('data-order', '0'))
-        low = float(cols[6].get('data-order', '0'))
-        current = float(cols[7].get('data-order', '0'))
-        change = float(cols[8].get('data-order', '0'))
-        percent_change = round(float(cols[9].get('data-order', '0')), 2)
-        volume = int(cols[10].get('data-order', '0').replace(',', ''))
+        # Parse the HTML content
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # Find the table containing market data
+        table = soup.find('table', {'class': 'tbl'})
+        
+        # Process each row of the table
+        processed_data = []
+        rows = table.find('tbody').find_all('tr')
+        for row in rows:
+            columns = row.find_all('td')
+            if len(columns) >= 11:  # Ensure there are enough columns
+                processed_item = {
+                    'SYMBOL': columns[0].text.strip(),
+                    'SECTOR': SECTOR_MAPPING.get(columns[1].text.strip(), 'Unknown'),
+                    'LISTED IN': columns[2].text.strip(),
+                    'LDCP': float(columns[3].text.strip().replace(',', '')),
+                    'OPEN': float(columns[4].text.strip().replace(',', '')),
+                    'HIGH': float(columns[5].text.strip().replace(',', '')),
+                    'LOW': float(columns[6].text.strip().replace(',', '')),
+                    'CURRENT': float(columns[7].text.strip().replace(',', '')),
+                    'CHANGE': round(float(columns[8].text.strip().replace(',', '')), 2),  # Round to 2 decimal points
+                    'CHANGE (%)': round(float(columns[9].text.strip().replace('%', '').replace(',', '')), 2),  # Round to 2 decimal points
+                    'VOLUME': int(columns[10].text.strip().replace(',', '')),
+                }
+                processed_data.append(processed_item)
+        
+        logging.info(f"Fetched and processed {len(processed_data)} market watch records.")
+        return processed_data
 
-        # Create a row for each `LISTED IN` value
-        for listed_in in listed_in_values:
-            market_data.append({
-                'SYMBOL': symbol,
-                'SECTOR': sector_name,
-                'LISTED IN': listed_in.strip(),
-                'LDCP': ldcp,
-                'OPEN': open_price,
-                'HIGH': high,
-                'LOW': low,
-                'CURRENT': current,
-                'CHANGE': change,
-                'CHANGE (%)': percent_change,
-                'VOLUME': volume
-            })
-    
-    records_added = len(market_data)
-    logging.info(f"Retrieved {records_added} records from market watch.")
-    return True, records_added  # Return success and number of records
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Failed to fetch market watch data: {e}")
+        return []
+    except Exception as e:
+        logging.error(f"Error processing market watch data: {e}")
+        return []
+
+
 
 
 
@@ -783,7 +771,9 @@ def fetch_psx_transaction_data(date):
         DataFrame: A single pandas DataFrame containing both B2B and I2I transactions with an additional 'Transaction_Type' field.
     """
     # Step 1: Construct URL based on the date provided
-    url = f"https://dps.psx.com.pk/download/omts/{date}.csv"
+    # Step 1: Construct the URL using the provided date
+    url = BASE_OFF_MARKET_CSV_URL.format(date)
+    logging.info(f"Fetching PSX CSV data from {url}")
     
     # Step 2: Fetch the CSV data from the URL
     try:
@@ -873,18 +863,27 @@ def fetch_psx_transaction_data(date):
 
 
 
-# ---- Function to Fetch PSX Constituent Data ---- #
-def fetch_psx_constituents(date):
+def fetch_psx_constituents(date=None):
     """
-    Fetches the PSX constituents Excel file for the given date and returns the data in a format suitable for insertion.
-
+    Fetches the PSX constituents Excel file for the given date or today's date if no date is provided.
+    
     Args:
-        date (str): The date in format 'YYYY-MM-DD'.
+        date (str): Optional date in format 'YYYY-MM-DD'. If not provided, fetches data for today's date.
 
     Returns:
         list: A list of dictionaries with the PSX data.
     """
     try:
+        from datetime import datetime
+        import requests
+        import pandas as pd
+        import logging
+        from io import BytesIO
+
+        # Use today's date if no date is provided
+        if date is None:
+            date = datetime.today().strftime('%Y-%m-%d')
+        
         # Construct the URL with the given date
         url = PSX_CONSTITUENT_URL.format(date)
         logging.info(f"Fetching PSX data from {url}")
@@ -897,20 +896,33 @@ def fetch_psx_constituents(date):
         excel_file = BytesIO(response.content)
         df = pd.read_excel(excel_file)
 
+        # Rename columns to match db_manager.py expectations
+        df.rename(columns={
+            'IDX WT %': 'IDX_WT',
+            'FF BASED SHARES': 'FF_BASED_SHARES',
+            'FF BASED MCAP': 'FF_BASED_MCAP',
+            'ORD SHARES': 'ORD_SHARES',
+            'ORD SHARES MCAP': 'ORD_SHARES_MCAP'
+        }, inplace=True)
+
         # Ensure the columns are in the expected format
-        required_columns = ['ISIN', 'SYMBOL', 'COMPANY', 'PRICE', 'IDX WT %', 'FF BASED SHARES', 'FF BASED MCAP', 'ORD SHARES', 'ORD SHARES MCAP', 'VOLUME']
+        required_columns = [
+            'ISIN', 'SYMBOL', 'COMPANY', 'PRICE', 
+            'IDX_WT', 'FF_BASED_SHARES', 'FF_BASED_MCAP', 
+            'ORD_SHARES', 'ORD_SHARES_MCAP', 'VOLUME'
+        ]
         if not set(required_columns).issubset(df.columns):
             logging.error("Excel file does not contain the expected columns.")
             return []
 
         # Convert the DataFrame into a list of dictionaries for insertion
         psx_data = df[required_columns].to_dict(orient='records')
+        logging.info(f"Fetched {len(psx_data)} records from PSX constituents.")
         return psx_data
 
     except Exception as e:
         logging.error(f"Error fetching PSX data: {e}")
         return []
-    
 
 
 
@@ -992,7 +1004,7 @@ def main():
 
     # ---- Step 7: Test get_kse_market_watch with predefined sector mapping  ----- #
     logging.info("Fetching market watch data...")
-    market_data = fetch_kse_market_watch(SECTOR_MAPPING)
+    market_data = fetch_kse_market_watch()
 
     if market_data:
         logging.info(f"Successfully retrieved market watch data.")

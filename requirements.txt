@@ -6,3 +6,5 @@ requests
 tabulate
 python-dateutil
 smartmoneyconcepts
+aiohttp
+asyncio

@@ -19,6 +19,7 @@
     |-- __pycache__
         |-- add_new_ticker.cpython-312.pyc
         |-- analyze_tickers.cpython-312.pyc
+        |-- manage_portfolios.cpython-312.pyc
         |-- synchronize_database.cpython-312.pyc
         |-- __init__.cpython-312.pyc
 |-- functionalities_creator.py

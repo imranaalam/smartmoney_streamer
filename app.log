@@ -1141,3 +1141,788 @@ ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), 
 2024-10-13 01:51:44,938 - INFO - Analysis for ticker 'PSO' completed successfully.
 2024-10-13 01:51:44,982 - INFO - Analysis for ticker 'PTC' completed successfully.
 2024-10-13 01:51:45,033 - INFO - Analysis for ticker 'SEARL' completed successfully.
+2024-10-14 16:54:46,029 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 16:54:50,400 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 16:54:58,808 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 16:54:58,987 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-14 16:55:07,065 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 16:55:25,113 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 16:55:30,988 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 16:55:34,907 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 16:55:35,108 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 16:55:38,275 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 17:01:23,897 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 17:23:29,146 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 17:23:29,701 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-14 17:23:31,677 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 17:23:31,698 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-14 17:23:32,942 - INFO - Analysis for ticker 'ABL' completed successfully.
+2024-10-14 17:23:32,984 - INFO - Analysis for ticker 'AIRLINK' completed successfully.
+2024-10-14 17:23:33,037 - INFO - Analysis for ticker 'FATIMA' completed successfully.
+2024-10-14 17:23:33,094 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-14 17:23:33,141 - INFO - Analysis for ticker 'HUMNL' completed successfully.
+2024-10-14 17:23:33,180 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-14 17:23:33,222 - INFO - Analysis for ticker 'OGDC' completed successfully.
+2024-10-14 17:23:33,263 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-14 17:23:33,306 - INFO - Analysis for ticker 'PSO' completed successfully.
+2024-10-14 17:23:33,352 - INFO - Analysis for ticker 'PTC' completed successfully.
+2024-10-14 17:23:33,392 - INFO - Analysis for ticker 'SEARL' completed successfully.
+2024-10-14 17:38:14,246 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 17:42:00,084 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 17:43:28,077 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 17:43:28,095 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 17:43:28,096 - INFO - Fetching market watch data...
+2024-10-14 17:43:29,678 - INFO - Retrieved 978 records from market watch.
+2024-10-14 17:43:29,679 - INFO - Fetched 2 market watch records.
+2024-10-14 17:43:29,680 - ERROR - An unexpected error occurred during synchronization: 'bool' object is not subscriptable
+Traceback (most recent call last):
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 981, in synchronize_database
+    success, records_added = insert_market_watch_data_into_db(conn)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 287, in insert_market_watch_data_into_db
+    symbol = record['SYMBOL']
+             ~~~~~~^^^^^^^^^^
+TypeError: 'bool' object is not subscriptable
+2024-10-14 17:43:29,683 - INFO - Database synchronization completed.
+2024-10-14 17:49:39,356 - INFO - Database initialized with Ticker and MarketWatch and Transactions table tables at data/tick_data.db.
+2024-10-14 17:50:31,061 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 17:50:31,120 - INFO - Fetching market watch data...
+2024-10-14 17:50:32,834 - INFO - Retrieved 978 records from market watch.
+2024-10-14 17:50:32,838 - INFO - Fetched 2 market watch records.
+2024-10-14 17:50:32,838 - ERROR - Exception during Market Watch synchronization: 'bool' object is not subscriptable
+Traceback (most recent call last):
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 982, in synchronize_database
+    success, records_added = insert_market_watch_data_into_db(conn)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 287, in insert_market_watch_data_into_db
+    symbol = record['SYMBOL']
+             ~~~~~~^^^^^^^^^^
+TypeError: 'bool' object is not subscriptable
+2024-10-14 17:50:32,840 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 17:50:32,841 - ERROR - Exception during PSX Constituents synchronization: name 'timedelta' is not defined
+Traceback (most recent call last):
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 999, in synchronize_database
+    date = (datetime.today() - timedelta(days=1)).strftime('%Y-%m-%d')
+                               ^^^^^^^^^
+NameError: name 'timedelta' is not defined
+2024-10-14 17:50:32,844 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 17:50:32,845 - ERROR - Exception during PSX Transaction synchronization: name 'timedelta' is not defined
+Traceback (most recent call last):
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 1019, in synchronize_database
+    transaction_date = (datetime.today() - timedelta(days=1)).strftime('%Y-%m-%d')
+                                           ^^^^^^^^^
+NameError: name 'timedelta' is not defined
+2024-10-14 17:50:32,852 - INFO - Database synchronization completed.
+2024-10-14 17:53:49,692 - INFO - Database initialized with necessary tables at data/tick_data.db.
+2024-10-14 17:54:33,439 - INFO - Database initialized with necessary tables at data/tick_data.db.
+2024-10-14 17:54:33,456 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 17:54:33,457 - INFO - Fetching market watch data...
+2024-10-14 17:54:35,769 - INFO - Retrieved 978 records from market watch.
+2024-10-14 17:54:35,770 - INFO - Fetched 2 market watch records.
+2024-10-14 17:54:35,770 - ERROR - Exception during Market Watch synchronization: 'bool' object is not subscriptable
+Traceback (most recent call last):
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 378, in synchronize_database
+    success, records_added = insert_market_watch_data_into_db(conn)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 174, in insert_market_watch_data_into_db
+    symbol = record['SYMBOL']
+             ~~~~~~^^^^^^^^^^
+TypeError: 'bool' object is not subscriptable
+2024-10-14 17:54:35,771 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 17:54:35,772 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-13.xls
+2024-10-14 17:54:36,700 - ERROR - Error fetching PSX data: 404 Client Error: Not Found for url: https://dps.psx.com.pk/download/indhist/2024-10-13.xls
+2024-10-14 17:54:36,706 - WARNING - No PSX Constituents data fetched.
+2024-10-14 17:54:36,707 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 17:54:37,605 - ERROR - Failed to fetch CSV data: 404 Client Error: Not Found for url: https://dps.psx.com.pk/download/omts/2024-10-13.csv
+2024-10-14 17:54:37,606 - WARNING - No PSX Transaction data fetched.
+2024-10-14 17:54:37,607 - INFO - Database synchronization completed.
+2024-10-14 18:29:32,868 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 18:29:32,869 - INFO - Fetching market watch data...
+2024-10-14 18:29:32,869 - ERROR - Exception during Market Watch synchronization: fetch_kse_market_watch() takes 1 positional argument but 2 were given
+Traceback (most recent call last):
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 998, in synchronize_database
+    success, records_added = insert_market_watch_data_into_db(conn, date)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 263, in insert_market_watch_data_into_db
+    market_data = fetch_kse_market_watch(SECTOR_MAPPING, date)  # Assuming fetch_kse_market_watch accepts a date parameter
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: fetch_kse_market_watch() takes 1 positional argument but 2 were given
+2024-10-14 18:29:32,872 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 18:29:32,872 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-11.xls
+2024-10-14 18:29:34,829 - INFO - Successfully synchronized PSX Constituents data with 544 records inserted/updated.
+2024-10-14 18:29:34,833 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 18:29:34,834 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 18:29:35,696 - INFO - CSV data fetched successfully.
+2024-10-14 18:29:35,715 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 18:29:35,726 - INFO - Inserted 33 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 18:29:35,729 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 18:29:35,736 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 18:29:35,742 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 18:29:35,743 - INFO - Data in 'Transactions' table after insertion (33 rows):
+2024-10-14 18:29:35,743 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 18:29:35,744 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 18:29:35,744 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 18:29:35,744 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 18:29:35,744 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 18:29:35,745 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 18:29:35,746 - INFO - Database synchronization completed.
+2024-10-14 18:42:19,080 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 18:42:19,085 - INFO - Fetching market watch data...
+2024-10-14 18:42:19,597 - ERROR - Failed to fetch market watch data: HTTPSConnectionPool(host='api.kse.com', port=443): Max retries exceeded with url: /market_watch (Caused by SSLError(SSLError(1, '[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:1000)')))
+2024-10-14 18:42:19,597 - ERROR - Failed to fetch market watch data.
+2024-10-14 18:42:19,597 - ERROR - Failed to synchronize Market Watch data.
+2024-10-14 18:42:19,597 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 18:42:19,598 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-11.xls
+2024-10-14 18:42:21,559 - INFO - Successfully synchronized PSX Constituents data with 544 records inserted/updated.
+2024-10-14 18:42:21,560 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 18:42:21,560 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 18:42:22,912 - INFO - CSV data fetched successfully.
+2024-10-14 18:42:22,934 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 18:42:22,943 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 18:42:22,943 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 18:42:22,944 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 18:42:22,951 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 18:42:22,952 - INFO - Data in 'Transactions' table after insertion (44 rows):
+2024-10-14 18:42:22,952 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 18:42:22,953 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 18:42:22,955 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 18:42:22,955 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 18:42:22,956 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 18:42:22,956 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 18:42:22,958 - INFO - Database synchronization completed.
+2024-10-14 18:53:54,516 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 18:53:54,518 - INFO - Fetching market watch data...
+2024-10-14 18:53:54,518 - ERROR - Exception during Market Watch synchronization: fetch_kse_market_watch() missing 1 required positional argument: 'SECTOR_MAPPING'
+Traceback (most recent call last):
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 991, in synchronize_database
+    success, records_added = insert_market_watch_data_into_db(conn)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 256, in insert_market_watch_data_into_db
+    market_data = fetch_kse_market_watch()  # Assuming fetch_kse_market_watch accepts a date parameter
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: fetch_kse_market_watch() missing 1 required positional argument: 'SECTOR_MAPPING'
+2024-10-14 18:53:54,521 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 18:53:54,521 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-11.xls
+2024-10-14 18:53:56,618 - INFO - Successfully synchronized PSX Constituents data with 544 records inserted/updated.
+2024-10-14 18:53:56,620 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 18:53:56,621 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 18:53:57,592 - INFO - CSV data fetched successfully.
+2024-10-14 18:53:57,612 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 18:53:57,619 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 18:53:57,623 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 18:53:57,623 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 18:53:57,624 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 18:53:57,625 - INFO - Data in 'Transactions' table after insertion (55 rows):
+2024-10-14 18:53:57,626 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 18:53:57,626 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 18:53:57,627 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 18:53:57,628 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 18:53:57,628 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 18:53:57,628 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 18:53:57,629 - INFO - Database synchronization completed.
+2024-10-14 18:57:28,960 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 18:57:28,961 - INFO - Fetching market watch data...
+2024-10-14 18:57:30,887 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 18:57:30,888 - INFO - Fetched 443 market watch records.
+2024-10-14 18:57:30,891 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 18:57:30,903 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 18:57:30,908 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 18:57:30,919 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 18:57:30,927 - INFO - Inserting batch 5 with 43 records.
+2024-10-14 18:57:30,932 - INFO - Successfully inserted/updated 443 records for market watch data.
+2024-10-14 18:57:30,957 - INFO - Total records in the MarketWatch table: 443
+2024-10-14 18:57:30,961 - INFO - Successfully synchronized Market Watch data with 443 records added/updated.
+2024-10-14 18:57:30,962 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 18:57:30,962 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-11.xls
+2024-10-14 18:57:32,724 - INFO - Successfully synchronized PSX Constituents data with 544 records inserted/updated.
+2024-10-14 18:57:32,724 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 18:57:32,725 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 18:57:33,653 - INFO - CSV data fetched successfully.
+2024-10-14 18:57:33,677 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 18:57:33,687 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 18:57:33,688 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 18:57:33,689 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 18:57:33,689 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 18:57:33,689 - INFO - Data in 'Transactions' table after insertion (66 rows):
+2024-10-14 18:57:33,690 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 18:57:33,690 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 18:57:33,691 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 18:57:33,691 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 18:57:33,691 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 18:57:33,691 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 18:57:33,693 - INFO - Database synchronization completed.
+2024-10-14 19:01:44,622 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-14 19:14:26,564 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 19:14:26,566 - INFO - Fetching market watch data...
+2024-10-14 19:14:28,094 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 19:14:28,096 - INFO - Fetched 443 market watch records.
+2024-10-14 19:14:28,101 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 19:14:28,110 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 19:14:28,121 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 19:14:28,136 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 19:14:28,145 - INFO - Inserting batch 5 with 100 records.
+2024-10-14 19:14:28,154 - INFO - Inserting batch 6 with 100 records.
+2024-10-14 19:14:28,165 - INFO - Inserting batch 7 with 100 records.
+2024-10-14 19:14:28,177 - INFO - Inserting batch 8 with 100 records.
+2024-10-14 19:14:28,191 - INFO - Inserting batch 9 with 100 records.
+2024-10-14 19:14:28,201 - INFO - Inserting batch 10 with 71 records.
+2024-10-14 19:14:28,214 - INFO - Successfully inserted/updated 971 records for market watch data.
+2024-10-14 19:14:28,215 - INFO - Total records in the MarketWatch table: 1248
+2024-10-14 19:14:28,217 - INFO - Successfully synchronized Market Watch data with 971 records added/updated.
+2024-10-14 19:14:28,218 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 19:14:28,222 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-11.xls
+2024-10-14 19:14:29,799 - INFO - Successfully synchronized PSX Constituents data with 544 records inserted/updated.
+2024-10-14 19:14:29,799 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 19:14:29,800 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 19:14:30,578 - INFO - CSV data fetched successfully.
+2024-10-14 19:14:30,598 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 19:14:30,607 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 19:14:30,610 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 19:14:30,611 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 19:14:30,611 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 19:14:30,612 - INFO - Data in 'Transactions' table after insertion (77 rows):
+2024-10-14 19:14:30,612 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 19:14:30,613 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 19:14:30,613 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 19:14:30,613 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 19:14:30,613 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 19:14:30,614 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 19:14:30,615 - INFO - Database synchronization completed.
+2024-10-14 19:23:42,078 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 19:23:42,080 - INFO - Deleting previous MarketWatch data...
+2024-10-14 19:23:42,086 - INFO - Previous MarketWatch data deleted.
+2024-10-14 19:23:42,093 - INFO - Fetching market watch data...
+2024-10-14 19:23:43,671 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 19:23:43,672 - INFO - Fetched 443 market watch records.
+2024-10-14 19:23:43,675 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 19:23:43,683 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 19:23:43,718 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 19:23:43,732 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 19:23:43,769 - INFO - Inserting batch 5 with 100 records.
+2024-10-14 19:23:43,803 - INFO - Inserting batch 6 with 100 records.
+2024-10-14 19:23:43,821 - INFO - Inserting batch 7 with 100 records.
+2024-10-14 19:23:43,842 - INFO - Inserting batch 8 with 100 records.
+2024-10-14 19:23:43,868 - INFO - Inserting batch 9 with 100 records.
+2024-10-14 19:23:43,932 - INFO - Inserting batch 10 with 71 records.
+2024-10-14 19:23:43,968 - INFO - Successfully inserted/updated 971 records for market watch data.
+2024-10-14 19:23:43,975 - INFO - Total records in the MarketWatch table: 971
+2024-10-14 19:23:43,982 - INFO - Successfully synchronized Market Watch data with 971 records added/updated.
+2024-10-14 19:23:43,984 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 19:23:43,984 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-11.xls
+2024-10-14 19:23:48,403 - INFO - Successfully synchronized PSX Constituents data with 544 records inserted/updated.
+2024-10-14 19:23:48,758 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 19:23:48,800 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 19:23:49,699 - INFO - CSV data fetched successfully.
+2024-10-14 19:23:49,784 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 19:23:49,829 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 19:23:49,901 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 19:23:50,006 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 19:23:50,080 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 19:23:50,118 - INFO - Data in 'Transactions' table after insertion (88 rows):
+2024-10-14 19:23:50,137 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 19:23:50,153 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 19:23:50,176 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 19:23:50,189 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 19:23:50,208 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 19:23:50,214 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 19:23:50,228 - INFO - Database synchronization completed.
+2024-10-14 19:49:29,112 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 19:49:29,113 - INFO - Deleting previous MarketWatch data...
+2024-10-14 19:49:29,125 - INFO - Previous MarketWatch data deleted.
+2024-10-14 19:49:29,144 - INFO - Fetching market watch data...
+2024-10-14 19:49:31,525 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 19:49:31,526 - INFO - Fetched 443 market watch records.
+2024-10-14 19:49:31,526 - INFO - Fetching defaulters data...
+2024-10-14 19:49:32,709 - INFO - Retrieved 96 records from defaulters list.
+2024-10-14 19:49:32,713 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 19:49:32,718 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 19:49:32,725 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 19:49:32,751 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 19:49:32,812 - INFO - Inserting batch 5 with 100 records.
+2024-10-14 19:49:32,819 - INFO - Inserting batch 6 with 100 records.
+2024-10-14 19:49:32,831 - INFO - Inserting batch 7 with 100 records.
+2024-10-14 19:49:32,846 - INFO - Inserting batch 8 with 100 records.
+2024-10-14 19:49:32,860 - INFO - Inserting batch 9 with 100 records.
+2024-10-14 19:49:32,869 - INFO - Inserting batch 10 with 71 records.
+2024-10-14 19:49:32,878 - INFO - Successfully inserted/updated 971 records for market watch data.
+2024-10-14 19:49:32,879 - INFO - Total records in the MarketWatch table: 971
+2024-10-14 19:49:32,880 - INFO - Successfully synchronized Market Watch data with 971 records added/updated.
+2024-10-14 19:49:32,880 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 19:49:32,880 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-11.xls
+2024-10-14 19:49:34,436 - INFO - Successfully synchronized PSX Constituents data with 544 records inserted/updated.
+2024-10-14 19:49:34,436 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 19:49:34,436 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 19:49:35,259 - INFO - CSV data fetched successfully.
+2024-10-14 19:49:35,283 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 19:49:35,292 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 19:49:35,294 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 19:49:35,295 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 19:49:35,295 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 19:49:35,297 - INFO - Data in 'Transactions' table after insertion (99 rows):
+2024-10-14 19:49:35,298 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 19:49:35,298 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 19:49:35,299 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 19:49:35,299 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 19:49:35,299 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 19:49:35,300 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 19:49:35,301 - INFO - Database synchronization completed.
+2024-10-14 19:56:58,233 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-14 19:56:59,077 - INFO - Retrieved 789 records for ticker 'JUBS'.
+2024-10-14 19:56:59,101 - INFO - Prepared 786 valid records for insertion for ticker 'JUBS'.
+2024-10-14 19:56:59,102 - INFO - Inserting batch 1 for ticker 'JUBS' with 100 records.
+2024-10-14 19:56:59,112 - INFO - Batch 1 inserted 100 records (may include ignored records).
+2024-10-14 19:56:59,130 - INFO - Inserting batch 2 for ticker 'JUBS' with 100 records.
+2024-10-14 19:56:59,137 - INFO - Batch 2 inserted 100 records (may include ignored records).
+2024-10-14 19:56:59,146 - INFO - Inserting batch 3 for ticker 'JUBS' with 100 records.
+2024-10-14 19:56:59,158 - INFO - Batch 3 inserted 100 records (may include ignored records).
+2024-10-14 19:56:59,163 - INFO - Inserting batch 4 for ticker 'JUBS' with 100 records.
+2024-10-14 19:56:59,169 - INFO - Batch 4 inserted 100 records (may include ignored records).
+2024-10-14 19:56:59,185 - INFO - Inserting batch 5 for ticker 'JUBS' with 100 records.
+2024-10-14 19:56:59,194 - INFO - Batch 5 inserted 100 records (may include ignored records).
+2024-10-14 19:56:59,213 - INFO - Inserting batch 6 for ticker 'JUBS' with 100 records.
+2024-10-14 19:56:59,219 - INFO - Batch 6 inserted 100 records (may include ignored records).
+2024-10-14 19:56:59,225 - INFO - Inserting batch 7 for ticker 'JUBS' with 100 records.
+2024-10-14 19:56:59,230 - INFO - Batch 7 inserted 100 records (may include ignored records).
+2024-10-14 19:56:59,232 - INFO - Inserting batch 8 for ticker 'JUBS' with 86 records.
+2024-10-14 19:56:59,236 - INFO - Batch 8 inserted 86 records (may include ignored records).
+2024-10-14 19:56:59,242 - INFO - Added 786 records for ticker 'JUBS'.
+2024-10-14 19:56:59,242 - INFO - Total records in the database for ticker 'JUBS': 786
+2024-10-14 19:56:59,245 - INFO - Added 786 records for ticker 'JUBS'.
+2024-10-14 19:57:15,671 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'JUBS', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-14 19:57:21,332 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'JUBS', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-14 19:57:22,371 - INFO - Analysis for ticker 'ABL' completed successfully.
+2024-10-14 19:57:22,414 - INFO - Analysis for ticker 'AIRLINK' completed successfully.
+2024-10-14 19:57:22,489 - INFO - Analysis for ticker 'FATIMA' completed successfully.
+2024-10-14 19:57:22,535 - INFO - Analysis for ticker 'HUBC' completed successfully.
+2024-10-14 19:57:22,578 - INFO - Analysis for ticker 'HUMNL' completed successfully.
+2024-10-14 19:57:22,627 - INFO - Analysis for ticker 'JUBS' completed successfully.
+2024-10-14 19:57:22,665 - INFO - Analysis for ticker 'MCB' completed successfully.
+2024-10-14 19:57:22,702 - INFO - Analysis for ticker 'OGDC' completed successfully.
+2024-10-14 19:57:22,769 - INFO - Analysis for ticker 'PPL' completed successfully.
+2024-10-14 19:57:22,853 - INFO - Analysis for ticker 'PSO' completed successfully.
+2024-10-14 19:57:22,906 - INFO - Analysis for ticker 'PTC' completed successfully.
+2024-10-14 19:57:22,953 - INFO - Analysis for ticker 'SEARL' completed successfully.
+2024-10-14 20:09:11,443 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 20:09:11,499 - ERROR - Exception during Market Watch synchronization: insert_market_watch_data_into_db() missing 1 required positional argument: 'date'
+Traceback (most recent call last):
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 1037, in synchronize_database
+    success, records_added = insert_market_watch_data_into_db(conn)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: insert_market_watch_data_into_db() missing 1 required positional argument: 'date'
+2024-10-14 20:09:11,555 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 20:09:11,635 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-11.xls
+2024-10-14 20:09:13,766 - INFO - Successfully synchronized PSX Constituents data with 544 records inserted/updated.
+2024-10-14 20:09:13,842 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 20:09:13,887 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 20:09:14,816 - INFO - CSV data fetched successfully.
+2024-10-14 20:09:14,909 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 20:09:14,969 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 20:09:15,022 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 20:09:15,067 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 20:09:15,106 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 20:09:15,219 - INFO - Data in 'Transactions' table after insertion (110 rows):
+2024-10-14 20:09:15,327 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 20:09:15,394 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 20:09:15,422 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 20:09:15,455 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 20:09:15,494 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 20:09:15,506 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 20:09:15,527 - INFO - Database synchronization completed.
+2024-10-14 20:17:14,119 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 20:17:14,120 - INFO - Deleting previous MarketWatch data...
+2024-10-14 20:17:14,142 - INFO - Previous MarketWatch data deleted.
+2024-10-14 20:17:14,144 - INFO - Fetching market watch data...
+2024-10-14 20:17:16,485 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 20:17:16,486 - INFO - Fetched 443 market watch records.
+2024-10-14 20:17:16,487 - INFO - Fetching defaulters data...
+2024-10-14 20:17:17,729 - INFO - Retrieved 96 records from defaulters list.
+2024-10-14 20:17:17,730 - INFO - Fetching PSX constituents data for date: 2024-10-14...
+2024-10-14 20:17:17,731 - ERROR - Error fetching PSX data: name 'datetime' is not defined
+2024-10-14 20:17:17,743 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 20:17:17,744 - ERROR - Failed to insert market watch data into database: table MarketWatch has no column named PRICE
+2024-10-14 20:17:17,745 - ERROR - Failed to synchronize Market Watch data.
+2024-10-14 20:17:17,745 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 20:17:17,745 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-11.xls
+2024-10-14 20:17:19,357 - INFO - Fetched 544 records from PSX constituents.
+2024-10-14 20:17:19,361 - INFO - Successfully synchronized PSX Constituents data with 544 records inserted/updated.
+2024-10-14 20:17:19,361 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 20:17:19,362 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 20:17:20,138 - INFO - CSV data fetched successfully.
+2024-10-14 20:17:20,161 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 20:17:20,173 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 20:17:20,175 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 20:17:20,176 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 20:17:20,177 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 20:17:20,178 - INFO - Data in 'Transactions' table after insertion (121 rows):
+2024-10-14 20:17:20,180 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 20:17:20,182 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 20:17:20,182 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 20:17:20,182 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 20:17:20,183 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 20:17:20,183 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 20:17:20,185 - INFO - Database synchronization completed.
+2024-10-14 20:25:33,768 - INFO - MarketWatch table dropped.
+2024-10-14 20:31:03,863 - INFO - MarketWatch table dropped.
+2024-10-14 20:31:03,928 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 20:31:03,932 - INFO - Deleting previous MarketWatch data...
+2024-10-14 20:31:03,939 - INFO - Previous MarketWatch data deleted.
+2024-10-14 20:31:03,965 - INFO - Fetching market watch data...
+2024-10-14 20:31:05,605 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 20:31:05,607 - INFO - Fetched 443 market watch records.
+2024-10-14 20:31:05,607 - INFO - Fetching defaulters data...
+2024-10-14 20:31:06,618 - INFO - Retrieved 96 records from defaulters list.
+2024-10-14 20:31:06,618 - INFO - Fetching PSX constituents data for date: 2024-10-14...
+2024-10-14 20:31:06,619 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-14.xls
+2024-10-14 20:31:08,144 - INFO - Fetched 544 records from PSX constituents.
+2024-10-14 20:31:08,152 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 20:31:08,157 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 20:31:08,165 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 20:31:08,170 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 20:31:08,180 - INFO - Inserting batch 5 with 100 records.
+2024-10-14 20:31:08,190 - INFO - Inserting batch 6 with 100 records.
+2024-10-14 20:31:08,199 - INFO - Inserting batch 7 with 100 records.
+2024-10-14 20:31:08,204 - INFO - Inserting batch 8 with 100 records.
+2024-10-14 20:31:08,211 - INFO - Inserting batch 9 with 100 records.
+2024-10-14 20:31:08,221 - INFO - Inserting batch 10 with 100 records.
+2024-10-14 20:31:08,227 - INFO - Inserting batch 11 with 67 records.
+2024-10-14 20:31:08,238 - INFO - Successfully inserted/updated 1067 records for market watch data.
+2024-10-14 20:31:08,239 - INFO - Total records in the MarketWatch table: 1067
+2024-10-14 20:31:08,239 - INFO - Successfully synchronized Market Watch data with 1067 records added/updated.
+2024-10-14 20:31:08,239 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 20:31:08,242 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-11.xls
+2024-10-14 20:31:10,180 - INFO - Fetched 544 records from PSX constituents.
+2024-10-14 20:31:10,184 - INFO - Successfully synchronized PSX Constituents data with 544 records inserted/updated.
+2024-10-14 20:31:10,184 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 20:31:10,185 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 20:31:10,957 - INFO - CSV data fetched successfully.
+2024-10-14 20:31:10,979 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 20:31:10,988 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 20:31:10,990 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 20:31:10,990 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 20:31:10,990 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 20:31:10,991 - INFO - Data in 'Transactions' table after insertion (132 rows):
+2024-10-14 20:31:10,991 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 20:31:10,992 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 20:31:10,993 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 20:31:10,993 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 20:31:10,994 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 20:31:10,994 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 20:31:10,995 - INFO - Database synchronization completed.
+2024-10-14 20:31:16,556 - INFO - MarketWatch table dropped.
+2024-10-14 20:31:17,697 - INFO - MarketWatch table dropped.
+2024-10-14 20:31:17,724 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 20:31:17,725 - INFO - Deleting previous MarketWatch data...
+2024-10-14 20:31:17,728 - INFO - Previous MarketWatch data deleted.
+2024-10-14 20:31:17,733 - INFO - Fetching market watch data...
+2024-10-14 20:31:19,447 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 20:31:19,448 - INFO - Fetched 443 market watch records.
+2024-10-14 20:31:19,449 - INFO - Fetching defaulters data...
+2024-10-14 20:31:20,540 - INFO - Retrieved 96 records from defaulters list.
+2024-10-14 20:31:20,541 - INFO - Fetching PSX constituents data for date: 2024-10-14...
+2024-10-14 20:31:20,542 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-14.xls
+2024-10-14 20:31:22,445 - INFO - Fetched 544 records from PSX constituents.
+2024-10-14 20:31:22,456 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 20:31:22,465 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 20:31:22,470 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 20:31:22,479 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 20:31:22,485 - INFO - Inserting batch 5 with 100 records.
+2024-10-14 20:31:22,494 - INFO - Inserting batch 6 with 100 records.
+2024-10-14 20:31:22,501 - INFO - Inserting batch 7 with 100 records.
+2024-10-14 20:31:22,508 - INFO - Inserting batch 8 with 100 records.
+2024-10-14 20:31:22,516 - INFO - Inserting batch 9 with 100 records.
+2024-10-14 20:31:22,525 - INFO - Inserting batch 10 with 100 records.
+2024-10-14 20:31:22,531 - INFO - Inserting batch 11 with 67 records.
+2024-10-14 20:31:22,537 - INFO - Successfully inserted/updated 1067 records for market watch data.
+2024-10-14 20:31:22,538 - INFO - Total records in the MarketWatch table: 1067
+2024-10-14 20:31:22,539 - INFO - Successfully synchronized Market Watch data with 1067 records added/updated.
+2024-10-14 20:31:22,539 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 20:31:22,539 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-13.xls
+2024-10-14 20:31:23,438 - ERROR - Error fetching PSX data: 404 Client Error: Not Found for url: https://dps.psx.com.pk/download/indhist/2024-10-13.xls
+2024-10-14 20:31:23,438 - WARNING - No PSX Constituents data fetched.
+2024-10-14 20:31:23,438 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 20:31:23,439 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-13.csv
+2024-10-14 20:31:24,789 - ERROR - Failed to fetch CSV data: 404 Client Error: Not Found for url: https://dps.psx.com.pk/download/omts/2024-10-13.csv
+2024-10-14 20:31:24,790 - WARNING - No PSX Transaction data fetched.
+2024-10-14 20:31:24,791 - INFO - Database synchronization completed.
+2024-10-14 20:34:03,411 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 20:34:03,413 - INFO - Deleting previous MarketWatch data...
+2024-10-14 20:34:03,418 - INFO - Previous MarketWatch data deleted.
+2024-10-14 20:34:03,424 - INFO - Fetching market watch data...
+2024-10-14 20:34:05,383 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 20:34:05,385 - INFO - Fetched 443 market watch records.
+2024-10-14 20:34:05,385 - INFO - Fetching defaulters data...
+2024-10-14 20:34:06,463 - INFO - Retrieved 96 records from defaulters list.
+2024-10-14 20:34:06,466 - INFO - Fetching PSX constituents data for date: 2024-10-14...
+2024-10-14 20:34:06,467 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-14.xls
+2024-10-14 20:34:08,024 - INFO - Fetched 544 records from PSX constituents.
+2024-10-14 20:34:08,033 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 20:34:08,038 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 20:34:08,047 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 20:34:08,054 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 20:34:08,063 - INFO - Inserting batch 5 with 100 records.
+2024-10-14 20:34:08,072 - INFO - Inserting batch 6 with 100 records.
+2024-10-14 20:34:08,081 - INFO - Inserting batch 7 with 100 records.
+2024-10-14 20:34:08,088 - INFO - Inserting batch 8 with 100 records.
+2024-10-14 20:34:08,096 - INFO - Inserting batch 9 with 100 records.
+2024-10-14 20:34:08,102 - INFO - Inserting batch 10 with 100 records.
+2024-10-14 20:34:08,111 - INFO - Inserting batch 11 with 67 records.
+2024-10-14 20:34:08,119 - INFO - Successfully inserted/updated 1067 records for market watch data.
+2024-10-14 20:34:08,121 - INFO - Total records in the MarketWatch table: 1067
+2024-10-14 20:34:08,123 - INFO - Successfully synchronized Market Watch data with 1067 records added/updated.
+2024-10-14 20:34:08,129 - INFO - Starting synchronization: Fetching and Inserting PSX Constituents data.
+2024-10-14 20:34:08,129 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-14.xls
+2024-10-14 20:34:09,943 - INFO - Fetched 544 records from PSX constituents.
+2024-10-14 20:34:09,952 - INFO - Successfully synchronized PSX Constituents data with 544 records inserted/updated.
+2024-10-14 20:34:09,953 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 20:34:09,954 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-14.csv
+2024-10-14 20:34:11,268 - INFO - CSV data fetched successfully.
+2024-10-14 20:34:11,284 - INFO - Starting insertion of 65 records into the Transactions table.
+2024-10-14 20:34:11,294 - INFO - Inserted 56 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 20:34:11,297 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 20:34:11,298 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 20:34:11,298 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 20:34:11,299 - INFO - Data in 'Transactions' table after insertion (188 rows):
+2024-10-14 20:34:11,300 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 20:34:11,302 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 20:34:11,302 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 20:34:11,302 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 20:34:11,302 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 20:34:11,303 - INFO - Successfully synchronized PSX Transaction data with 65 records inserted.
+2024-10-14 20:34:11,304 - INFO - Database synchronization completed.
+2024-10-14 22:01:38,702 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 22:01:38,703 - INFO - Deleting previous MarketWatch data...
+2024-10-14 22:01:38,719 - INFO - Previous MarketWatch data deleted.
+2024-10-14 22:01:38,724 - INFO - Fetching market watch data...
+2024-10-14 22:01:41,264 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 22:01:41,265 - INFO - Fetched 443 market watch records.
+2024-10-14 22:01:41,265 - INFO - Fetching defaulters data...
+2024-10-14 22:01:42,408 - INFO - Retrieved 96 records from defaulters list.
+2024-10-14 22:01:42,410 - INFO - Fetching PSX constituents data for date: 2024-10-14...
+2024-10-14 22:01:42,410 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-14.xls
+2024-10-14 22:01:43,876 - INFO - Fetched 544 records from PSX constituents.
+2024-10-14 22:01:43,884 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 22:01:43,891 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 22:01:43,897 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 22:01:43,909 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 22:01:43,915 - INFO - Inserting batch 5 with 100 records.
+2024-10-14 22:01:43,920 - INFO - Inserting batch 6 with 100 records.
+2024-10-14 22:01:43,932 - INFO - Inserting batch 7 with 100 records.
+2024-10-14 22:01:43,939 - INFO - Inserting batch 8 with 100 records.
+2024-10-14 22:01:43,947 - INFO - Inserting batch 9 with 100 records.
+2024-10-14 22:01:43,952 - INFO - Inserting batch 10 with 100 records.
+2024-10-14 22:01:43,963 - INFO - Inserting batch 11 with 67 records.
+2024-10-14 22:01:43,968 - INFO - Successfully inserted/updated 1067 records for market watch data.
+2024-10-14 22:01:43,973 - INFO - Total records in the MarketWatch table: 1067
+2024-10-14 22:01:43,975 - INFO - Successfully synchronized Market Watch data with 1067 records added/updated.
+2024-10-14 22:01:43,978 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 22:01:43,980 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 22:01:45,460 - INFO - CSV data fetched successfully.
+2024-10-14 22:01:45,479 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 22:01:45,491 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 22:01:45,494 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 22:01:45,494 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 22:01:45,495 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 22:01:45,496 - INFO - Data in 'Transactions' table after insertion (199 rows):
+2024-10-14 22:01:45,496 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 22:01:45,497 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 22:01:45,497 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 22:01:45,498 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 22:01:45,498 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 22:01:45,498 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 22:01:45,500 - INFO - Database synchronization completed.
+2024-10-14 22:08:00,307 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 22:08:00,308 - INFO - Deleting previous MarketWatch data...
+2024-10-14 22:08:00,326 - INFO - Previous MarketWatch data deleted.
+2024-10-14 22:08:00,338 - INFO - Fetching market watch data...
+2024-10-14 22:08:02,450 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 22:08:02,451 - INFO - Fetched 443 market watch records.
+2024-10-14 22:08:02,451 - INFO - Fetching defaulters data...
+2024-10-14 22:08:04,293 - INFO - Retrieved 96 records from defaulters list.
+2024-10-14 22:08:04,295 - INFO - Fetching PSX constituents data for date: 2024-10-14...
+2024-10-14 22:08:04,296 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-14.xls
+2024-10-14 22:08:06,190 - INFO - Fetched 544 records from PSX constituents.
+2024-10-14 22:08:06,199 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 22:08:06,208 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 22:08:06,215 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 22:08:06,293 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 22:08:06,309 - INFO - Inserting batch 5 with 100 records.
+2024-10-14 22:08:06,332 - INFO - Inserting batch 6 with 100 records.
+2024-10-14 22:08:06,357 - INFO - Inserting batch 7 with 100 records.
+2024-10-14 22:08:06,390 - INFO - Inserting batch 8 with 100 records.
+2024-10-14 22:08:06,412 - INFO - Inserting batch 9 with 100 records.
+2024-10-14 22:08:06,425 - INFO - Inserting batch 10 with 100 records.
+2024-10-14 22:08:06,450 - INFO - Inserting batch 11 with 67 records.
+2024-10-14 22:08:06,489 - INFO - Successfully inserted/updated 1067 records for market watch data.
+2024-10-14 22:08:06,504 - INFO - Total records in the MarketWatch table: 1067
+2024-10-14 22:08:06,505 - INFO - Successfully synchronized Market Watch data with 1067 records added/updated.
+2024-10-14 22:08:06,505 - INFO - Starting synchronization: Synchronizing all tickers.
+2024-10-14 22:08:06,507 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'JUBS', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-14 22:08:06,507 - INFO - Found 12 tickers to synchronize.
+2024-10-14 22:08:06,507 - INFO - Synchronizing ticker 1/12: ABL
+2024-10-14 22:08:06,507 - INFO - Latest date for ticker 'ABL': 2024-10-11
+2024-10-14 22:08:06,508 - ERROR - Exception during Ticker synchronization: name 'fetch_ticker_data' is not defined
+Traceback (most recent call last):
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 1075, in synchronize_database
+    new_data = fetch_ticker_data(ticker, since=latest_date)
+               ^^^^^^^^^^^^^^^^^
+NameError: name 'fetch_ticker_data' is not defined
+2024-10-14 22:08:06,515 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 22:08:06,515 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 22:08:07,397 - INFO - CSV data fetched successfully.
+2024-10-14 22:08:07,417 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 22:08:07,428 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 22:08:07,428 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 22:08:07,429 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 22:08:07,429 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 22:08:07,431 - INFO - Data in 'Transactions' table after insertion (210 rows):
+2024-10-14 22:08:07,431 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 22:08:07,432 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 22:08:07,432 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 22:08:07,432 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 22:08:07,432 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 22:08:07,432 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 22:08:07,433 - INFO - Database synchronization completed.
+2024-10-14 22:18:46,024 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 22:18:46,025 - INFO - Deleting previous MarketWatch data...
+2024-10-14 22:18:46,038 - INFO - Previous MarketWatch data deleted.
+2024-10-14 22:18:46,051 - INFO - Fetching market watch data...
+2024-10-14 22:18:48,363 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 22:18:48,369 - INFO - Fetched 443 market watch records.
+2024-10-14 22:18:48,370 - INFO - Fetching defaulters data...
+2024-10-14 22:18:49,519 - INFO - Retrieved 96 records from defaulters list.
+2024-10-14 22:18:49,520 - INFO - Fetching PSX constituents data for date: 2024-10-14...
+2024-10-14 22:18:49,520 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-14.xls
+2024-10-14 22:18:51,272 - INFO - Fetched 544 records from PSX constituents.
+2024-10-14 22:18:51,280 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 22:18:51,289 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 22:18:51,297 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 22:18:51,314 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 22:18:51,328 - INFO - Inserting batch 5 with 100 records.
+2024-10-14 22:18:51,341 - INFO - Inserting batch 6 with 100 records.
+2024-10-14 22:18:51,350 - INFO - Inserting batch 7 with 100 records.
+2024-10-14 22:18:51,361 - INFO - Inserting batch 8 with 100 records.
+2024-10-14 22:18:51,370 - INFO - Inserting batch 9 with 100 records.
+2024-10-14 22:18:51,376 - INFO - Inserting batch 10 with 100 records.
+2024-10-14 22:18:51,381 - INFO - Inserting batch 11 with 67 records.
+2024-10-14 22:18:51,385 - INFO - Successfully inserted/updated 1067 records for market watch data.
+2024-10-14 22:18:51,389 - INFO - Total records in the MarketWatch table: 1067
+2024-10-14 22:18:51,391 - INFO - Successfully synchronized Market Watch data with 1067 records added/updated.
+2024-10-14 22:18:51,392 - INFO - Starting synchronization: Synchronizing all tickers.
+2024-10-14 22:18:51,394 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'JUBS', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-14 22:18:51,394 - INFO - Found 12 tickers to synchronize.
+2024-10-14 22:18:51,394 - INFO - Synchronizing ticker 1/12: ABL
+2024-10-14 22:18:51,395 - INFO - Latest date for ticker 'ABL': 2024-10-11
+2024-10-14 22:18:51,395 - ERROR - Exception during Ticker synchronization: name 'get_stock_data' is not defined
+Traceback (most recent call last):
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 1094, in synchronize_database
+    new_data = get_stock_data(ticker, date_from_str, date_to_str)
+               ^^^^^^^^^^^^^^
+NameError: name 'get_stock_data' is not defined
+2024-10-14 22:18:51,404 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 22:18:51,404 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 22:18:52,603 - INFO - CSV data fetched successfully.
+2024-10-14 22:18:52,621 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 22:18:52,629 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 22:18:52,630 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 22:18:52,631 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 22:18:52,631 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 22:18:52,633 - INFO - Data in 'Transactions' table after insertion (221 rows):
+2024-10-14 22:18:52,633 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 22:18:52,636 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 22:18:52,636 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 22:18:52,637 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 22:18:52,637 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 22:18:52,637 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 22:18:52,639 - INFO - Database synchronization completed.
+2024-10-14 22:24:11,324 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 22:24:11,326 - INFO - Deleting previous MarketWatch data...
+2024-10-14 22:24:11,343 - INFO - Previous MarketWatch data deleted.
+2024-10-14 22:24:11,349 - INFO - Fetching market watch data...
+2024-10-14 22:24:13,008 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 22:24:13,011 - INFO - Fetched 443 market watch records.
+2024-10-14 22:24:13,011 - INFO - Fetching defaulters data...
+2024-10-14 22:24:14,546 - INFO - Retrieved 96 records from defaulters list.
+2024-10-14 22:24:14,548 - INFO - Fetching PSX constituents data for date: 2024-10-14...
+2024-10-14 22:24:14,548 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-14.xls
+2024-10-14 22:24:16,135 - INFO - Fetched 544 records from PSX constituents.
+2024-10-14 22:24:16,142 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 22:24:16,149 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 22:24:16,157 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 22:24:16,160 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 22:24:16,166 - INFO - Inserting batch 5 with 100 records.
+2024-10-14 22:24:16,175 - INFO - Inserting batch 6 with 100 records.
+2024-10-14 22:24:16,180 - INFO - Inserting batch 7 with 100 records.
+2024-10-14 22:24:16,185 - INFO - Inserting batch 8 with 100 records.
+2024-10-14 22:24:16,193 - INFO - Inserting batch 9 with 100 records.
+2024-10-14 22:24:16,202 - INFO - Inserting batch 10 with 100 records.
+2024-10-14 22:24:16,214 - INFO - Inserting batch 11 with 67 records.
+2024-10-14 22:24:16,228 - INFO - Successfully inserted/updated 1067 records for market watch data.
+2024-10-14 22:24:16,231 - INFO - Total records in the MarketWatch table: 1067
+2024-10-14 22:24:16,233 - INFO - Successfully synchronized Market Watch data with 1067 records added/updated.
+2024-10-14 22:24:16,239 - INFO - Starting synchronization: Synchronizing all tickers.
+2024-10-14 22:24:16,241 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'JUBS', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-14 22:24:16,246 - INFO - Found 12 tickers to synchronize.
+2024-10-14 22:24:16,248 - INFO - Synchronizing ticker 1/12: ABL
+2024-10-14 22:24:16,265 - INFO - Latest date for ticker 'ABL': 2024-10-11
+2024-10-14 22:24:18,562 - INFO - Retrieved 0 records for ticker 'ABL'.
+2024-10-14 22:24:18,562 - INFO - No new data fetched for ticker 'ABL'.
+2024-10-14 22:24:18,562 - INFO - Synchronizing ticker 2/12: AIRLINK
+2024-10-14 22:24:18,564 - INFO - Latest date for ticker 'AIRLINK': 2024-10-11
+2024-10-14 22:24:20,697 - INFO - Retrieved 0 records for ticker 'AIRLINK'.
+2024-10-14 22:24:20,698 - INFO - No new data fetched for ticker 'AIRLINK'.
+2024-10-14 22:24:20,698 - INFO - Synchronizing ticker 3/12: FATIMA
+2024-10-14 22:24:20,700 - INFO - Latest date for ticker 'FATIMA': 2024-10-11
+2024-10-14 22:24:22,884 - INFO - Retrieved 0 records for ticker 'FATIMA'.
+2024-10-14 22:24:22,885 - INFO - No new data fetched for ticker 'FATIMA'.
+2024-10-14 22:24:22,885 - INFO - Synchronizing ticker 4/12: HUBC
+2024-10-14 22:24:22,887 - INFO - Latest date for ticker 'HUBC': 2024-10-11
+2024-10-14 22:24:25,238 - INFO - Retrieved 0 records for ticker 'HUBC'.
+2024-10-14 22:24:25,238 - INFO - No new data fetched for ticker 'HUBC'.
+2024-10-14 22:24:25,239 - INFO - Synchronizing ticker 5/12: HUMNL
+2024-10-14 22:24:25,240 - INFO - Latest date for ticker 'HUMNL': 2024-10-11
+2024-10-14 22:24:27,351 - INFO - Retrieved 0 records for ticker 'HUMNL'.
+2024-10-14 22:24:27,352 - INFO - No new data fetched for ticker 'HUMNL'.
+2024-10-14 22:24:27,353 - INFO - Synchronizing ticker 6/12: JUBS
+2024-10-14 22:24:27,354 - INFO - Latest date for ticker 'JUBS': 2024-10-14
+2024-10-14 22:24:30,850 - INFO - Retrieved 0 records for ticker 'JUBS'.
+2024-10-14 22:24:30,851 - INFO - No new data fetched for ticker 'JUBS'.
+2024-10-14 22:24:30,851 - INFO - Synchronizing ticker 7/12: MCB
+2024-10-14 22:24:30,852 - INFO - Latest date for ticker 'MCB': 2024-10-11
+2024-10-14 22:24:39,611 - INFO - Retrieved 0 records for ticker 'MCB'.
+2024-10-14 22:24:39,612 - INFO - No new data fetched for ticker 'MCB'.
+2024-10-14 22:24:39,612 - INFO - Synchronizing ticker 8/12: OGDC
+2024-10-14 22:24:39,613 - INFO - Latest date for ticker 'OGDC': 2024-10-11
+2024-10-14 22:24:41,758 - INFO - Retrieved 0 records for ticker 'OGDC'.
+2024-10-14 22:24:41,758 - INFO - No new data fetched for ticker 'OGDC'.
+2024-10-14 22:24:41,758 - INFO - Synchronizing ticker 9/12: PPL
+2024-10-14 22:24:41,760 - INFO - Latest date for ticker 'PPL': 2024-10-11
+2024-10-14 22:24:43,637 - INFO - Retrieved 0 records for ticker 'PPL'.
+2024-10-14 22:24:43,637 - INFO - No new data fetched for ticker 'PPL'.
+2024-10-14 22:24:43,638 - INFO - Synchronizing ticker 10/12: PSO
+2024-10-14 22:24:43,639 - INFO - Latest date for ticker 'PSO': 2024-10-11
+2024-10-14 22:24:48,885 - INFO - Retrieved 0 records for ticker 'PSO'.
+2024-10-14 22:24:48,885 - INFO - No new data fetched for ticker 'PSO'.
+2024-10-14 22:24:48,886 - INFO - Synchronizing ticker 11/12: PTC
+2024-10-14 22:24:48,887 - INFO - Latest date for ticker 'PTC': 2024-10-11
+2024-10-14 22:24:50,906 - INFO - Retrieved 0 records for ticker 'PTC'.
+2024-10-14 22:24:50,907 - INFO - No new data fetched for ticker 'PTC'.
+2024-10-14 22:24:50,907 - INFO - Synchronizing ticker 12/12: SEARL
+2024-10-14 22:24:50,908 - INFO - Latest date for ticker 'SEARL': 2024-10-11
+2024-10-14 22:24:53,101 - INFO - Retrieved 0 records for ticker 'SEARL'.
+2024-10-14 22:24:53,101 - INFO - No new data fetched for ticker 'SEARL'.
+2024-10-14 22:24:53,101 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 22:24:53,102 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 22:24:53,945 - INFO - CSV data fetched successfully.
+2024-10-14 22:24:53,963 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 22:24:53,972 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 22:24:53,974 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 22:24:53,974 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 22:24:53,975 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 22:24:53,976 - INFO - Data in 'Transactions' table after insertion (232 rows):
+2024-10-14 22:24:53,976 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 22:24:53,977 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 22:24:53,977 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 22:24:53,977 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 22:24:53,977 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 22:24:53,978 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 22:24:53,980 - INFO - Database synchronization completed.
