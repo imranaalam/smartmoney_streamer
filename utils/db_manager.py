@@ -13,11 +13,17 @@ from utils.data_fetcher import (
     get_defaulters_list,
     fetch_psx_transaction_data,
     fetch_psx_constituents,
-    get_stock_data
+    get_stock_data,
+    async_get_stock_data, 
+    fetch_all_tickers_data
 )
 
 # when running main.py
 from utils.logger import setup_logging
+
+import asyncio
+import aiohttp
+from utils.data_fetcher import async_get_stock_data
 
 
 
@@ -140,6 +146,70 @@ def initialize_db_and_tables(db_path='data/tick_data.db'):
         return None
 
 
+async def synchronize_tickers_async(conn, tickers, summary, progress_callback=None):
+    """
+    Asynchronously synchronizes tickers.
+
+    Args:
+        conn (sqlite3.Connection): SQLite database connection.
+        tickers (list): List of ticker symbols.
+        summary (dict): Summary dictionary to update.
+        progress_callback (callable): Optional callback to update progress.
+    """
+    total_tickers = len(tickers)
+    data_total_added = 0
+    errors = []
+
+    async with aiohttp.ClientSession() as session:
+        tasks = []
+        for idx, ticker in enumerate(tickers, start=1):
+            latest_date = get_latest_date_for_ticker(conn, ticker)
+            # Convert latest_date to 'DD MMM YYYY' format
+            if latest_date:
+                latest_date_obj = datetime.strptime(latest_date, "%Y-%m-%d")
+                date_from = latest_date_obj.strftime("%d %b %Y")
+            else:
+                # Define a default start date if no records exist
+                date_from = "01 Jan 2000"
+            date_to = datetime.today().strftime("%d %b %Y")
+
+            task = asyncio.ensure_future(
+                async_get_stock_data(session, ticker, date_from, date_to)
+            )
+            tasks.append((ticker, task, idx, total_tickers))
+
+        for ticker, task, idx, total in tasks:
+            data = await task
+            if data:
+                # Insert data into the database using a ThreadPoolExecutor to avoid blocking
+                loop = asyncio.get_event_loop()
+                with ThreadPoolExecutor() as pool:
+                    success, records_added = await loop.run_in_executor(
+                        pool, insert_ticker_data_into_db, conn, data, ticker
+                    )
+                if success:
+                    data_total_added += records_added
+                    logging.info(f"Added {records_added} new records for ticker '{ticker}'.")
+                else:
+                    error_msg = f"Failed to insert data for ticker '{ticker}'."
+                    errors.append(error_msg)
+                    logging.error(error_msg)
+            else:
+                logging.info(f"No new data fetched for ticker '{ticker}'.")
+
+            # Update progress if callback is provided
+            if progress_callback:
+                progress_callback(idx, total)
+
+    summary['tickers']['success'] = True
+    summary['tickers']['records_added'] = data_total_added
+    summary['tickers']['message'] = f"Successfully synchronized tickers with {data_total_added} new records added."
+    if errors:
+        summary['tickers']['message'] += f" Encountered errors with {len(errors)} tickers."
+        summary['tickers']['errors'] = errors
+
+
+
 def get_unique_tickers_from_db(conn):
     """
     Retrieves a list of unique tickers from the database.
@@ -170,7 +240,7 @@ def get_latest_date_for_ticker(conn, ticker):
         return None
     
     
-
+# utils/db_manager.py
 def insert_ticker_data_into_db(conn, data, ticker, batch_size=100):
     """
     Inserts the list of stock data into the SQLite database in batches.
@@ -230,17 +300,18 @@ def insert_ticker_data_into_db(conn, data, ticker, batch_size=100):
         
         # Log the total number of records added for this ticker
         logging.info(f"Added {records_added} records for ticker '{ticker}'.")
-
+    
         # Verify whether records were actually inserted by querying the database
         cursor.execute("SELECT COUNT(*) FROM Ticker WHERE Ticker = ?;", (ticker,))
         total_in_db = cursor.fetchone()[0]
         logging.info(f"Total records in the database for ticker '{ticker}': {total_in_db}")
-
+    
         return True, records_added
 
     except sqlite3.Error as e:
         logging.error(f"Failed to insert data into database for ticker '{ticker}': {e}")
         return False, 0
+
 
 def insert_market_watch_data_into_db(conn, batch_size=100):
     """
@@ -1019,11 +1090,7 @@ def search_psx_constituents_by_symbol(conn, symbol):
 
 
 
-
-
-# utils/db_manager.py
-
-def synchronize_database(conn, date, progress_callback=None):
+def synchronize_database(conn, date, progress_bar=None, status_text=None):
     """
     Synchronizes the database by performing the following tasks:
     1. Inserts or updates Market Watch data.
@@ -1033,7 +1100,8 @@ def synchronize_database(conn, date, progress_callback=None):
     Args:
         conn (sqlite3.Connection): SQLite database connection.
         date (str): The date for which to synchronize data in 'YYYY-MM-DD' format.
-        progress_callback (function): A callback function to update progress.
+        progress_bar (streamlit.progress): Streamlit progress bar object.
+        status_text (streamlit.empty): Streamlit empty object for status updates.
 
     Returns:
         dict: Summary of synchronization results with detailed messages.
@@ -1048,8 +1116,6 @@ def synchronize_database(conn, date, progress_callback=None):
         # ---- Task 1: Insert/Update Market Watch Data ---- #
         try:
             logging.info("Starting synchronization: Inserting/Updating Market Watch data.")
-            if progress_callback:
-                progress_callback(0.05, "Inserting/Updating Market Watch data...")
             success, records_added = insert_market_watch_data_into_db(conn)
             summary['market_watch']['success'] = success
             summary['market_watch']['records_added'] = records_added
@@ -1059,10 +1125,18 @@ def synchronize_database(conn, date, progress_callback=None):
             else:
                 summary['market_watch']['message'] = "Failed to synchronize Market Watch data."
                 logging.error(summary['market_watch']['message'])
+            
+            # Update progress
+            if progress_bar and status_text:
+                progress_bar.progress(0.1)  # 10%
+                status_text.text("Market Watch data synchronized.")
         except Exception as e:
             summary['market_watch']['message'] = f"Exception during Market Watch synchronization: {str(e)}"
             logging.exception(summary['market_watch']['message'])
-
+            if progress_bar and status_text:
+                progress_bar.progress(0.1)  # 10%
+                status_text.text("Market Watch synchronization failed.")
+        
         # ---- Task 2: Synchronize All Tickers ---- #
         try:
             logging.info("Starting synchronization: Synchronizing all tickers.")
@@ -1074,27 +1148,26 @@ def synchronize_database(conn, date, progress_callback=None):
                 total_tickers = len(tickers)
                 logging.info(f"Found {total_tickers} tickers to synchronize.")
                 data_total_added = 0
+                
+                # Define date range for fetching
+                date_from = "01 Jan 2000"
+                date_to = datetime.strptime(date, "%Y-%m-%d").strftime("%d %b %Y")
+                
+                # Fetch all tickers data asynchronously
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                ticker_data = loop.run_until_complete(fetch_all_tickers_data(tickers, date_from, date_to))
+                loop.close()
+                
                 for idx, ticker in enumerate(tickers, start=1):
                     logging.info(f"Synchronizing ticker {idx}/{total_tickers}: {ticker}")
+                    if progress_bar and status_text:
+                        progress = 0.1 + (idx / total_tickers) * 0.4  # Progress between 10% to 50%
+                        progress = min(progress, 0.5)  # Ensure it doesn't exceed 50%
+                        progress_bar.progress(progress)
+                        status_text.text(f"Synchronizing ticker {idx}/{total_tickers}: {ticker}")
                     
-                    if progress_callback:
-                        progress = 0.05 + (0.7 * idx / total_tickers)
-                        progress_callback(progress, f"Synchronizing ticker {idx}/{total_tickers}: {ticker}")
-                    
-                    latest_date = get_latest_date_for_ticker(conn, ticker)
-                    if latest_date:
-                        # Convert latest_date to 'DD MMM YYYY' format and add one day to fetch data after the latest_date
-                        latest_date_dt = datetime.strptime(latest_date, "%Y-%m-%d")
-                        date_from = (latest_date_dt + timedelta(days=1)).strftime("%d %b %Y")
-                    else:
-                        # If no records exist, fetch data from a default start date, e.g., '01 Jan 2000'
-                        date_from = "01 Jan 2000"
-                    
-                    # Define date_to as the synchronization date, converted to 'DD MMM YYYY'
-                    date_to_dt = datetime.strptime(date, "%Y-%m-%d")
-                    date_to = date_to_dt.strftime("%d %b %Y")
-                    
-                    new_data = get_stock_data(ticker, date_from, date_to)
+                    new_data = ticker_data.get(ticker)
                     if new_data:
                         success, records_added = insert_ticker_data_into_db(conn, new_data, ticker)
                         if success:
@@ -1111,15 +1184,19 @@ def synchronize_database(conn, date, progress_callback=None):
                 summary['tickers']['message'] = f"Successfully synchronized tickers with {data_total_added} new records added."
                 if summary['tickers']['errors']:
                     summary['tickers']['message'] += f" Encountered errors with {len(summary['tickers']['errors'])} tickers."
+                if progress_bar and status_text:
+                    progress_bar.progress(0.5)  # 50%
+                    status_text.text("Ticker synchronization completed.")
         except Exception as e:
             summary['tickers']['message'] = f"Exception during Ticker synchronization: {str(e)}"
             logging.exception(summary['tickers']['message'])
-
+            if progress_bar and status_text:
+                progress_bar.progress(0.5)  # 50%
+                status_text.text("Ticker synchronization failed.")
+        
         # ---- Task 3: Fetch and Insert PSX Transaction Data ---- #
         try:
             logging.info("Starting synchronization: Fetching and Inserting PSX Transaction data.")
-            if progress_callback:
-                progress_callback(0.80, "Fetching and Inserting PSX Transaction data...")
             logging.debug(f"Fetching PSX Transaction data for date: {date}")
             transaction_data = fetch_psx_transaction_data(date)
             if transaction_data is not None and not transaction_data.empty:
@@ -1131,13 +1208,25 @@ def synchronize_database(conn, date, progress_callback=None):
             else:
                 summary['psx_transactions']['message'] = "No PSX Transaction data fetched."
                 logging.warning(summary['psx_transactions']['message'])
+            
+            # Update progress
+            if progress_bar and status_text:
+                progress_bar.progress(0.6)  # 60%
+                status_text.text("PSX Transaction data synchronized.")
         except Exception as e:
             summary['psx_transactions']['message'] = f"Exception during PSX Transaction synchronization: {str(e)}"
             logging.exception(summary['psx_transactions']['message'])
+            if progress_bar and status_text:
+                progress_bar.progress(0.6)  # 60%
+                status_text.text("PSX Transaction synchronization failed.")
 
-        # ---- Completion ---- #
-        if progress_callback:
-            progress_callback(1.0, "Synchronization complete.")
+        # ---- Finalizing Synchronization ---- #
+        try:
+            if progress_bar and status_text:
+                progress_bar.progress(1.0)  # 100%
+                status_text.text("All synchronization tasks completed.")
+        except:
+            pass
 
     except Exception as e:
         # Catch any unexpected exceptions
@@ -1147,7 +1236,6 @@ def synchronize_database(conn, date, progress_callback=None):
         summary['psx_transactions']['message'] += f" | Unexpected error: {str(e)}"
 
     return summary
-
 
 
 def main():

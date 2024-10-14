@@ -1,11 +1,18 @@
+# functionalities/synchronize_database.py
+
 import streamlit as st
 import logging
 import sqlite3
 from utils.db_manager import synchronize_database
 from datetime import datetime, timedelta
 
-# Configure logging (ensure this is set up appropriately in your application)
-logging.basicConfig(level=logging.INFO)
+# Configure logging
+logging.basicConfig(
+    filename='app.log',
+    filemode='a',
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
 logger = logging.getLogger(__name__)
 
 # Helper function to find the last working day (excluding weekends)
@@ -47,22 +54,10 @@ def synchronize_database_ui(conn):
     st.write(f"Selected Date: {selected_date}")
     
     if st.button("Start Synchronization"):
-        progress_bar = st.progress(0)
+        progress_bar = st.progress(0.0)
         status_text = st.empty()
         
-        def progress_callback(progress, message):
-            """
-            Updates the Streamlit progress bar and status text.
-            
-            Args:
-                progress (float): Progress value between 0.0 and 1.0.
-                message (str): Status message to display.
-            """
-            progress_bar.progress(progress)
-            status_text.text(message)
-        
-        with st.spinner("Synchronizing the database..."):
-            summary = synchronize_database(conn, selected_date, progress_callback=progress_callback)
+        summary = synchronize_database(conn, selected_date, progress_bar, status_text)
         
         st.success("Synchronization process has completed. Check the summary below for details.")
         logging.info("Database synchronization completed.")
@@ -83,8 +78,6 @@ def synchronize_database_ui(conn):
                 st.success(summary['tickers']['message'])
                 if summary['tickers']['errors']:
                     st.warning(f"Encountered errors with {len(summary['tickers']['errors'])} tickers.")
-                    for error in summary['tickers']['errors']:
-                        st.write(f"- {error}")
             else:
                 st.error(summary['tickers']['message'])
             

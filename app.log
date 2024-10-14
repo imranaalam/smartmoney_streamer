@@ -1926,3 +1926,219 @@ NameError: name 'get_stock_data' is not defined
 2024-10-14 22:24:53,977 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
 2024-10-14 22:24:53,978 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
 2024-10-14 22:24:53,980 - INFO - Database synchronization completed.
+2024-10-14 22:40:55,423 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 22:40:55,423 - INFO - Deleting previous MarketWatch data...
+2024-10-14 22:40:55,460 - INFO - Previous MarketWatch data deleted.
+2024-10-14 22:40:55,470 - INFO - Fetching market watch data...
+2024-10-14 22:40:57,535 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 22:40:57,538 - INFO - Fetched 443 market watch records.
+2024-10-14 22:40:57,538 - INFO - Fetching defaulters data...
+2024-10-14 22:40:58,648 - INFO - Retrieved 96 records from defaulters list.
+2024-10-14 22:40:58,648 - INFO - Fetching PSX constituents data for date: 2024-10-14...
+2024-10-14 22:40:58,649 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-14.xls
+2024-10-14 22:41:00,819 - INFO - Fetched 544 records from PSX constituents.
+2024-10-14 22:41:00,827 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 22:41:00,837 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 22:41:00,844 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 22:41:00,864 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 22:41:00,873 - INFO - Inserting batch 5 with 100 records.
+2024-10-14 22:41:00,879 - INFO - Inserting batch 6 with 100 records.
+2024-10-14 22:41:00,889 - INFO - Inserting batch 7 with 100 records.
+2024-10-14 22:41:00,897 - INFO - Inserting batch 8 with 100 records.
+2024-10-14 22:41:00,907 - INFO - Inserting batch 9 with 100 records.
+2024-10-14 22:41:00,919 - INFO - Inserting batch 10 with 100 records.
+2024-10-14 22:41:00,928 - INFO - Inserting batch 11 with 67 records.
+2024-10-14 22:41:00,937 - INFO - Successfully inserted/updated 1067 records for market watch data.
+2024-10-14 22:41:00,938 - INFO - Total records in the MarketWatch table: 1067
+2024-10-14 22:41:00,939 - INFO - Successfully synchronized Market Watch data with 1067 records added/updated.
+2024-10-14 22:41:00,939 - INFO - Starting synchronization: Synchronizing all tickers.
+2024-10-14 22:41:00,941 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'JUBS', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-14 22:41:00,941 - INFO - Found 12 tickers to synchronize.
+2024-10-14 22:41:00,943 - INFO - Latest date for ticker 'ABL': 2024-10-11
+2024-10-14 22:41:00,944 - INFO - Latest date for ticker 'AIRLINK': 2024-10-11
+2024-10-14 22:41:00,944 - INFO - Latest date for ticker 'FATIMA': 2024-10-11
+2024-10-14 22:41:00,945 - INFO - Latest date for ticker 'HUBC': 2024-10-11
+2024-10-14 22:41:00,945 - INFO - Latest date for ticker 'HUMNL': 2024-10-11
+2024-10-14 22:41:00,948 - INFO - Latest date for ticker 'JUBS': 2024-10-14
+2024-10-14 22:41:00,950 - INFO - Latest date for ticker 'MCB': 2024-10-11
+2024-10-14 22:41:00,951 - INFO - Latest date for ticker 'OGDC': 2024-10-11
+2024-10-14 22:41:00,951 - INFO - Latest date for ticker 'PPL': 2024-10-11
+2024-10-14 22:41:00,952 - INFO - Latest date for ticker 'PSO': 2024-10-11
+2024-10-14 22:41:00,952 - INFO - Latest date for ticker 'PTC': 2024-10-11
+2024-10-14 22:41:00,953 - INFO - Latest date for ticker 'SEARL': 2024-10-11
+2024-10-14 22:41:02,002 - ERROR - HTTP Request failed for ticker 'FATIMA': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 22:41:02,008 - ERROR - HTTP Request failed for ticker 'OGDC': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 22:41:02,009 - ERROR - HTTP Request failed for ticker 'HUBC': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 22:41:02,019 - ERROR - HTTP Request failed for ticker 'MCB': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 22:41:02,020 - ERROR - HTTP Request failed for ticker 'ABL': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 22:41:02,020 - ERROR - HTTP Request failed for ticker 'PPL': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 22:41:02,020 - INFO - No new data fetched for ticker 'ABL'.
+2024-10-14 22:41:02,023 - ERROR - Exception during Ticker synchronization: Progress Value has invalid value [0.0, 1.0]: 8.333333
+Traceback (most recent call last):
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 1150, in synchronize_database
+    asyncio.run(synchronize_tickers_async(conn, tickers, summary, progress_callback))
+  File "C:\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\asyncio\base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 200, in synchronize_tickers_async
+    progress_callback(idx, total)
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\functionalities\synchronize_database.py", line 65, in update_progress
+    progress_bar.progress(progress)
+  File "C:\Python312\Lib\site-packages\streamlit\elements\progress.py", line 146, in progress
+    progress_proto.value = _get_value(value)
+                           ^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\streamlit\elements\progress.py", line 74, in _get_value
+    raise StreamlitAPIException(
+streamlit.errors.StreamlitAPIException: Progress Value has invalid value [0.0, 1.0]: 8.333333
+2024-10-14 22:41:02,072 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 22:41:02,072 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 22:41:02,922 - INFO - CSV data fetched successfully.
+2024-10-14 22:41:02,944 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 22:41:02,960 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 22:41:02,970 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 22:41:02,970 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 22:41:02,976 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 22:41:02,979 - INFO - Data in 'Transactions' table after insertion (243 rows):
+2024-10-14 22:41:02,980 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 22:41:02,980 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 22:41:02,983 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 22:41:02,986 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 22:41:02,986 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 22:41:02,987 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 22:41:02,987 - INFO - Database synchronization completed.
+2024-10-14 23:13:16,531 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 23:13:16,533 - INFO - Deleting previous MarketWatch data...
+2024-10-14 23:13:16,545 - INFO - Previous MarketWatch data deleted.
+2024-10-14 23:13:16,552 - INFO - Fetching market watch data...
+2024-10-14 23:13:18,323 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 23:13:18,325 - INFO - Fetched 443 market watch records.
+2024-10-14 23:13:18,325 - INFO - Fetching defaulters data...
+2024-10-14 23:13:19,271 - INFO - Retrieved 96 records from defaulters list.
+2024-10-14 23:13:19,273 - INFO - Fetching PSX constituents data for date: 2024-10-14...
+2024-10-14 23:13:19,278 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-14.xls
+2024-10-14 23:13:20,776 - INFO - Fetched 544 records from PSX constituents.
+2024-10-14 23:13:20,784 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 23:13:20,789 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 23:13:20,795 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 23:13:20,803 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 23:13:20,808 - INFO - Inserting batch 5 with 100 records.
+2024-10-14 23:13:20,822 - INFO - Inserting batch 6 with 100 records.
+2024-10-14 23:13:20,829 - INFO - Inserting batch 7 with 100 records.
+2024-10-14 23:13:20,839 - INFO - Inserting batch 8 with 100 records.
+2024-10-14 23:13:20,846 - INFO - Inserting batch 9 with 100 records.
+2024-10-14 23:13:20,855 - INFO - Inserting batch 10 with 100 records.
+2024-10-14 23:13:20,866 - INFO - Inserting batch 11 with 67 records.
+2024-10-14 23:13:20,874 - INFO - Successfully inserted/updated 1067 records for market watch data.
+2024-10-14 23:13:20,878 - INFO - Total records in the MarketWatch table: 1067
+2024-10-14 23:13:20,878 - INFO - Successfully synchronized Market Watch data with 1067 records added/updated.
+2024-10-14 23:13:20,879 - INFO - Starting synchronization: Synchronizing all tickers.
+2024-10-14 23:13:20,882 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'JUBS', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-14 23:13:20,883 - INFO - Found 12 tickers to synchronize.
+2024-10-14 23:13:20,885 - ERROR - Exception during Ticker synchronization: name 'fetch_all_tickers_data' is not defined
+Traceback (most recent call last):
+  File "D:\$REPOs\stock exchange psx\ticker_analyst\stock_analysis_app\utils\db_manager.py", line 1157, in synchronize_database
+    ticker_data = loop.run_until_complete(fetch_all_tickers_data(tickers, date_from, date_to))
+                                          ^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'fetch_all_tickers_data' is not defined
+2024-10-14 23:13:20,894 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 23:13:20,895 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 23:13:22,154 - INFO - CSV data fetched successfully.
+2024-10-14 23:13:22,174 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 23:13:22,182 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 23:13:22,188 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 23:13:22,189 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 23:13:22,190 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 23:13:22,192 - INFO - Data in 'Transactions' table after insertion (254 rows):
+2024-10-14 23:13:22,192 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 23:13:22,193 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 23:13:22,193 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 23:13:22,193 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 23:13:22,194 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 23:13:22,194 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 23:13:22,196 - INFO - Database synchronization completed.
+2024-10-14 23:21:19,840 - INFO - Starting synchronization: Inserting/Updating Market Watch data.
+2024-10-14 23:21:19,842 - INFO - Deleting previous MarketWatch data...
+2024-10-14 23:21:19,850 - INFO - Previous MarketWatch data deleted.
+2024-10-14 23:21:19,866 - INFO - Fetching market watch data...
+2024-10-14 23:21:21,287 - INFO - Fetched and processed 443 market watch records.
+2024-10-14 23:21:21,288 - INFO - Fetched 443 market watch records.
+2024-10-14 23:21:21,288 - INFO - Fetching defaulters data...
+2024-10-14 23:21:22,298 - INFO - Retrieved 96 records from defaulters list.
+2024-10-14 23:21:22,299 - INFO - Fetching PSX constituents data for date: 2024-10-14...
+2024-10-14 23:21:22,300 - INFO - Fetching PSX data from https://dps.psx.com.pk/download/indhist/2024-10-14.xls
+2024-10-14 23:21:23,786 - INFO - Fetched 544 records from PSX constituents.
+2024-10-14 23:21:23,794 - INFO - Inserting batch 1 with 100 records.
+2024-10-14 23:21:23,805 - INFO - Inserting batch 2 with 100 records.
+2024-10-14 23:21:23,819 - INFO - Inserting batch 3 with 100 records.
+2024-10-14 23:21:23,858 - INFO - Inserting batch 4 with 100 records.
+2024-10-14 23:21:23,877 - INFO - Inserting batch 5 with 100 records.
+2024-10-14 23:21:23,896 - INFO - Inserting batch 6 with 100 records.
+2024-10-14 23:21:23,903 - INFO - Inserting batch 7 with 100 records.
+2024-10-14 23:21:23,910 - INFO - Inserting batch 8 with 100 records.
+2024-10-14 23:21:23,919 - INFO - Inserting batch 9 with 100 records.
+2024-10-14 23:21:23,927 - INFO - Inserting batch 10 with 100 records.
+2024-10-14 23:21:23,937 - INFO - Inserting batch 11 with 67 records.
+2024-10-14 23:21:23,944 - INFO - Successfully inserted/updated 1067 records for market watch data.
+2024-10-14 23:21:23,944 - INFO - Total records in the MarketWatch table: 1067
+2024-10-14 23:21:23,947 - INFO - Successfully synchronized Market Watch data with 1067 records added/updated.
+2024-10-14 23:21:23,949 - INFO - Starting synchronization: Synchronizing all tickers.
+2024-10-14 23:21:23,952 - INFO - Retrieved tickers from DB: ['ABL', 'AIRLINK', 'FATIMA', 'HUBC', 'HUMNL', 'JUBS', 'MCB', 'OGDC', 'PPL', 'PSO', 'PTC', 'SEARL']
+2024-10-14 23:21:23,952 - INFO - Found 12 tickers to synchronize.
+2024-10-14 23:21:25,218 - ERROR - HTTP Request failed for ticker 'AIRLINK': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 23:21:25,590 - ERROR - HTTP Request failed for ticker 'JUBS': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 23:21:25,627 - ERROR - HTTP Request failed for ticker 'HUMNL': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 23:21:25,638 - ERROR - HTTP Request failed for ticker 'FATIMA': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 23:21:25,665 - ERROR - HTTP Request failed for ticker 'SEARL': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 23:21:25,726 - ERROR - HTTP Request failed for ticker 'PSO': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 23:21:25,759 - ERROR - HTTP Request failed for ticker 'MCB': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 23:21:25,895 - ERROR - HTTP Request failed for ticker 'ABL': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 23:21:25,948 - ERROR - HTTP Request failed for ticker 'OGDC': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 23:21:26,256 - ERROR - HTTP Request failed for ticker 'PPL': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 23:21:26,267 - ERROR - HTTP Request failed for ticker 'HUBC': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 23:21:26,526 - ERROR - HTTP Request failed for ticker 'PTC': 0, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url=URL('https://www.investorslounge.com/Default/SendPostRequest')
+2024-10-14 23:21:26,528 - INFO - Synchronizing ticker 1/12: ABL
+2024-10-14 23:21:26,529 - INFO - No new data fetched for ticker 'ABL'.
+2024-10-14 23:21:26,529 - INFO - Synchronizing ticker 2/12: AIRLINK
+2024-10-14 23:21:26,531 - INFO - No new data fetched for ticker 'AIRLINK'.
+2024-10-14 23:21:26,532 - INFO - Synchronizing ticker 3/12: FATIMA
+2024-10-14 23:21:26,533 - INFO - No new data fetched for ticker 'FATIMA'.
+2024-10-14 23:21:26,534 - INFO - Synchronizing ticker 4/12: HUBC
+2024-10-14 23:21:26,535 - INFO - No new data fetched for ticker 'HUBC'.
+2024-10-14 23:21:26,536 - INFO - Synchronizing ticker 5/12: HUMNL
+2024-10-14 23:21:26,537 - INFO - No new data fetched for ticker 'HUMNL'.
+2024-10-14 23:21:26,537 - INFO - Synchronizing ticker 6/12: JUBS
+2024-10-14 23:21:26,538 - INFO - No new data fetched for ticker 'JUBS'.
+2024-10-14 23:21:26,539 - INFO - Synchronizing ticker 7/12: MCB
+2024-10-14 23:21:26,540 - INFO - No new data fetched for ticker 'MCB'.
+2024-10-14 23:21:26,540 - INFO - Synchronizing ticker 8/12: OGDC
+2024-10-14 23:21:26,541 - INFO - No new data fetched for ticker 'OGDC'.
+2024-10-14 23:21:26,542 - INFO - Synchronizing ticker 9/12: PPL
+2024-10-14 23:21:26,543 - INFO - No new data fetched for ticker 'PPL'.
+2024-10-14 23:21:26,543 - INFO - Synchronizing ticker 10/12: PSO
+2024-10-14 23:21:26,544 - INFO - No new data fetched for ticker 'PSO'.
+2024-10-14 23:21:26,544 - INFO - Synchronizing ticker 11/12: PTC
+2024-10-14 23:21:26,545 - INFO - No new data fetched for ticker 'PTC'.
+2024-10-14 23:21:26,546 - INFO - Synchronizing ticker 12/12: SEARL
+2024-10-14 23:21:26,546 - INFO - No new data fetched for ticker 'SEARL'.
+2024-10-14 23:21:26,549 - INFO - Starting synchronization: Fetching and Inserting PSX Transaction data.
+2024-10-14 23:21:26,549 - INFO - Fetching PSX CSV data from https://dps.psx.com.pk/download/omts/2024-10-11.csv
+2024-10-14 23:21:27,349 - INFO - CSV data fetched successfully.
+2024-10-14 23:21:27,367 - INFO - Starting insertion of 39 records into the Transactions table.
+2024-10-14 23:21:27,377 - INFO - Inserted 11 records of 'Off Market & Cross Transactions' into the database.
+2024-10-14 23:21:27,379 - INFO - Fetching table structure for 'Transactions'...
+2024-10-14 23:21:27,379 - INFO - Transactions Table Structure: [(0, 'Date', 'TEXT', 0, None, 1), (1, 'Settlement_Date', 'TEXT', 0, None, 0), (2, 'Buyer_Code', 'TEXT', 0, None, 3), (3, 'Seller_Code', 'TEXT', 0, None, 4), (4, 'Symbol_Code', 'TEXT', 0, None, 2), (5, 'Company', 'TEXT', 0, None, 0), (6, 'Turnover', 'INTEGER', 0, None, 0), (7, 'Rate', 'REAL', 0, None, 0), (8, 'Value', 'REAL', 0, None, 0), (9, 'Transaction_Type', 'TEXT', 0, None, 0)]
+2024-10-14 23:21:27,383 - INFO - Fetching all data from 'Transactions' table to verify insertion...
+2024-10-14 23:21:27,386 - INFO - Data in 'Transactions' table after insertion (265 rows):
+2024-10-14 23:21:27,386 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 23:21:27,386 - INFO - ('2024-10-11', '2024-10-15', None, None, 'CWSM', 'Chakwal Spinning', 5000, 40.0, 200000.0, 'B2B')
+2024-10-14 23:21:27,387 - INFO - ('2024-10-11', '2024-10-14', None, None, 'JSBL', 'JS Bank Ltd', 48899000, 8.41, 411240590.0, 'B2B')
+2024-10-14 23:21:27,387 - INFO - ('2024-10-11', '2024-10-15', None, None, 'NBP', 'National BankXD', 1000000, 63.0, 63000000.0, 'B2B')
+2024-10-14 23:21:27,387 - INFO - ('2024-10-11', '2024-10-14', None, None, 'CWSM', 'Chakwal Spinning', 2000, 45.0, 90000.0, 'B2B')
+2024-10-14 23:21:27,388 - INFO - Successfully synchronized PSX Transaction data with 39 records inserted.
+2024-10-14 23:21:27,390 - INFO - Database synchronization completed.
